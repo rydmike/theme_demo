@@ -18,7 +18,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    const FlexScheme usedFlexScheme = FlexScheme.shark;
+    const FlexScheme usedFlexScheme = FlexScheme.hippieBlue;
     final ThemeMode themeMode = watch(themeModeProvider).state;
 
     return MaterialApp(
