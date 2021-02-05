@@ -33,6 +33,8 @@ class _ThemeModeSwitchState extends State<ThemeModeSwitch> {
       selectedColor: colorScheme.surface,
       color: colorScheme.onSurface,
       fillColor: colorScheme.primary,
+      hoverColor: colorScheme.primary.withOpacity(0.2),
+      focusColor: colorScheme.primary.withOpacity(0.3),
       borderWidth: 2,
       borderColor: colorScheme.primary,
       selectedBorderColor: colorScheme.primary,
