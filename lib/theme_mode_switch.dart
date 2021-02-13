@@ -1,5 +1,39 @@
 import 'package:flutter/material.dart';
 
+/// ThemeModeSwitch that on purpose only depends on Flutter SDK.
+///
+/// You could bake in the Riverpod provider as well, but then it is tied
+/// to your app and no longer generic.
+///
+/// You can also make this as a Stateless Widget by using an initializer for
+/// _isSelected, but then you cannot have const constructor. It would look
+/// like this:
+///
+/// @immutable
+/// class ThemeModeSwitch extends StatelessWidget {
+///   ThemeModeSwitch({
+///     Key key,
+///     @required this.themeMode,
+///     @required this.onThemeMode,
+///   })  : assert(themeMode != null, 'themeMode cannot be null'),
+///         assert(onThemeMode != null, 'onThemeMode cannot be null'),
+///         _isSelected = [
+///           themeMode == ThemeMode.light,
+///           themeMode == ThemeMode.system,
+///           themeMode == ThemeMode.dark,
+///         ],
+///         super(key: key);
+///
+///  /// The current themeMode option button to be marked as selected.
+///   final ThemeMode themeMode;
+///
+///   /// The new theme mode that was selected using the 3 option buttons.
+///   final ValueChanged<ThemeMode> onThemeMode;
+///
+///   // Local final set via initializer for the Stateless Widget.
+///   final List<bool> _isSelected;
+
+@immutable
 class ThemeModeSwitch extends StatefulWidget {
   const ThemeModeSwitch({
     Key key,
@@ -20,16 +54,23 @@ class ThemeModeSwitch extends StatefulWidget {
 }
 
 class _ThemeModeSwitchState extends State<ThemeModeSwitch> {
+  List<bool> _isSelected = [];
+
   @override
-  Widget build(BuildContext context) {
-    final List<bool> isSelected = [
+  void initState() {
+    _isSelected = [
       widget.themeMode == ThemeMode.light,
       widget.themeMode == ThemeMode.system,
       widget.themeMode == ThemeMode.dark,
     ];
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return ToggleButtons(
-      isSelected: isSelected,
+      isSelected: _isSelected,
       selectedColor: colorScheme.surface,
       color: colorScheme.onSurface,
       fillColor: colorScheme.primary,
@@ -41,11 +82,11 @@ class _ThemeModeSwitchState extends State<ThemeModeSwitch> {
       borderRadius: BorderRadius.circular(50),
       onPressed: (int newIndex) {
         setState(() {
-          for (int index = 0; index < isSelected.length; index++) {
+          for (int index = 0; index < _isSelected.length; index++) {
             if (index == newIndex) {
-              isSelected[index] = true;
+              _isSelected[index] = true;
             } else {
-              isSelected[index] = false;
+              _isSelected[index] = false;
             }
           }
         });
