@@ -1,7 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/material.dart';
+
 import 'providers.dart';
 import 'theme_mode_switch.dart';
 
@@ -14,7 +15,7 @@ void main() {
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({final Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -83,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text(
+              Text(
                 'You have pushed the button this many times:',
               ),
               Text(
