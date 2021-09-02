@@ -84,14 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'You have pushed the button this many times:',
               ),
               Text(
                 '$_counter',
                 style: Theme.of(context).textTheme.headline4,
               ),
-              Consumer(builder: (context, watch, _) {
+              Consumer(builder: (BuildContext context, watch, _) {
                 return ThemeModeSwitch(
                   themeMode: watch(themeModeProvider).state,
                   onThemeMode: (ThemeMode newMode) {
@@ -120,7 +120,7 @@ class DrawerDemo extends StatelessWidget {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: [
+        children: <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
@@ -132,7 +132,7 @@ class DrawerDemo extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Theme'),
-            trailing: Consumer(builder: (context, watch, _) {
+            trailing: Consumer(builder: (BuildContext context, watch, _) {
               return ThemeModeSwitch(
                 themeMode: watch(themeModeProvider).state,
                 onThemeMode: (ThemeMode newMode) {

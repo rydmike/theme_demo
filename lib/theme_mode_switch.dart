@@ -54,11 +54,11 @@ class ThemeModeSwitch extends StatefulWidget {
 }
 
 class _ThemeModeSwitchState extends State<ThemeModeSwitch> {
-  List<bool> _isSelected = [];
+  List<bool> _isSelected = <bool>[];
 
   @override
   void initState() {
-    _isSelected = [
+    _isSelected = <bool>[
       widget.themeMode == ThemeMode.light,
       widget.themeMode == ThemeMode.system,
       widget.themeMode == ThemeMode.dark,
@@ -68,7 +68,7 @@ class _ThemeModeSwitchState extends State<ThemeModeSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return ToggleButtons(
       isSelected: _isSelected,
       selectedColor: colorScheme.surface,
