@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 /// ThemeModeSwitch that on purpose only depends on Flutter SDK.
 ///
 /// You could bake in the Riverpod provider as well, but then it is tied
-/// to your app and no longer generic.
+/// to your app and no longer generic. Other switches demonstrate that.
 ///
 /// You can also make this as a Stateless Widget by using an initializer for
-/// _isSelected, but then you cannot have const constructor. It would look
+/// _isSelected, but then you cannot have a const constructor. It would look
 /// like this:
 ///
 /// @immutable
@@ -24,24 +24,21 @@ import 'package:flutter/material.dart';
 ///         ],
 ///         super(key: key);
 ///
-///  /// The current themeMode option button to be marked as selected.
-///   final ThemeMode themeMode;
+///  // The current themeMode option button to be marked as selected.
+///  final ThemeMode themeMode;
 ///
-///   /// The new theme mode that was selected using the 3 option buttons.
-///   final ValueChanged<ThemeMode> onThemeMode;
+///  // The new theme mode that was selected using the 3 option buttons.
+///  final ValueChanged<ThemeMode> onThemeMode;
 ///
-///   // Local final set via initializer for the Stateless Widget.
-///   final List<bool> _isSelected;
-
+///  // Local final set via initializer for the Stateless Widget.
+///  final List<bool> _isSelected;
 @immutable
 class ThemeModeSwitch extends StatefulWidget {
   const ThemeModeSwitch({
-    Key key,
-    @required this.themeMode,
-    @required this.onThemeMode,
-  })  : assert(themeMode != null, 'themeMode cannot be null'),
-        assert(onThemeMode != null, 'onThemeMode cannot be null'),
-        super(key: key);
+    Key? key,
+    required this.themeMode,
+    required this.onThemeMode,
+  }) : super(key: key);
 
   /// The current themeMode option button to be marked as selected.
   final ThemeMode themeMode;
