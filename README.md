@@ -32,5 +32,5 @@ theming features it offers, like primary colored surface and background branding
 
 ### Demo
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme toggle demo" width="400"/>
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme toggle demo" width="350"/>
 
