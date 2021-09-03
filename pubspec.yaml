@@ -1,22 +1,45 @@
 name: theme_demo
-description: Theme mode toggle demo with Riverpod and ToggleButtons
+description: Theme demo with FlexColorScheme and Riverpod.
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.2.0
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  # Used by Cupertino classes for iOS style icons (by Google, flutter.dev).
+  # https://pub.dev/packages/cupertino_icons
   cupertino_icons: ^1.0.3
+
+  # Used for surface colored branded theming. (by rydmike.com)
+  # https://pub.dev/packages/flex_color_scheme
   flex_color_scheme: ^3.0.1
+
+  # The Flutter framework (by Google, flutter.dev)
+  # https://flutter.dev
   flutter:
     sdk: flutter
+
+  # Riverpod, next generation version of Provider (by Remi Rousselet).
+  # https://pub.dev/packages/flutter_riverpod
   flutter_riverpod: ^1.0.0-dev.7
+
+  # Used for launching a WEB URL (by Google flutter.dev).
+  # https://pub.dev/packages/url_launcher
+  url_launcher: ^6.0.10
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+# The following section is specific to Flutter.
 flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
   uses-material-design: true
 
+  # all image assets used by the program.
+  assets:
+    # All used images assets.
+    - assets/images/
