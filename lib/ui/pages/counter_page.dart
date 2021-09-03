@@ -1,7 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:theme_demo/ui/widgets/about.dart';
 import 'package:theme_demo/ui/widgets/app_drawer.dart';
 import 'package:theme_demo/ui/widgets/page_body.dart';
@@ -14,18 +13,14 @@ import 'package:theme_demo/ui/widgets/theme/theme_selector.dart';
 import 'package:theme_demo/utils/app_icons.dart';
 import 'package:theme_demo/utils/app_insets.dart';
 
-/// This is basically a demo of the default Flutter counter page, with
-/// a theme mode switch on it using a Riverpod provider.
+/// This is basically the default Flutter counter page, with some theme control
+/// widgets on it that use Riverpod state providers internally to also modify
+/// active theme.
 ///
-/// The counter is using just local state in a StatefulWidget, to
-/// demonstrate the usage of ConsumerStatefulWidget instead of
-/// StatefulWidget and ConsumerState<T> instead of State<T>.
-///
-/// NOTE: This local counter state is no kept when switching between pages.
+/// NOTE: This local counter state is not kept when switching between pages.
 /// As an exercise you can make it to an <int> StateProvider and use it
-/// instead, then it will be kept when changing pages. If you do soe you
-/// can also change this page Widget to a ConsumerWidget.
-class CounterPage extends ConsumerStatefulWidget {
+/// instead, then it will be kept when changing pages too.
+class CounterPage extends StatefulWidget {
   const CounterPage({Key? key}) : super(key: key);
 
   static const String route = '/counter';
@@ -34,7 +29,7 @@ class CounterPage extends ConsumerStatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends ConsumerState<CounterPage> {
+class _MyHomePageState extends State<CounterPage> {
   int _counter = 0;
 
   void _incrementCounter() {

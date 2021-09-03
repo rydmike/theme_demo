@@ -19,7 +19,7 @@ void main() {
 // use to control the used light and dark themes, as well as mode.
 //
 // If your app is using a StatefulWidget then you can use StatefulConsumerWidget
-// instead, and ConsumerState<T> instead of State<T>, see CounterPage example.
+// instead, and ConsumerState<T> instead of State<T>.
 class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
