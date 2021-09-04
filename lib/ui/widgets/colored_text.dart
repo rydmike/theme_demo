@@ -16,7 +16,8 @@ import 'package:flutter/material.dart';
 /// as direct properties in the widget, without need to provide them via
 /// a [TextStyle] in [style]. A [style] may also be provided, if given then
 /// the [color], [fontWeight] and [fontSize] given via direct properties
-/// override the same properties in the [style].
+/// override the same properties in the [style]. The default color is [primary]
+/// if both [color] and the color in [style] are null.
 ///
 /// The [ColoredText] is a simple modified version of Flutter SDK [Text]. The
 /// rest of the comments are straight copies from the SDK.
@@ -87,7 +88,15 @@ import 'package:flutter/material.dart';
 ///  * [RichText], which gives you more control over the text styles.
 ///  * [DefaultTextStyle], which sets default styles for [ColoredText] widgets.
 class ColoredText extends StatelessWidget {
-  /// Creates a text widget.
+  /// Creates a colored text widget.
+  ///
+  /// The [ColoredText] defaults to using Theme.of(context).colorScheme.primary
+  /// as its text color. It also exposes the [color], [fontWeight] and [fontSize]
+  /// as direct properties in the widget, without need to provide them via
+  /// a [TextStyle] in [style]. A [style] may also be provided, if given then
+  /// the [color], [fontWeight] and [fontSize] given via direct properties
+  /// override the same properties in the [style]. The default color is [primary]
+  /// if both [color] and the color in [style] are null.
   ///
   /// If the [style] argument is null, the text will use the style from the
   /// closest enclosing [DefaultTextStyle].
@@ -118,7 +127,7 @@ class ColoredText extends StatelessWidget {
   })  : textSpan = null,
         super(key: key);
 
-  /// Creates a text widget with a [InlineSpan].
+  /// Creates a colored text widget with a [InlineSpan].
   ///
   /// The following subclasses of [InlineSpan] may be used to build rich text:
   ///
@@ -161,8 +170,8 @@ class ColoredText extends StatelessWidget {
 
   /// The color to use when painting the text.
   ///
-  /// If [foreground] is specified, this value must be null. The [color] property
-  /// is shorthand for `Paint()..color = color`.
+  /// If [foreground] is specified in [style], this value must be null.
+  /// The [color] property is shorthand for `Paint()..color = color`.
   ///
   /// In [merge], [apply], and [lerp], conflicts between [color] and [foreground]
   /// specification are resolved in [foreground]'s favor - i.e. if [foreground] is
@@ -283,7 +292,8 @@ class ColoredText extends StatelessWidget {
       TextStyle(
           fontWeight: fontWeight,
           fontSize: fontSize,
-          color: color ?? Theme.of(context).colorScheme.primary),
+          color:
+              color ?? style?.color ?? Theme.of(context).colorScheme.primary),
     );
     if (MediaQuery.boldTextOverride(context)) {
       effectiveTextStyle = effectiveTextStyle
