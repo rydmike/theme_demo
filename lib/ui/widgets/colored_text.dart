@@ -180,8 +180,17 @@ class ColoredText extends StatelessWidget {
 
   /// The color to use when painting the text.
   ///
-  /// If [foreground] is specified in [style], this value must be null.
-  /// The [color] property is shorthand for `Paint()..color = color`.
+  /// The [color] property gets a default of [primary] color if it is null,
+  /// before merging with [style], so if [color] is null, but a [style] is
+  /// given, with or without [color] set in it, it will always be [primary]
+  /// colored anyway. This is an always colored text widget after all and
+  /// one design goal was for it to always default to primary color if not
+  /// specified in the direct [color] property to use some other color.
+  ///
+  /// Since this property will always resolve to a none null color value, it
+  /// does mean that this widget cannot specify the [foreground] color in
+  /// [style] property, doing so will result in an assert informing you of
+  /// the conflict.
   ///
   /// In [merge], [apply], and [lerp], conflicts between [color] and [foreground]
   /// specification are resolved in [foreground]'s favor - i.e. if [foreground] is
