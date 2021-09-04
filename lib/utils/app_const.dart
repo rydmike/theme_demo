@@ -8,7 +8,7 @@ class AppConst {
   // When I build a new public version I just make sure to update this info
   // before building them.
   static const String appName = 'ThemeDemo';
-  static const String version = '0.2.0';
+  static const String version = '0.2.1';
   static const String packageVersion = '3.0.1';
   static const String packageUrl = 'https://pub.dev/packages/flex_color_scheme';
   static const String flutterVersion = 'Channel stable v2.2.3';

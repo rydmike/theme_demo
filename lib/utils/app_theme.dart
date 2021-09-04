@@ -27,12 +27,14 @@ class AppTheme {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
     );
-    // Currently we just use ColorScheme in one sub-theme, but if needed in
-    // other sub-themes too, then here it is.
+    // Get the ColorScheme defined by our used FlexColorScheme, we will use
+    // the colors in it, in an example to customize the default colors in
+    // some Widgets sub-themes.
     final ColorScheme _colorScheme = _flexScheme.toScheme;
+    // Convert FlexColorScheme to ThemeData, apply sub-themes and return it.
     return _flexScheme.toTheme.copyWith(
       // Add our custom button shape and padding theming.
-      elevatedButtonTheme: elevatedButtonTheme,
+      elevatedButtonTheme: elevatedButtonTheme(_colorScheme),
       outlinedButtonTheme: outlinedButtonTheme(
         _colorScheme,
         const Color(0x1F000000),
@@ -67,13 +69,14 @@ class AppTheme {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
     );
-    // Currently we just use ColorScheme in one sub-theme, but if needed in
-    // other sub-themes too, then here it is.
+    // Get the ColorScheme defined by our used FlexColorScheme, we will use
+    // the colors in it, in an example to customize the default colors in
+    // some Widgets sub-themes.
     final ColorScheme _colorScheme = _flexScheme.toScheme;
     // Convert FlexColorScheme to ThemeData, apply sub-themes and return it.
     return _flexScheme.toTheme.copyWith(
-      // Add our custom button shape and padding theming.
-      elevatedButtonTheme: elevatedButtonTheme,
+      // Add our custom button shape, colors and padding theming.
+      elevatedButtonTheme: elevatedButtonTheme(_colorScheme),
       outlinedButtonTheme: outlinedButtonTheme(
         _colorScheme,
         const Color(0x1FFFFFFF),
@@ -86,9 +89,39 @@ class AppTheme {
   // These theme definitions are used to give all Material buttons a
   // a Stadium rounded design. This is just to demonstrate more involved
   // sub-theming with FlexColorScheme.
-  static ElevatedButtonThemeData get elevatedButtonTheme =>
+  static ElevatedButtonThemeData elevatedButtonTheme(ColorScheme scheme) =>
       ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
+        // As an example, say we want the primaryVariant color instead of
+        // primary as default on all our ElevatedButtons, then we just use
+        // that color instead in this Widget's sub-theme.
+        primary: scheme.primaryVariant,
+        // For primary color we could just use the onPrimary as the text/icon
+        // color on this. However, there is no guarantee that the
+        // onPrimary also has correct contrast for primaryVariant, unless you
+        // defined your colors like that. There is also no onPrimaryVariant
+        // property in the ColorScheme class, a clear feature gap imo. We must
+        // thus ourselves ensure we get correct contrasting text/icon color for
+        // the primaryVariant color, we can use the SDK ThemeData static
+        // function that the ThemeData also uses to evaluate correct contrasting
+        // color. For simplicity we just use black and white colors here.
+        //
+        // Generally if you want some custom colors in your theme that otherwise
+        // do no affect built-in Widgets default colors, using primaryVariant
+        // and secondaryVariant and putting the colors there for re-use on
+        // custom sub-themes for built in Widgets is a good idea.
+        // In current SDK the primaryVariant color is only referenced in the
+        // SnackBar Widget's default colors, so be aware of that if you change
+        // it. If you just need one custom color that you can apply to your
+        // built in widgets sub-themes, then using secondaryVariant color
+        // is an even better choice, as currently no built in SDK widget uses it
+        // for its default colors, so defining the color to something that does
+        // not change any default color behaviour.
+        onPrimary:
+            ThemeData.estimateBrightnessForColor(scheme.primaryVariant) ==
+                    Brightness.dark
+                ? Colors.white
+                : Colors.black,
         minimumSize: minButtonSize,
         shape: const StadiumBorder(), //buttonShape,
         padding: roundButtonPadding,
@@ -98,33 +131,29 @@ class AppTheme {
   static OutlinedButtonThemeData outlinedButtonTheme(
           ColorScheme scheme, Color disabledColor) =>
       OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          minimumSize: minButtonSize,
-          shape: const StadiumBorder(),
-          padding: roundButtonPadding,
-        ).copyWith(
-          side: MaterialStateProperty.resolveWith<BorderSide?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.disabled)) {
-                return BorderSide(
-                  color: disabledColor,
-                  width: 0.5,
-                );
-              }
-              if (states.contains(MaterialState.error)) {
-                return BorderSide(
-                  color: scheme.error,
-                  width: AppInsets.outlineThickness,
-                );
-              }
-              return BorderSide(
-                color: scheme.primary,
-                width: AppInsets.outlineThickness,
-              );
-            },
-          ),
-        ),
-      );
+          style: OutlinedButton.styleFrom(
+        minimumSize: minButtonSize,
+        shape: const StadiumBorder(),
+        padding: roundButtonPadding,
+      ).copyWith(side: MaterialStateProperty.resolveWith<BorderSide?>(
+              (Set<MaterialState> states) {
+        if (states.contains(MaterialState.disabled)) {
+          return BorderSide(
+            color: disabledColor,
+            width: 0.5,
+          );
+        }
+        if (states.contains(MaterialState.error)) {
+          return BorderSide(
+            color: scheme.error,
+            width: AppInsets.outlineThickness,
+          );
+        }
+        return BorderSide(
+          color: scheme.primary,
+          width: AppInsets.outlineThickness,
+        );
+      })));
 
   static TextButtonThemeData get textButtonTheme => TextButtonThemeData(
           style: TextButton.styleFrom(
@@ -226,14 +255,19 @@ class AppTheme {
   // Tapestry pink and laser yellow.
   static const FlexSchemeColor _customScheme5Light = FlexSchemeColor(
     primary: Color(0xFFAA637F),
-    primaryVariant: Color(0xFF8D4D66),
+    //
+    // As an example, say we like one of the existing built in color definitions
+    // for the variant color then just re-use it there:
+    primaryVariant: FlexColor.sakuraLightPrimaryVariant,
     secondary: Color(0xFFC2A86B),
     secondaryVariant: Color(0xFFB19249),
     appBarColor: Color(0xFFB19249),
   );
   static const FlexSchemeColor _customScheme5Dark = FlexSchemeColor(
     primary: Color(0xFFBC859B),
-    primaryVariant: Color(0xFFA67487),
+    //
+    // We use the corresponding pre-defined dark variant color.
+    primaryVariant: FlexColor.sakuraDarkPrimaryVariant,
     secondary: Color(0xFFCFBB8B),
     secondaryVariant: Color(0xFFC2A970),
     appBarColor: Color(0xFFC2A970),
@@ -249,6 +283,14 @@ class AppTheme {
       light: _customScheme1Light,
       dark: _customScheme1Dark,
     ),
+    //
+    // As an example, say you want to add one of the pre-defined FlexColor
+    // schemes to the list of schemes we offer as user choices, then just pick
+    // the ones you want and insert in the order you want it, here we
+    // add the Mandy Red scheme.
+    FlexColor.schemes[FlexScheme.mandyRed]!,
+    //
+    // And continue with your own custom schemes, with own custom names.
     const FlexSchemeData(
       name: 'Juan and pink',
       description: 'San Juan blue and sea pink.',
@@ -273,8 +315,14 @@ class AppTheme {
       light: _customScheme5Light,
       dark: _customScheme5Dark,
     ),
-    // After custom color schemes, add all built in FlexColor schemes.
-    // TODO(rydmike): Make list const in the package, then it can all be const.
+    //
+    // As an example:
+    // After all our custom color schemes, and hand picked built in colors
+    // we add all built in FlexColor schemes.
+    // The MandyRed scheme will of course show up as a duplicate when we do
+    // this, since we already added it manually already. This is just to
+    // demonstrating how to easily add all existing scheme to end of our custom
+    // scheme choices.
     ...FlexColor.schemesList,
   ];
 }
