@@ -16,8 +16,13 @@ import 'package:flutter/material.dart';
 /// as direct properties in the widget, without need to provide them via
 /// a [TextStyle] in [style]. A [style] may also be provided, if given then
 /// the [color], [fontWeight] and [fontSize] given via direct properties
-/// override the same properties in the [style]. The default color is [primary]
-/// if both [color] and the color in [style] are null.
+/// override the same properties in the [style].
+///
+/// The [color] property gets a default of [primary] if null before merging
+/// with [style], so if [color] is null, but a [style] is given, with or
+/// without [color] set in it, it will always be [primary] colored anyway, this
+/// is an always colored text widget after all and one design goal was for it
+/// to always default to primary color.
 ///
 /// The [ColoredText] is a simple modified version of Flutter SDK [Text]. The
 /// rest of the comments are straight copies from the SDK.
@@ -95,8 +100,13 @@ class ColoredText extends StatelessWidget {
   /// as direct properties in the widget, without need to provide them via
   /// a [TextStyle] in [style]. A [style] may also be provided, if given then
   /// the [color], [fontWeight] and [fontSize] given via direct properties
-  /// override the same properties in the [style]. The default color is [primary]
-  /// if both [color] and the color in [style] are null.
+  /// override the same properties in the [style].
+  ///
+  /// The [color] property gets a default of [primary] if null before merging
+  /// with [style], so if [color] is null, but a [style] is given, with or
+  /// without [color] set in it, it will always be [primary] colored anyway, this
+  /// is an always colored text widget after all and one design goal was for it
+  /// to always default to primary color.
   ///
   /// If the [style] argument is null, the text will use the style from the
   /// closest enclosing [DefaultTextStyle].
@@ -290,10 +300,10 @@ class ColoredText extends StatelessWidget {
     }
     effectiveTextStyle = effectiveTextStyle!.merge(
       TextStyle(
-          fontWeight: fontWeight,
-          fontSize: fontSize,
-          color:
-              color ?? style?.color ?? Theme.of(context).colorScheme.primary),
+        fontWeight: fontWeight,
+        fontSize: fontSize,
+        color: color ?? Theme.of(context).colorScheme.primary,
+      ),
     );
     if (MediaQuery.boldTextOverride(context)) {
       effectiveTextStyle = effectiveTextStyle
