@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:theme_demo/ui/widgets/colored_text.dart';
 
 /// SplashPageOne splash example page.
 class SplashPage extends StatelessWidget {
@@ -44,19 +45,31 @@ class SplashPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
+                ColoredText(
                   'Splash!',
-                  style: theme.textTheme.headline2!
-                      .copyWith(color: theme.colorScheme.primary),
+                  style: theme.textTheme.headline2,
                 ),
                 const SizedBox(height: 20),
                 const Text('A clean splash screen'),
                 const SizedBox(height: 8),
                 const Text('No status bar scrim and has inverted status icons',
                     textAlign: TextAlign.center),
+                const SizedBox(height: 8),
+                const ColoredText('I am ColoredText, primary by default'),
+                const ColoredText(
+                  'I can be bold easily',
+                  fontWeight: FontWeight.bold,
+                ),
+                const ColoredText(
+                  'adjusting my size is easy too',
+                  fontSize: 18,
+                ),
                 const SizedBox(height: 30),
-                Text('Tap screen to close',
-                    style: TextStyle(color: theme.colorScheme.secondary)),
+                ColoredText(
+                  'Tap screen to close',
+                  color: theme.colorScheme.secondary,
+                  fontWeight: FontWeight.bold,
+                ),
               ],
             ),
           ),
