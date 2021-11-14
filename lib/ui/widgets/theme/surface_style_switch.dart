@@ -16,7 +16,7 @@ class SurfaceStyleSwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeData theme = Theme.of(context);
-    final FlexSurface surface = ref.watch(surfaceStyleProvider).state;
+    final FlexSurface surface = ref.watch(surfaceStyleProvider);
     final MaterialColor primarySwatch =
         FlexColorScheme.createPrimarySwatch(theme.colorScheme.primary);
     final List<bool> isSelected = <bool>[
@@ -29,7 +29,8 @@ class SurfaceStyleSwitch extends ConsumerWidget {
     return ToggleButtons(
       isSelected: isSelected,
       onPressed: (int newIndex) {
-        ref.read(surfaceStyleProvider).state = FlexSurface.values[newIndex];
+        ref.read(surfaceStyleProvider.state).state =
+            FlexSurface.values[newIndex];
       },
       children: <Widget>[
         Icon(AppIcons.defaultSurface,

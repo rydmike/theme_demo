@@ -44,8 +44,8 @@ class _ThemeDemoPageState extends State<ThemeDemoPage> {
           ),
         ),
         drawer: const AppDrawer(),
-        // This annotated region will change the Android system navigation bar to
-        // a theme color matching active theme mode and FlexColorScheme theme.
+        // This annotated region will change the Android system navigation bar
+        // to a theme color matching active FlexColorScheme theme.
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: FlexColorScheme.themedSystemNavigationBar(context),
           child: PageBody(

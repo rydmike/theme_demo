@@ -15,7 +15,7 @@ void main() {
   );
 }
 
-// We are using a Consumer Widget here to access the Riverpod providers we
+// We are using a Consumer Widget to access the Riverpod providers we
 // use to control the used light and dark themes, as well as mode.
 //
 // If your app is using a StatefulWidget then you can use StatefulConsumerWidget
@@ -29,11 +29,11 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       title: AppConst.appName,
       // The light theme depends on lightThemeProvider's state.
-      theme: ref.watch(lightThemeProvider).state,
+      theme: ref.watch(lightThemeProvider),
       // The dark theme depends on darkThemeProvider's state.
-      darkTheme: ref.watch(darkThemeProvider).state,
+      darkTheme: ref.watch(darkThemeProvider),
       // Currently used theme mode depends on themeModeProvider's state.
-      themeMode: ref.watch(themeModeProvider).state,
+      themeMode: ref.watch(themeModeProvider),
       // Starting page using named routes.
       initialRoute: CounterPage.route,
       // Named routes and their page builders.

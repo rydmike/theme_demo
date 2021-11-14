@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 
 /// A run of colored text with a single style.
 ///
-/// The [ColoredText] widget displays a string of text with single style. The string
-/// might break across multiple lines or might all be displayed on the same line
-/// depending on the layout constraints.
+/// The [ColoredText] widget displays a string of text with single style. The
+/// string might break across multiple lines or might all be displayed on the
+/// same line depending on the layout constraints.
 ///
 /// The [ColoredText] defaults to using Theme.of(context).colorScheme.primary
 /// as its text color. It also exposes the [color], [fontWeight] and [fontSize]
@@ -36,8 +36,8 @@ import 'package:flutter/material.dart';
 ///
 /// {@tool snippet}
 ///
-/// This example shows how to display text using the [ColoredText] widget with the
-/// [overflow] set to [TextOverflow.ellipsis].
+/// This example shows how to display text using the [ColoredText] widget with
+/// the [overflow] set to [TextOverflow.ellipsis].
 ///
 /// ![If the text is shorter than the available space, it is displayed in full without an ellipsis.](https://flutter.github.io/assets-for-api-docs/assets/widgets/text.png)
 ///
@@ -67,8 +67,10 @@ import 'package:flutter/material.dart';
 ///   TextSpan(
 ///     text: 'Hello', // default text style
 ///     children: <TextSpan>[
-///       TextSpan(text: ' beautiful ', style: TextStyle(fontStyle: FontStyle.italic)),
-///       TextSpan(text: 'world', style: TextStyle(fontWeight: FontWeight.bold)),
+///       TextSpan(text: ' beautiful ', style:
+///         TextStyle(fontStyle: FontStyle.italic)),
+///       TextSpan(text: 'world', style:
+///         TextStyle(fontWeight: FontWeight.bold)),
 ///     ],
 ///   ),
 /// )
@@ -77,8 +79,8 @@ import 'package:flutter/material.dart';
 ///
 /// ## Interactivity
 ///
-/// To make [ColoredText] react to touch events, wrap it in a [GestureDetector] widget
-/// with a [GestureDetector.onTap] handler.
+/// To make [ColoredText] react to touch events, wrap it in a [GestureDetector]
+/// widget with a [GestureDetector.onTap] handler.
 ///
 /// In a material design application, consider using a [TextButton] instead, or
 /// if that isn't appropriate, at least using an [InkWell] instead of
@@ -96,17 +98,17 @@ class ColoredText extends StatelessWidget {
   /// Creates a colored text widget.
   ///
   /// The [ColoredText] defaults to using Theme.of(context).colorScheme.primary
-  /// as its text color. It also exposes the [color], [fontWeight] and [fontSize]
-  /// as direct properties in the widget, without need to provide them via
-  /// a [TextStyle] in [style]. A [style] may also be provided, if given then
-  /// the [color], [fontWeight] and [fontSize] given via direct properties
-  /// override the same properties in the [style].
+  /// as its text color. It also exposes the [color], [fontWeight]
+  /// and [fontSize] as direct properties in the widget, without need to provide
+  /// them via a [TextStyle] in [style]. A [style] may also be provided, if
+  /// given then the [color], [fontWeight] and [fontSize] given via direct
+  /// properties override the same properties in the [style].
   ///
   /// The [color] property gets a default of [primary] if null before merging
   /// with [style], so if [color] is null, but a [style] is given, with or
-  /// without [color] set in it, it will always be [primary] colored anyway, this
-  /// is an always colored text widget after all and one design goal was for it
-  /// to always default to primary color.
+  /// without [color] set in it, it will always be [primary] colored anyway,
+  /// this is an always colored text widget after all and one design goal was
+  /// for it to always default to primary color.
   ///
   /// If the [style] argument is null, the text will use the style from the
   /// closest enclosing [DefaultTextStyle].
@@ -114,8 +116,9 @@ class ColoredText extends StatelessWidget {
   /// The [data] parameter must not be null.
   ///
   /// The [overflow] property's behavior is affected by the [softWrap] argument.
-  /// If the [softWrap] is true or null, the glyph causing overflow, and those that follow,
-  /// will not be rendered. Otherwise, it will be shown with the given overflow option.
+  /// If the [softWrap] is true or null, the glyph causing overflow, and those
+  /// that follow, will not be rendered. Otherwise, it will be shown with the
+  /// given overflow option.
   const ColoredText(
     String this.data, {
     Key? key,
@@ -192,9 +195,10 @@ class ColoredText extends StatelessWidget {
   /// [style] property, doing so will result in an assert informing you of
   /// the conflict.
   ///
-  /// In [merge], [apply], and [lerp], conflicts between [color] and [foreground]
-  /// specification are resolved in [foreground]'s favor - i.e. if [foreground] is
-  /// specified in one place, it will dominate [color] in another.
+  /// In [merge], [apply], and [lerp], conflicts between [color] and
+  /// [foreground] specification are resolved in [foreground]'s favor - i.e. if
+  /// [foreground] is specified in one place, it will dominate [color] in
+  /// another.
   final Color? color;
 
   /// The size of glyphs (in logical pixels) to use when painting the text.
@@ -242,19 +246,22 @@ class ColoredText extends StatelessWidget {
   /// be rendered differently, depending on the locale.
   ///
   /// It's rarely necessary to set this property. By default its value
-  /// is inherited from the enclosing app with `Localizations.localeOf(context)`.
+  /// is inherited from the enclosing app with
+  /// `Localizations.localeOf(context)`.
   ///
   /// See [RenderParagraph.locale] for more information.
   final Locale? locale;
 
   /// Whether the text should break at soft line breaks.
   ///
-  /// If false, the glyphs in the text will be positioned as if there was unlimited horizontal space.
+  /// If false, the glyphs in the text will be positioned as if there was
+  /// unlimited horizontal space.
   final bool? softWrap;
 
   /// How visual overflow should be handled.
   ///
-  /// Defaults to retrieving the value from the nearest [DefaultTextStyle] ancestor.
+  /// Defaults to retrieving the value from the nearest [DefaultTextStyle]
+  /// ancestor.
   final TextOverflow? overflow;
 
   /// The number of font pixels for each logical pixel.
@@ -267,9 +274,9 @@ class ColoredText extends StatelessWidget {
   /// [MediaQuery], or 1.0 if there is no [MediaQuery] in scope.
   final double? textScaleFactor;
 
-  /// An optional maximum number of lines for the text to span, wrapping if necessary.
-  /// If the text exceeds the given number of lines, it will be truncated according
-  /// to [overflow].
+  /// An optional maximum number of lines for the text to span, wrapping if
+  /// necessary. If the text exceeds the given number of lines, it will be
+  /// truncated according to [overflow].
   ///
   /// If this is 1, text will not wrap. Otherwise, text will be wrapped at the
   /// edge of the box.
@@ -283,8 +290,8 @@ class ColoredText extends StatelessWidget {
   /// An alternative semantics label for this text.
   ///
   /// If present, the semantics of this widget will contain this value instead
-  /// of the actual text. This will overwrite any of the semantics labels applied
-  /// directly to the [TextSpan]s.
+  /// of the actual text. This will overwrite any of the semantics labels
+  /// applied directly to the [TextSpan]s.
   ///
   /// This is useful for replacing abbreviations or shorthands with the full
   /// text value:
@@ -321,10 +328,8 @@ class ColoredText extends StatelessWidget {
 
     Widget result = RichText(
       textAlign: textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
-      textDirection:
-          textDirection, // RichText uses Directionality.of to obtain a default if this is null.
-      locale:
-          locale, // RichText uses Localizations.localeOf to obtain a default if this is null
+      textDirection: textDirection,
+      locale: locale,
       softWrap: softWrap ?? defaultTextStyle.softWrap,
       overflow: overflow ?? defaultTextStyle.overflow,
       textScaleFactor: textScaleFactor ?? MediaQuery.textScaleFactorOf(context),

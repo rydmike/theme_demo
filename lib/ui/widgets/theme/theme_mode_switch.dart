@@ -14,7 +14,7 @@ class ThemeModeSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ThemeMode themeMode = ref.watch(themeModeProvider).state;
+    final ThemeMode themeMode = ref.watch(themeModeProvider);
     final List<bool> isSelected = <bool>[
       themeMode == ThemeMode.light,
       themeMode == ThemeMode.system,
@@ -24,11 +24,11 @@ class ThemeModeSwitch extends ConsumerWidget {
       isSelected: isSelected,
       onPressed: (int newIndex) {
         if (newIndex == 0) {
-          ref.read(themeModeProvider).state = ThemeMode.light;
+          ref.read(themeModeProvider.state).state = ThemeMode.light;
         } else if (newIndex == 1) {
-          ref.read(themeModeProvider).state = ThemeMode.system;
+          ref.read(themeModeProvider.state).state = ThemeMode.system;
         } else {
-          ref.read(themeModeProvider).state = ThemeMode.dark;
+          ref.read(themeModeProvider.state).state = ThemeMode.dark;
         }
       },
       children: const <Widget>[

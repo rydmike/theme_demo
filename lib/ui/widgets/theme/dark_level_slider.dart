@@ -8,15 +8,15 @@ class DarkLevelSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedHide(
-      hide: !ref.watch(computeDarkThemeProvider).state,
+      hide: !ref.watch(computeDarkThemeProvider),
       child: ListTile(
         title: Slider.adaptive(
           max: 100,
           divisions: 100,
-          label: ref.read(darkLevelProvider).state.floor().toString(),
-          value: ref.watch(darkLevelProvider).state.toDouble(),
+          label: ref.read(darkLevelProvider).toString(),
+          value: ref.watch(darkLevelProvider).toDouble(),
           onChanged: (double value) {
-            ref.read(darkLevelProvider).state = value.floor().toInt();
+            ref.read(darkLevelProvider.state).state = value.floor();
           },
         ),
         trailing: Padding(
@@ -29,7 +29,7 @@ class DarkLevelSlider extends ConsumerWidget {
                 style: Theme.of(context).textTheme.caption,
               ),
               Text(
-                '${ref.read(darkLevelProvider).state.floor()} %',
+                '${ref.read(darkLevelProvider)} %',
                 style: Theme.of(context)
                     .textTheme
                     .caption!

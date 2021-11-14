@@ -6,7 +6,7 @@ class AppBarElevationSlider extends ConsumerWidget {
   const AppBarElevationSlider({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final double elevation = ref.watch(appBarElevationProvider).state;
+    final double elevation = ref.watch(appBarElevationProvider);
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ListTile(
       title: const Text('AppBar elevation'),
@@ -14,13 +14,12 @@ class AppBarElevationSlider extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Slider.adaptive(
-              min: 0,
               max: 10,
               divisions: 20,
               label: elevation.toStringAsFixed(1),
               value: elevation,
               onChanged: (double value) {
-                ref.read(appBarElevationProvider).state = value;
+                ref.read(appBarElevationProvider.state).state = value;
               }),
         ],
       ),

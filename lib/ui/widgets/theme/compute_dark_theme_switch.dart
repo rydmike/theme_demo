@@ -13,9 +13,9 @@ class ComputeDarkThemeSwitch extends ConsumerWidget {
         'Dark scheme colors are computed from the light scheme, instead of '
         'using defined dark scheme colors.',
       ),
-      value: ref.watch(computeDarkThemeProvider).state,
+      value: ref.watch(computeDarkThemeProvider),
       onChanged: (bool value) =>
-          ref.read(computeDarkThemeProvider).state = value,
+          ref.read(computeDarkThemeProvider.state).state = value,
     );
   }
 }

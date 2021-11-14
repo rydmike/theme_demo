@@ -16,7 +16,7 @@ class LightAppBarStyleSwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeData theme = Theme.of(context);
-    final FlexAppBarStyle style = ref.watch(lightAppBarStyleProvider).state;
+    final FlexAppBarStyle style = ref.watch(lightAppBarStyleProvider);
     final MaterialColor primarySwatch =
         FlexColorScheme.createPrimarySwatch(theme.colorScheme.primary);
     final List<bool> isSelected = <bool>[
@@ -29,7 +29,7 @@ class LightAppBarStyleSwitch extends ConsumerWidget {
     return ToggleButtons(
       isSelected: isSelected,
       onPressed: (int newIndex) {
-        ref.read(lightAppBarStyleProvider).state =
+        ref.read(lightAppBarStyleProvider.state).state =
             FlexAppBarStyle.values[newIndex];
       },
       children: <Widget>[

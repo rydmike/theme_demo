@@ -9,9 +9,9 @@ class TrueBlackSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchListTile.adaptive(
       title: const Text('Use true black'),
-      value: ref.watch(darkIsTrueBlackProvider).state,
+      value: ref.watch(darkIsTrueBlackProvider),
       onChanged: (bool value) {
-        ref.read(darkIsTrueBlackProvider).state = value;
+        ref.read(darkIsTrueBlackProvider.state).state = value;
       },
     );
   }

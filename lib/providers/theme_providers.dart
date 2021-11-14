@@ -26,11 +26,11 @@ final StateProvider<ThemeMode> themeModeProvider =
 final StateProvider<ThemeData> lightThemeProvider =
     StateProvider<ThemeData>((StateProviderRef<ThemeData> ref) {
   return AppTheme.light(
-    usedTheme: ref.watch(schemeProvider).state,
-    swapColors: ref.watch(lightSwapColorsProvider).state,
-    appBarStyle: ref.watch(lightAppBarStyleProvider).state,
-    appBarElevation: ref.watch(appBarElevationProvider).state,
-    surfaceStyle: ref.watch(surfaceStyleProvider).state,
+    usedTheme: ref.watch(schemeProvider),
+    swapColors: ref.watch(lightSwapColorsProvider),
+    appBarStyle: ref.watch(lightAppBarStyleProvider),
+    appBarElevation: ref.watch(appBarElevationProvider),
+    surfaceStyle: ref.watch(surfaceStyleProvider),
   );
 });
 
@@ -40,14 +40,14 @@ final StateProvider<ThemeData> lightThemeProvider =
 final StateProvider<ThemeData> darkThemeProvider =
     StateProvider<ThemeData>((StateProviderRef<ThemeData> ref) {
   return AppTheme.dark(
-    usedTheme: ref.watch(schemeProvider).state,
-    swapColors: ref.watch(darkSwapColorsProvider).state,
-    appBarStyle: ref.watch(darkAppBarStyleProvider).state,
-    appBarElevation: ref.watch(appBarElevationProvider).state,
-    surfaceStyle: ref.watch(surfaceStyleProvider).state,
-    darkIsTrueBlack: ref.watch(darkIsTrueBlackProvider).state,
-    computeDark: ref.watch(computeDarkThemeProvider).state,
-    darkLevel: ref.watch(darkLevelProvider).state,
+    usedTheme: ref.watch(schemeProvider),
+    swapColors: ref.watch(darkSwapColorsProvider),
+    appBarStyle: ref.watch(darkAppBarStyleProvider),
+    appBarElevation: ref.watch(appBarElevationProvider),
+    surfaceStyle: ref.watch(surfaceStyleProvider),
+    darkIsTrueBlack: ref.watch(darkIsTrueBlackProvider),
+    computeDark: ref.watch(computeDarkThemeProvider),
+    darkLevel: ref.watch(darkLevelProvider),
   );
 });
 

@@ -305,8 +305,9 @@ class _ThemeShowcaseState extends State<ThemeShowcase> {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
 
-    final Color effectiveTabBackground = Theme.of(context).appBarTheme.color ??
-        (isDark ? colorScheme.surface : colorScheme.primary);
+    final Color effectiveTabBackground =
+        Theme.of(context).appBarTheme.backgroundColor ??
+            (isDark ? colorScheme.surface : colorScheme.primary);
 
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -428,8 +429,6 @@ class _ThemeShowcaseState extends State<ThemeShowcase> {
       child: Column(
         children: const <Widget>[
           Material(
-            type: MaterialType.canvas,
-            elevation: 0,
             child: SizedBox(
               height: 50,
               child: Center(
@@ -439,7 +438,26 @@ class _ThemeShowcaseState extends State<ThemeShowcase> {
           ),
           SizedBox(height: 10),
           Material(
-            type: MaterialType.canvas,
+            elevation: 1,
+            child: SizedBox(
+              height: 50,
+              child: Center(
+                child: Text('Material type canvas, elevation 1'),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Material(
+            elevation: 4,
+            child: SizedBox(
+              height: 50,
+              child: Center(
+                child: Text('Material type canvas, elevation 4'),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Material(
             elevation: 8,
             child: SizedBox(
               height: 50,
@@ -450,7 +468,6 @@ class _ThemeShowcaseState extends State<ThemeShowcase> {
           ),
           SizedBox(height: 10),
           Material(
-            elevation: 0,
             type: MaterialType.card,
             child: SizedBox(
               height: 50,
@@ -482,12 +499,54 @@ class _ThemeShowcaseState extends State<ThemeShowcase> {
             ),
           ),
           SizedBox(height: 10),
+          SizedBox(height: 10),
+          Material(
+            elevation: 8,
+            type: MaterialType.card,
+            child: SizedBox(
+              height: 50,
+              child: Center(
+                child: Text('Material type card, elevation 8'),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Card(
+            elevation: 0,
+            child: SizedBox(
+              height: 50,
+              child: Center(
+                child: Text('Card widget, elevation 0'),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Card(
+            elevation: 1,
+            child: SizedBox(
+              height: 50,
+              child: Center(
+                child: Text('Card widget, elevation 0'),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
           Card(
             elevation: 4,
             child: SizedBox(
               height: 50,
               child: Center(
                 child: Text('Card widget, elevation 4'),
+              ),
+            ),
+          ),
+          SizedBox(height: 10),
+          Card(
+            elevation: 8,
+            child: SizedBox(
+              height: 50,
+              child: Center(
+                child: Text('Card widget, elevation 8'),
               ),
             ),
           ),

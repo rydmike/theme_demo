@@ -62,8 +62,8 @@ class _MyHomePageState extends State<CounterPage> {
               Text('Info', style: headline4),
               const Text(
                 'This page shows resulting FlexColorScheme theme based colors '
-                'and the other settings. I shows how simple Riverpod based '
-                'widgets can be used here, as well as in Drawer and a '
+                'and the other settings. It shows how simple Riverpod based '
+                'widgets can be used here, as well as in the Drawer and in a '
                 'BottomSheet to control theme settings.',
               ),
               const Divider(),

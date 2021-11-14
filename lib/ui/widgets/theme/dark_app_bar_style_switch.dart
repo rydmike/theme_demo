@@ -17,7 +17,7 @@ class DarkAppBarStyleSwitch extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
-    final FlexAppBarStyle style = ref.watch(darkAppBarStyleProvider).state;
+    final FlexAppBarStyle style = ref.watch(darkAppBarStyleProvider);
     final MaterialColor primarySwatch =
         FlexColorScheme.createPrimarySwatch(colorScheme.primary);
     final List<bool> isSelected = <bool>[
@@ -30,7 +30,7 @@ class DarkAppBarStyleSwitch extends ConsumerWidget {
     return ToggleButtons(
       isSelected: isSelected,
       onPressed: (int newIndex) {
-        ref.read(darkAppBarStyleProvider).state =
+        ref.read(darkAppBarStyleProvider.state).state =
             FlexAppBarStyle.values[newIndex];
       },
       children: <Widget>[

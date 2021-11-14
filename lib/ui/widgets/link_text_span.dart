@@ -6,7 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 /// working URL link text when using it in a [Text.rich] or lower
 /// level [RichText] widget.
 ///
-/// This class was found in the Flutter Gallery app, including the comment below.
+/// This class was found in the Flutter Gallery app, including the
+/// comment below.
 class LinkTextSpan extends TextSpan {
   // Beware!
   // This class is only safe because the TapGestureRecognizer is not

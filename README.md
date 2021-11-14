@@ -7,6 +7,19 @@ application theme, using simple **Riverpod** StateProviders for light `theme` an
 in a [MaterialApp](https://api.flutter.dev/flutter/material/MaterialApp-class.html), 
 as well as toggling the [themeMode](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html) property. 
 
+> ### Riverpod 1.0.0 and FlexColorScheme 4.0.0
+> 
+> This example has now been updated to be compatible with stable release
+> of Riverpod 1.0.0 and also to use FlexColorScheme 4.0.0.
+> FlexColorScheme is however fully API compatible with version 3, so that
+> part did not need any updates.
+> 
+> The demo does not yet use any new FlexColorScheme 4.0.0 features.
+> I plan to add that this demo as well and a simple version of how
+> to persist the settings with Hive and Riverpod. I also plan to
+> add a reference to this repo in the docs to FlexColoScheme v4 so 
+> users can find this repo too, since it can be useful as an 
+> additional example.
 
 The demo uses several custom [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as 
 Switches and Sliders, to make the UI widgets used to toggle several input values 

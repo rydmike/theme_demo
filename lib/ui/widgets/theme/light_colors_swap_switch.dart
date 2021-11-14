@@ -10,9 +10,9 @@ class LightColorsSwapSwitch extends ConsumerWidget {
     return SwitchListTile.adaptive(
       title: const Text('Light mode swap colors'),
       subtitle: const Text('Turn ON to swap primary and secondary colors'),
-      value: ref.watch(lightSwapColorsProvider).state,
+      value: ref.watch(lightSwapColorsProvider),
       onChanged: (bool value) {
-        ref.read(lightSwapColorsProvider).state = value;
+        ref.read(lightSwapColorsProvider.state).state = value;
       },
     );
   }

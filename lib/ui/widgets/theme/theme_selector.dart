@@ -26,12 +26,12 @@ class ThemeSelector extends ConsumerWidget {
 
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     final ColorScheme scheme = Theme.of(context).colorScheme;
-    final int selected = ref.watch(schemeProvider).state;
+    final int selected = ref.watch(schemeProvider);
 
     return PopupMenuButton<int>(
       padding: EdgeInsets.zero,
       onSelected: (int newTheme) {
-        ref.read(schemeProvider).state = newTheme;
+        ref.read(schemeProvider.state).state = newTheme;
       },
       itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
         for (int i = 0; i < AppTheme.schemes.length; i++)
