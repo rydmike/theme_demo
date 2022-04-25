@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:theme_demo/utils/app_const.dart';
+
+import '../../utils/app_const.dart';
 
 /// A wrapper for a page body.
 ///

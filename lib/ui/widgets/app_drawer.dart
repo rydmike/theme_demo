@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:theme_demo/ui/pages/counter_page.dart';
-import 'package:theme_demo/ui/pages/splash_page.dart';
-import 'package:theme_demo/ui/pages/theme_demo_page.dart';
-import 'package:theme_demo/ui/widgets/about.dart';
-import 'package:theme_demo/ui/widgets/in_bottom_sheet.dart';
-import 'package:theme_demo/ui/widgets/theme/theme_mode_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/theme_preferences.dart';
-import 'package:theme_demo/utils/app_const.dart';
-import 'package:theme_demo/utils/app_icons.dart';
-import 'package:theme_demo/utils/app_insets.dart';
+
+import '../../utils/app_const.dart';
+import '../../utils/app_icons.dart';
+import '../../utils/app_insets.dart';
+import '../pages/counter_page.dart';
+import '../pages/splash_page.dart';
+import '../pages/theme_demo_page.dart';
+import 'about.dart';
+import 'in_bottom_sheet.dart';
+import 'theme/theme_mode_switch.dart';
+import 'theme/theme_preferences.dart';
 
 /// An AppDrawer widget used on two pages in this demo application.
 ///

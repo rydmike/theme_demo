@@ -1,12 +1,13 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:theme_demo/ui/widgets/about.dart';
-import 'package:theme_demo/ui/widgets/app_drawer.dart';
-import 'package:theme_demo/ui/widgets/page_body.dart';
-import 'package:theme_demo/ui/widgets/theme/show_theme_colors.dart';
-import 'package:theme_demo/ui/widgets/theme/theme_showcase.dart';
-import 'package:theme_demo/utils/app_insets.dart';
+
+import '../../utils/app_insets.dart';
+import '../widgets/about.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/page_body.dart';
+import '../widgets/theme/show_theme_colors.dart';
+import '../widgets/theme/theme_showcase.dart';
 
 /// This page is used as a demo to show a page using the FlexColorScheme
 /// based theme. The widgets and content on it don't really do anything.

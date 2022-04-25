@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:theme_demo/providers/theme_providers.dart';
-import 'package:theme_demo/ui/pages/counter_page.dart';
-import 'package:theme_demo/ui/pages/splash_page.dart';
-import 'package:theme_demo/ui/pages/theme_demo_page.dart';
-import 'package:theme_demo/utils/app_const.dart';
+
+import 'providers/theme_providers.dart';
+import 'ui/pages/counter_page.dart';
+import 'ui/pages/splash_page.dart';
+import 'ui/pages/theme_demo_page.dart';
+import 'utils/app_const.dart';
 
 void main() {
   runApp(

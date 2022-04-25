@@ -1,7 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:theme_demo/ui/widgets/colored_text.dart';
+
+import '../widgets/colored_text.dart';
 
 /// SplashPageOne splash example page.
 class SplashPage extends StatelessWidget {

@@ -1,7 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:theme_demo/utils/app_theme.dart';
+
+import '../utils/app_theme.dart';
 
 // Riverpod Provider demo to manage application theme changes.
 //

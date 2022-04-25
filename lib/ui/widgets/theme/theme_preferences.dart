@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:theme_demo/ui/widgets/animated_hide.dart';
-import 'package:theme_demo/ui/widgets/theme/app_bar_elevation_slider.dart';
-import 'package:theme_demo/ui/widgets/theme/compute_dark_theme_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/dark_app_bar_style_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/dark_colors_swap_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/dark_level_slider.dart';
-import 'package:theme_demo/ui/widgets/theme/light_app_bar_style_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/light_colors_swap_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/surface_style_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/theme_mode_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/theme_selector.dart';
-import 'package:theme_demo/ui/widgets/theme/true_black_switch.dart';
-import 'package:theme_demo/utils/app_insets.dart';
+
+import '../../../utils/app_insets.dart';
+import '../animated_hide.dart';
+import 'app_bar_elevation_slider.dart';
+import 'compute_dark_theme_switch.dart';
+import 'dark_app_bar_style_switch.dart';
+import 'dark_colors_swap_switch.dart';
+import 'dark_level_slider.dart';
+import 'light_app_bar_style_switch.dart';
+import 'light_colors_swap_switch.dart';
+import 'surface_style_switch.dart';
+import 'theme_mode_switch.dart';
+import 'theme_selector.dart';
+import 'true_black_switch.dart';
 
 /// A widget that allows us to change a large number of theme preferences.
 ///

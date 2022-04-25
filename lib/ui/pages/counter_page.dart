@@ -1,17 +1,18 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:theme_demo/ui/widgets/about.dart';
-import 'package:theme_demo/ui/widgets/app_drawer.dart';
-import 'package:theme_demo/ui/widgets/page_body.dart';
-import 'package:theme_demo/ui/widgets/theme/dark_app_bar_style_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/light_app_bar_style_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/show_theme_colors.dart';
-import 'package:theme_demo/ui/widgets/theme/surface_style_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/theme_mode_switch.dart';
-import 'package:theme_demo/ui/widgets/theme/theme_selector.dart';
-import 'package:theme_demo/utils/app_icons.dart';
-import 'package:theme_demo/utils/app_insets.dart';
+
+import '../../utils/app_icons.dart';
+import '../../utils/app_insets.dart';
+import '../widgets/about.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/page_body.dart';
+import '../widgets/theme/dark_app_bar_style_switch.dart';
+import '../widgets/theme/light_app_bar_style_switch.dart';
+import '../widgets/theme/show_theme_colors.dart';
+import '../widgets/theme/surface_style_switch.dart';
+import '../widgets/theme/theme_mode_switch.dart';
+import '../widgets/theme/theme_selector.dart';
 
 /// This is basically the default Flutter counter page, with some theme control
 /// widgets on it that use Riverpod state providers internally to also modify

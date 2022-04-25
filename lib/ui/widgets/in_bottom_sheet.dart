@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:theme_demo/utils/app_insets.dart';
+
+import '../../utils/app_insets.dart';
 
 /// A convenience function to show a widget in a customized BottomSheet.
 void inBottomSheet(BuildContext context, {required Widget child}) {

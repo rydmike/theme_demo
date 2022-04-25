@@ -1,9 +1,10 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:theme_demo/providers/theme_providers.dart';
-import 'package:theme_demo/utils/app_insets.dart';
-import 'package:theme_demo/utils/app_theme.dart';
+
+import '../../../providers/theme_providers.dart';
+import '../../../utils/app_insets.dart';
+import '../../../utils/app_theme.dart';
 
 // This is a theme selector using a ListTile with a Popup-up menu theme
 // selection widget.
@@ -21,8 +22,8 @@ class ThemeSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Size of the theme selector with theme colors.
-    const double _height = 23;
-    const double _width = _height * 1.3;
+    const double height = 23;
+    const double width = height * 1.3;
 
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     final ColorScheme scheme = Theme.of(context).colorScheme;
@@ -41,7 +42,7 @@ class ThemeSelector extends ConsumerWidget {
               contentPadding: EdgeInsets.zero,
               title: Text(AppTheme.schemes[i].name),
               leading: SizedBox(
-                width: _width * 2,
+                width: width * 2,
                 child: FlexThemeModeOptionButton(
                   flexSchemeColor: isLight
                       ? AppTheme.schemes[i].light
@@ -54,8 +55,8 @@ class ThemeSelector extends ConsumerWidget {
                     width: AppInsets.outlineThickness,
                   ),
                   backgroundColor: scheme.background,
-                  width: _width,
-                  height: _height,
+                  width: width,
+                  height: height,
                   padding: EdgeInsets.zero,
                   borderRadius: 0,
                   optionButtonPadding: EdgeInsets.zero,
@@ -71,7 +72,7 @@ class ThemeSelector extends ConsumerWidget {
         title: Text('${AppTheme.schemes[selected].name} theme'),
         subtitle: Text(AppTheme.schemes[selected].description),
         trailing: SizedBox(
-          width: _width * 2,
+          width: width * 2,
           child: FlexThemeModeOptionButton(
             flexSchemeColor: FlexSchemeColor(
               primary: scheme.primary,
@@ -85,8 +86,8 @@ class ThemeSelector extends ConsumerWidget {
               width: AppInsets.outlineThickness,
             ),
             backgroundColor: scheme.background,
-            width: _width,
-            height: _height,
+            width: width,
+            height: height,
             padding: EdgeInsets.zero,
             borderRadius: 0,
             optionButtonPadding: EdgeInsets.zero,

@@ -1,7 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:theme_demo/utils/app_const.dart';
-import 'package:theme_demo/utils/app_insets.dart';
+
+import 'app_const.dart';
+import 'app_insets.dart';
 
 /// The theme for this app are defined here.
 class AppTheme {
@@ -18,7 +19,7 @@ class AppTheme {
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
     // to other theme's, so we create it first.
-    final FlexColorScheme _flexScheme = FlexColorScheme.light(
+    final FlexColorScheme flexScheme = FlexColorScheme.light(
       colors: schemes[usedTheme].light,
       swapColors: swapColors,
       appBarStyle: appBarStyle,
@@ -30,17 +31,17 @@ class AppTheme {
     // Get the ColorScheme defined by our used FlexColorScheme, we will use
     // the colors in it, in an example to customize the default colors in
     // some Widgets sub-themes.
-    final ColorScheme _colorScheme = _flexScheme.toScheme;
+    final ColorScheme colorScheme = flexScheme.toScheme;
     // Convert FlexColorScheme to ThemeData, apply sub-themes and return it.
-    return _flexScheme.toTheme.copyWith(
+    return flexScheme.toTheme.copyWith(
       // Add our custom button shape and padding theming.
-      elevatedButtonTheme: elevatedButtonTheme(_colorScheme),
+      elevatedButtonTheme: elevatedButtonTheme(colorScheme),
       outlinedButtonTheme: outlinedButtonTheme(
-        _colorScheme,
+        colorScheme,
         const Color(0x1F000000),
       ),
       textButtonTheme: textButtonTheme,
-      toggleButtonsTheme: toggleButtonsTheme(_colorScheme),
+      toggleButtonsTheme: toggleButtonsTheme(colorScheme),
     );
   }
 
@@ -57,7 +58,7 @@ class AppTheme {
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
     // to sub-theme's, so we create it first.
-    final FlexColorScheme _flexScheme = FlexColorScheme.dark(
+    final FlexColorScheme flexScheme = FlexColorScheme.dark(
       colors: computeDark
           ? schemes[usedTheme].light.defaultError.toDark(darkLevel)
           : schemes[usedTheme].dark,
@@ -72,17 +73,17 @@ class AppTheme {
     // Get the ColorScheme defined by our used FlexColorScheme, we will use
     // the colors in it, in an example to customize the default colors in
     // some Widgets sub-themes.
-    final ColorScheme _colorScheme = _flexScheme.toScheme;
+    final ColorScheme colorScheme = flexScheme.toScheme;
     // Convert FlexColorScheme to ThemeData, apply sub-themes and return it.
-    return _flexScheme.toTheme.copyWith(
+    return flexScheme.toTheme.copyWith(
       // Add our custom button shape, colors and padding theming.
-      elevatedButtonTheme: elevatedButtonTheme(_colorScheme),
+      elevatedButtonTheme: elevatedButtonTheme(colorScheme),
       outlinedButtonTheme: outlinedButtonTheme(
-        _colorScheme,
+        colorScheme,
         const Color(0x1FFFFFFF),
       ),
       textButtonTheme: textButtonTheme,
-      toggleButtonsTheme: toggleButtonsTheme(_colorScheme),
+      toggleButtonsTheme: toggleButtonsTheme(colorScheme),
     );
   }
 

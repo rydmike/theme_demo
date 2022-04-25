@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:theme_demo/providers/theme_providers.dart';
+
+import '../../../providers/theme_providers.dart';
 
 class TrueBlackSwitch extends ConsumerWidget {
   const TrueBlackSwitch({Key? key}) : super(key: key);
