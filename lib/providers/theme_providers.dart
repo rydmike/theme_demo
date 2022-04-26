@@ -31,7 +31,7 @@ final StateProvider<ThemeData> lightThemeProvider =
     swapColors: ref.watch(lightSwapColorsProvider),
     appBarStyle: ref.watch(lightAppBarStyleProvider),
     appBarElevation: ref.watch(appBarElevationProvider),
-    surfaceStyle: ref.watch(surfaceStyleProvider),
+    surfaceMode: ref.watch(surfaceModeProvider),
   );
 });
 
@@ -45,7 +45,7 @@ final StateProvider<ThemeData> darkThemeProvider =
     swapColors: ref.watch(darkSwapColorsProvider),
     appBarStyle: ref.watch(darkAppBarStyleProvider),
     appBarElevation: ref.watch(appBarElevationProvider),
-    surfaceStyle: ref.watch(surfaceStyleProvider),
+    surfaceMode: ref.watch(surfaceModeProvider),
     darkIsTrueBlack: ref.watch(darkIsTrueBlackProvider),
     computeDark: ref.watch(computeDarkThemeProvider),
     darkLevel: ref.watch(darkLevelProvider),
@@ -63,9 +63,17 @@ final StateProvider<int> schemeProvider =
 /// The primary colored surface branding style provider.
 ///
 /// Defaults to medium strength.
-final StateProvider<FlexSurface> surfaceStyleProvider =
-    StateProvider<FlexSurface>((StateProviderRef<FlexSurface> ref) {
-  return FlexSurface.medium;
+final StateProvider<FlexSurfaceMode> surfaceModeProvider =
+    StateProvider<FlexSurfaceMode>((StateProviderRef<FlexSurfaceMode> ref) {
+  return FlexSurfaceMode.highScaffoldLowSurface;
+});
+
+/// Provider for the strength of the blend leel used by surface mode.
+///
+/// Defaults to 0.
+final StateProvider<int> blendLevelProvider =
+    StateProvider<int>((StateProviderRef<int> ref) {
+  return 0;
 });
 
 /// The themed style of the light theme mode AppBar.
@@ -88,9 +96,7 @@ final StateProvider<bool> lightSwapColorsProvider =
 /// [FlexAppBarStyle.material], which uses the Material background color
 /// for active theme mode. The used default here [FlexAppBarStyle.background]
 /// is the background color that gets primary color branding based on the
-/// current [FlexSurface] setting. If [FlexSurface.material] is used, then this
-/// will when [FlexAppBarStyle.background] is used actually result in same color
-/// as when using [FlexAppBarStyle.material].
+/// current [FlexSurfaceMode] setting.
 final StateProvider<FlexAppBarStyle> darkAppBarStyleProvider =
     StateProvider<FlexAppBarStyle>((StateProviderRef<FlexAppBarStyle> ref) {
   return FlexAppBarStyle.background;

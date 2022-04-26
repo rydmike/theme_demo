@@ -13,7 +13,7 @@ dependencies:
 
   # Used for surface colored branded theming. (by rydmike.com)
   # https://pub.dev/packages/flex_color_scheme
-  flex_color_scheme: ^4.1.1
+  flex_color_scheme: ^5.0.0
 
   # The Flutter framework (by Google, flutter.dev)
   # https://flutter.dev
@@ -22,11 +22,11 @@ dependencies:
 
   # Riverpod, next generation version of Provider (by Remi Rousselet).
   # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^1.0.0
+  flutter_riverpod: ^1.0.3
 
   # Used for launching a WEB URL (by Google flutter.dev).
   # https://pub.dev/packages/url_launcher
-  url_launcher: ^6.0.15
+  url_launcher: ^6.1.0
 
 dev_dependencies:
   flutter_test:

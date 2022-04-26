@@ -15,7 +15,7 @@ class AppTheme {
     required bool swapColors,
     required FlexAppBarStyle appBarStyle,
     required double appBarElevation,
-    required FlexSurface surfaceStyle,
+    required FlexSurfaceMode surfaceMode,
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
     // to other theme's, so we create it first.
@@ -23,7 +23,7 @@ class AppTheme {
       colors: schemes[usedTheme].light,
       swapColors: swapColors,
       appBarStyle: appBarStyle,
-      surfaceStyle: surfaceStyle,
+      surfaceMode: surfaceMode,
       appBarElevation: appBarElevation,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
@@ -51,7 +51,7 @@ class AppTheme {
     required bool swapColors,
     required FlexAppBarStyle appBarStyle,
     required double appBarElevation,
-    required FlexSurface surfaceStyle,
+    required FlexSurfaceMode surfaceMode,
     required bool darkIsTrueBlack,
     required bool computeDark,
     required int darkLevel,
@@ -64,7 +64,7 @@ class AppTheme {
           : schemes[usedTheme].dark,
       swapColors: swapColors,
       appBarStyle: appBarStyle,
-      surfaceStyle: surfaceStyle,
+      surfaceMode: surfaceMode,
       appBarElevation: appBarElevation,
       darkIsTrueBlack: darkIsTrueBlack,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -93,33 +93,33 @@ class AppTheme {
   static ElevatedButtonThemeData elevatedButtonTheme(ColorScheme scheme) =>
       ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-        // As an example, say we want the primaryVariant color instead of
+        // As an example, say we want the primaryContainer color instead of
         // primary as default on all our ElevatedButtons, then we just use
         // that color instead in this Widget's sub-theme.
-        primary: scheme.primaryVariant,
+        primary: scheme.primaryContainer,
         // For primary color we could just use the onPrimary as the text/icon
         // color on this. However, there is no guarantee that the
-        // onPrimary also has correct contrast for primaryVariant, unless you
-        // defined your colors like that. There is also no onPrimaryVariant
+        // onPrimary also has correct contrast for primaryContainer, unless you
+        // defined your colors like that. There is also no onPrimaryContainer
         // property in the ColorScheme class, a clear feature gap imo. We must
         // thus ourselves ensure we get correct contrasting text/icon color for
-        // the primaryVariant color, we can use the SDK ThemeData static
+        // the primaryContainer color, we can use the SDK ThemeData static
         // function that the ThemeData also uses to evaluate correct contrasting
         // color. For simplicity we just use black and white colors here.
         //
         // Generally if you want some custom colors in your theme that otherwise
-        // do no affect built-in Widgets default colors, using primaryVariant
-        // and secondaryVariant and putting the colors there for re-use on
+        // do no affect built-in Widgets default colors, using primaryContainer
+        // and secondaryContainer and putting the colors there for re-use on
         // custom sub-themes for built in Widgets is a good idea.
-        // In current SDK the primaryVariant color is only referenced in the
+        // In current SDK the primaryContainer color is only referenced in the
         // SnackBar Widget's default colors, so be aware of that if you change
         // it. If you just need one custom color that you can apply to your
-        // built in widgets sub-themes, then using secondaryVariant color
+        // built in widgets sub-themes, then using secondaryContainer color
         // is an even better choice, as currently no built in SDK widget uses it
         // for its default colors, so defining the color to something that does
         // not change any default color behaviour.
         onPrimary:
-            ThemeData.estimateBrightnessForColor(scheme.primaryVariant) ==
+            ThemeData.estimateBrightnessForColor(scheme.primaryContainer) ==
                     Brightness.dark
                 ? Colors.white
                 : Colors.black,
@@ -196,62 +196,62 @@ class AppTheme {
   // Custom dark red and green scheme.
   static const FlexSchemeColor _customScheme1Light = FlexSchemeColor(
     primary: Color(0xFF4E0028),
-    primaryVariant: Color(0xFF320019),
+    primaryContainer: Color(0xFF9E7389),
     secondary: Color(0xFF003419),
-    secondaryVariant: Color(0xFF002411),
-    appBarColor: Color(0xFF002411),
+    secondaryContainer: Color(0xFF738F81),
+    appBarColor: Color(0xFF003419),
   );
   static const FlexSchemeColor _customScheme1Dark = FlexSchemeColor(
     primary: Color(0xFF9E7389),
-    primaryVariant: Color(0xFF775C69),
+    primaryContainer: Color(0xFF4E0028),
     secondary: Color(0xFF738F81),
-    secondaryVariant: Color(0xFF5C7267),
-    appBarColor: Color(0xFF5C7267),
+    secondaryContainer: Color(0xFF003419),
+    appBarColor: Color(0xFF738F81),
   );
   // San Juan blue and sea pink.
   static const FlexSchemeColor _customScheme2Light = FlexSchemeColor(
     primary: Color(0xFF395778),
-    primaryVariant: Color(0xFF637E9F),
+    primaryContainer: Color(0xFF8096B1),
     secondary: Color(0xFFE7949A),
-    secondaryVariant: Color(0xFFF2C4C7),
-    appBarColor: Color(0xFFF2C4C7),
+    secondaryContainer: Color(0xFFF2C4C7),
+    appBarColor: Color(0xFFE7949A),
   );
   static const FlexSchemeColor _customScheme2Dark = FlexSchemeColor(
-    primary: Color(0xFF5E7691),
-    primaryVariant: Color(0xFF8096B1),
-    secondary: Color(0xFFEBA8AD),
-    secondaryVariant: Color(0xFFF4CFD1),
-    appBarColor: Color(0xFFF4CFD1),
+    primary: Color(0xFF8096B1),
+    primaryContainer: Color(0xFF395778),
+    secondary: Color(0xFFF2C4C7),
+    secondaryContainer: Color(0xFFE7949A),
+    appBarColor: Color(0xFFF2C4C7),
   );
   // Custom dark green and mustard yellow scheme
   static const FlexSchemeColor _customScheme3Light = FlexSchemeColor(
     primary: Color(0xFF2A3639),
-    primaryVariant: Color(0xFF98B694),
+    primaryContainer: Color(0xFF98B694),
     secondary: Color(0xFFC1AA44),
-    secondaryVariant: Color(0xFFAF942B),
-    appBarColor: Color(0xFFAF942B),
+    secondaryContainer: Color(0xFFD3C37B),
+    appBarColor: Color(0xFFC1AA44),
   );
   static const FlexSchemeColor _customScheme3Dark = FlexSchemeColor(
-    primary: Color(0xFF76887B),
-    primaryVariant: Color(0xFFB6CBB3),
+    primary: Color(0xFF98B694),
+    primaryContainer: Color(0xFF2A3639),
     secondary: Color(0xFFD3C37B),
-    secondaryVariant: Color(0xFFC6B36A),
+    secondaryContainer: Color(0xFFC1AA44),
     appBarColor: Color(0xFFC6B36A),
   );
   // Oregon orange and green theme
   static const FlexSchemeColor _customScheme4Light = FlexSchemeColor(
     primary: Color(0xFF993200),
-    primaryVariant: Color(0xFF6E2400),
+    primaryContainer: Color(0xFFBE866B),
     secondary: Color(0xFF1B5C62),
-    secondaryVariant: Color(0xFF134045),
-    appBarColor: Color(0xFF134045),
+    secondaryContainer: Color(0xFF5FA4AC),
+    appBarColor: Color(0xFF1B5C62),
   );
   static const FlexSchemeColor _customScheme4Dark = FlexSchemeColor(
-    primary: Color(0xFFAE6846),
-    primaryVariant: Color(0xFFBE866B),
+    primary: Color(0xFFBE866B),
+    primaryContainer: Color(0xFF993200),
     secondary: Color(0xFF5FA4AC),
-    secondaryVariant: Color(0xFF4C838A),
-    appBarColor: Color(0xFF4C838A),
+    secondaryContainer: Color(0xFF1B5C62),
+    appBarColor: Color(0xFF5FA4AC),
   );
   // Tapestry pink and laser yellow.
   static const FlexSchemeColor _customScheme5Light = FlexSchemeColor(
@@ -259,19 +259,19 @@ class AppTheme {
     //
     // As an example, say we like one of the existing built in color definitions
     // for the variant color then just re-use it there:
-    primaryVariant: FlexColor.sakuraLightPrimaryVariant,
-    secondary: Color(0xFFC2A86B),
-    secondaryVariant: Color(0xFFB19249),
+    primaryContainer: FlexColor.sakuraLightPrimaryContainer,
+    secondary: Color(0xFFB19249),
+    secondaryContainer: Color(0xFFCFBB8B),
     appBarColor: Color(0xFFB19249),
   );
   static const FlexSchemeColor _customScheme5Dark = FlexSchemeColor(
     primary: Color(0xFFBC859B),
     //
     // We use the corresponding pre-defined dark variant color.
-    primaryVariant: FlexColor.sakuraDarkPrimaryVariant,
+    primaryContainer: FlexColor.sakuraDarkPrimaryContainer,
     secondary: Color(0xFFCFBB8B),
-    secondaryVariant: Color(0xFFC2A970),
-    appBarColor: Color(0xFFC2A970),
+    secondaryContainer: Color(0xFFB19249),
+    appBarColor: Color(0xFFCFBB8B),
   );
 
   // Create a list with all our custom color schemes and add
