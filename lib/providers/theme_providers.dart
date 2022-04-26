@@ -32,6 +32,7 @@ final StateProvider<ThemeData> lightThemeProvider =
     appBarStyle: ref.watch(lightAppBarStyleProvider),
     appBarElevation: ref.watch(appBarElevationProvider),
     surfaceMode: ref.watch(surfaceModeProvider),
+    blendLevel: ref.watch(blendLevelProvider),
   );
 });
 
@@ -46,6 +47,7 @@ final StateProvider<ThemeData> darkThemeProvider =
     appBarStyle: ref.watch(darkAppBarStyleProvider),
     appBarElevation: ref.watch(appBarElevationProvider),
     surfaceMode: ref.watch(surfaceModeProvider),
+    blendLevel: ref.watch(blendLevelProvider),
     darkIsTrueBlack: ref.watch(darkIsTrueBlackProvider),
     computeDark: ref.watch(computeDarkThemeProvider),
     darkLevel: ref.watch(darkLevelProvider),
@@ -70,10 +72,10 @@ final StateProvider<FlexSurfaceMode> surfaceModeProvider =
 
 /// Provider for the strength of the blend leel used by surface mode.
 ///
-/// Defaults to 0.
+/// Defaults to 10.
 final StateProvider<int> blendLevelProvider =
     StateProvider<int>((StateProviderRef<int> ref) {
-  return 0;
+  return 10;
 });
 
 /// The themed style of the light theme mode AppBar.

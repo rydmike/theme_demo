@@ -48,7 +48,7 @@ class LightAppBarStyleSwitch extends ConsumerWidget {
         Icon(AppIcons.appbarColored,
             color: Color.alphaBlend(
                 theme.colorScheme.primary.withAlpha(100), Colors.white)),
-        Icon(AppIcons.appbarColored, color: theme.colorScheme.secondaryVariant),
+        Icon(AppIcons.appbarColored, color: theme.colorScheme.secondary),
       ],
     );
   }

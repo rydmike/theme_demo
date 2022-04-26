@@ -51,7 +51,7 @@ void showAppAboutDialog(BuildContext context) {
               ),
               LinkTextSpan(
                 style: linkStyle,
-                url: AppConst.packageUrl,
+                uri: AppConst.packageUri,
                 text: 'pub.dev',
               ),
               TextSpan(
@@ -84,9 +84,9 @@ class _AboutAppIcon extends StatelessWidget {
     return FlexThemeModeOptionButton(
       flexSchemeColor: FlexSchemeColor(
         primary: scheme.primary,
-        primaryVariant: scheme.primaryVariant,
+        primaryContainer: scheme.primaryContainer,
         secondary: scheme.secondary,
-        secondaryVariant: scheme.secondaryVariant,
+        secondaryContainer: scheme.secondaryContainer,
       ),
       selected: true,
       selectedBorder: BorderSide(

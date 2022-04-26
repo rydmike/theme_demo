@@ -8,14 +8,18 @@ class AppConst {
   // When I build a new public version I just make sure to update this info
   // before building them.
   static const String appName = 'ThemeDemo';
-  static const String version = '0.4.0';
-  static const String packageVersion = '4.0.0';
-  static const String packageUrl = 'https://pub.dev/packages/flex_color_scheme';
-  static const String flutterVersion = 'Channel stable v2.5.3';
-  static const String copyright = '© 2020, 2021';
+  static const String version = '0.5.0';
+  static const String packageVersion = '5.0.0';
+  static const String flutterVersion = 'Channel stable v2.10.4';
+  static const String copyright = '© 2020, 2021, 2022';
   static const String author = 'Mike Rydstrom';
   static const String license = 'BSD 3-Clause License';
   static const String icon = 'assets/images/app_icon.png';
+  static final Uri packageUri = Uri(
+    scheme: 'https',
+    host: 'pub.dev',
+    path: 'packages/flex_color_scheme',
+  );
 
   // The max dp width used for layout content on the screen in the available
   // body area. Wider content gets growing side padding, kind of like on most

@@ -58,7 +58,7 @@ class SurfaceStyleSwitch extends ConsumerWidget {
     //   FlexSurfaceMode.levelSurfacesLowScaffold,
     //   FlexSurfaceMode.highScaffoldLowSurfaces,
     //   // Only have these blend options if show all set, not enough room.
-    //   if (showAllModes) FlexSurfaceMode.levelSurfacesLowScaffoldVariantDialog,
+    //  if (showAllModes) FlexSurfaceMode.levelSurfacesLowScaffoldVariantDialog,
     //   if (showAllModes) FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
     // ];
     return ToggleButtons(

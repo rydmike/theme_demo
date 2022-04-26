@@ -76,9 +76,9 @@ class ThemeSelector extends ConsumerWidget {
           child: FlexThemeModeOptionButton(
             flexSchemeColor: FlexSchemeColor(
               primary: scheme.primary,
-              primaryVariant: scheme.primaryVariant,
+              primaryContainer: scheme.primaryContainer,
               secondary: scheme.secondary,
-              secondaryVariant: scheme.secondaryVariant,
+              tertiary: scheme.tertiary,
             ),
             selected: true,
             selectedBorder: BorderSide(

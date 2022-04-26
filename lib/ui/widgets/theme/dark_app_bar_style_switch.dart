@@ -49,7 +49,7 @@ class DarkAppBarStyleSwitch extends ConsumerWidget {
         Icon(AppIcons.appbarColored,
             color: Color.alphaBlend(
                 colorScheme.primary.withAlpha(90), Colors.black)),
-        Icon(AppIcons.appbarColored, color: colorScheme.secondaryVariant),
+        Icon(AppIcons.appbarColored, color: colorScheme.secondary),
       ],
     );
   }

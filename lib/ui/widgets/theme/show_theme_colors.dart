@@ -61,10 +61,10 @@ class ShowThemeColors extends StatelessWidget {
               : Colors.black,
         ),
         ThemeCard(
-          label: 'Primary\nVariant',
-          color: colorScheme.primaryVariant,
+          label: 'Primary\nContainer',
+          color: colorScheme.primaryContainer,
           textColor: ThemeData.estimateBrightnessForColor(
-                      colorScheme.primaryVariant) ==
+                      colorScheme.primaryContainer) ==
                   Brightness.dark
               ? Colors.white
               : Colors.black,
@@ -84,10 +84,10 @@ class ShowThemeColors extends StatelessWidget {
               : Colors.black,
         ),
         ThemeCard(
-          label: 'Secondary\nVariant',
-          color: colorScheme.secondaryVariant,
+          label: 'Secondary\nContainer',
+          color: colorScheme.secondaryContainer,
           textColor: ThemeData.estimateBrightnessForColor(
-                      colorScheme.secondaryVariant) ==
+                      colorScheme.secondaryContainer) ==
                   Brightness.dark
               ? Colors.white
               : Colors.black,

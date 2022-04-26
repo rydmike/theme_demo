@@ -7,17 +7,15 @@ application theme, using simple **Riverpod** StateProviders for light `theme` an
 in a [MaterialApp](https://api.flutter.dev/flutter/material/MaterialApp-class.html), 
 as well as toggling the [themeMode](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html) property. 
 
-> ### Riverpod 1.0.0 and FlexColorScheme 4.0.0
+> ### Riverpod 1.0.0 and FlexColorScheme 5.0.0
 > 
 > This example has now been updated to be compatible with stable release
-> of Riverpod 1.0.0 and also to use FlexColorScheme 4.0.0.
-> FlexColorScheme is however fully API compatible with version 3, so that
-> part did not need any updates.
+> of Riverpod 1.x.x and also to use FlexColorScheme 5.x.x.
 > 
-> The demo does not yet use any new FlexColorScheme 4.0.0 features.
-> I plan to add that this demo as well and a simple version of how
+> This demo does not yet use new FlexColorScheme V5 features.
+> I plan to add V5 features to this demo, and a simple version of how
 > to persist the settings with Hive and Riverpod. I also plan to
-> add a reference to this repo in the docs to FlexColoScheme v4 so 
+> add a reference to this repo in the FlexColoScheme v5 docs site so 
 > users can find this repo too, since it can be useful as an 
 > additional example.
 
@@ -34,8 +32,8 @@ to manipulate modify the used ThemeData for the application.
 The used approach works regardless of how deep in the widget tree the actual
 theme control widgets are in the widget tree. In this example this is demonstrated
 by placing some theme widget controls on the classical default Flutter counter page.
-And the mode toggle is also in the App drawer and the entire collection of 
-demonstrated theming features and their control widgets are hidden in a bottom sheet.
+The mode toggle is also in the App drawer, and the entire collection of 
+demonstrated theming features, and their control widgets are hidden in a bottom sheet.
 
 FlexColorScheme is also used as way to provide many pre-made color scheme together 
 with customs color schemes as well and to show other nice automatic and convenient 
