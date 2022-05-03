@@ -10,6 +10,7 @@ import '../widgets/page_body.dart';
 import '../widgets/theme/dark_app_bar_style_switch.dart';
 import '../widgets/theme/light_app_bar_style_switch.dart';
 import '../widgets/theme/show_theme_colors.dart';
+import '../widgets/theme/surface_blend_level_slider.dart';
 import '../widgets/theme/surface_style_switch.dart';
 import '../widgets/theme/theme_mode_switch.dart';
 import '../widgets/theme/theme_selector.dart';
@@ -32,6 +33,22 @@ class CounterPage extends StatefulWidget {
 
 class _MyHomePageState extends State<CounterPage> {
   int _counter = 0;
+  late final ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController(
+      keepScrollOffset: true,
+      debugLabel: 'pageBodyScroll',
+    );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -57,7 +74,9 @@ class _MyHomePageState extends State<CounterPage> {
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: FlexColorScheme.themedSystemNavigationBar(context),
         child: PageBody(
+          controller: scrollController,
           child: ListView(
+            controller: scrollController,
             padding: const EdgeInsets.all(AppInsets.edge),
             children: <Widget>[
               Text('Info', style: headline4),
@@ -81,6 +100,7 @@ class _MyHomePageState extends State<CounterPage> {
                   contentPadding: EdgeInsets.zero,
                   title: Text('Surface branding'),
                   trailing: SurfaceStyleSwitch()),
+              const SurfaceBlendLevelSlider(),
               const Divider(),
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -111,6 +131,7 @@ class _MyHomePageState extends State<CounterPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(AppIcons.add),

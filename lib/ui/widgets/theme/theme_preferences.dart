@@ -37,43 +37,41 @@ class ThemePreferences extends ConsumerWidget {
         children: <Widget>[
           const _CloseBottomSheetHandle(),
           Expanded(
-            child: Scrollbar(
-              child: ListView(
-                children: <Widget>[
-                  const Divider(),
-                  const ThemeSelector(),
-                  const ListTile(
-                    title: Text('Theme mode'),
-                    trailing: ThemeModeSwitch(),
+            child: ListView(
+              children: <Widget>[
+                const Divider(),
+                const ThemeSelector(),
+                const ListTile(
+                  title: Text('Theme mode'),
+                  trailing: ThemeModeSwitch(),
+                ),
+                if (isLight)
+                  const LightColorsSwapSwitch()
+                else
+                  const DarkColorsSwapSwitch(),
+                // Hide the extra dark mode controls in light theme.
+                AnimatedHide(
+                  hide: isLight,
+                  child: Column(
+                    children: const <Widget>[
+                      TrueBlackSwitch(),
+                      ComputeDarkThemeSwitch(),
+                      DarkLevelSlider(),
+                    ],
                   ),
-                  if (isLight)
-                    const LightColorsSwapSwitch()
-                  else
-                    const DarkColorsSwapSwitch(),
-                  // Hide the extra dark mode controls in light theme.
-                  AnimatedHide(
-                    hide: isLight,
-                    child: Column(
-                      children: const <Widget>[
-                        TrueBlackSwitch(),
-                        ComputeDarkThemeSwitch(),
-                        DarkLevelSlider(),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  const ListTile(title: Text('Surface branding')),
-                  const ListTile(trailing: SurfaceStyleSwitch()),
-                  const Divider(),
-                  const ListTile(title: Text('AppBar style')),
-                  ListTile(
-                    trailing: isLight
-                        ? const LightAppBarStyleSwitch()
-                        : const DarkAppBarStyleSwitch(),
-                  ),
-                  const AppBarElevationSlider(),
-                ],
-              ),
+                ),
+                const Divider(),
+                const ListTile(title: Text('Surface branding')),
+                const ListTile(trailing: SurfaceStyleSwitch()),
+                const Divider(),
+                const ListTile(title: Text('AppBar style')),
+                ListTile(
+                  trailing: isLight
+                      ? const LightAppBarStyleSwitch()
+                      : const DarkAppBarStyleSwitch(),
+                ),
+                const AppBarElevationSlider(),
+              ],
             ),
           ),
         ],
