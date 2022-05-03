@@ -70,7 +70,7 @@ final StateProvider<FlexSurfaceMode> surfaceModeProvider =
   return FlexSurfaceMode.highScaffoldLowSurface;
 });
 
-/// Provider for the strength of the blend leel used by surface mode.
+/// Provider for the strength of the blend level used by surface mode.
 ///
 /// Defaults to 10.
 final StateProvider<int> blendLevelProvider =

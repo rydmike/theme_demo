@@ -121,7 +121,7 @@ class AppTheme {
         // built in widgets sub-themes, then using secondaryContainer color
         // is an even better choice, as currently no built in SDK widget uses it
         // for its default colors, so defining the color to something that does
-        // not change any default color behaviour.
+        // not change any default color behavior.
         onPrimary:
             ThemeData.estimateBrightnessForColor(scheme.primaryContainer) ==
                     Brightness.dark
