@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'features/pages/counter_page.dart';
+import 'features/pages/theme_demo_page.dart';
+import 'features/splash/splash_page.dart';
+import 'key_value_repo/key_value_repository.dart';
+import 'key_value_repo/key_value_repository_hive.dart';
+import 'key_value_repo/key_value_repository_provider.dart';
 import 'providers/theme_providers.dart';
-import 'ui/pages/counter_page.dart';
-import 'ui/pages/splash_page.dart';
-import 'ui/pages/theme_demo_page.dart';
 import 'utils/app_const.dart';
+import 'utils/app_scroll_behavior.dart';
 
-void main() {
+Future<void> main() async {
+  final KeyValueRepository keyValueRepository = await keyValueRepositoryInit();
+
   runApp(
-    // Wrap your app with a Riverpod ProviderScope.
-    const ProviderScope(
-      child: MyApp(),
+    // Wrap the app with a Riverpod ProviderScope, injecting override for
+    // our key-value repository.
+    ProviderScope(
+      overrides: <Override>[
+        keyValueRepositoryProvider.overrideWithProvider(
+            Provider<KeyValueRepository>((ProviderRef<KeyValueRepository> ref) {
+          ref.onDispose(keyValueRepository.dispose);
+          return keyValueRepository;
+        }))
+      ],
+      child: const MyApp(),
     ),
   );
+}
+
+// Just as an example that we can put this in separate function and in another
+// file with other app init work if needed.
+Future<KeyValueRepository> keyValueRepositoryInit() async {
+  final KeyValueRepositoryHive kvpDataSource =
+      KeyValueRepositoryHive(AppConst.kvpDataSourceName);
+  await kvpDataSource.init();
+  return kvpDataSource;
 }
 
 // We are using a Consumer Widget to access the Riverpod providers we
@@ -22,12 +45,13 @@ void main() {
 // If your app is using a StatefulWidget then you can use StatefulConsumerWidget
 // instead, and ConsumerState<T> instead of State<T>.
 class MyApp extends ConsumerWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      scrollBehavior: const AppScrollBehavior(),
       title: AppConst.appName,
       // The light theme depends on lightThemeProvider's state.
       theme: ref.watch(lightThemeProvider),
