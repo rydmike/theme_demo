@@ -4,16 +4,20 @@ publish_to: 'none'
 version: 0.5.0
 
 environment:
-  sdk: '>=2.14.0 <3.0.0'
+  sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
   # Used by Cupertino classes for iOS style icons (by Google, flutter.dev).
   # https://pub.dev/packages/cupertino_icons
   cupertino_icons: ^1.0.4
 
+  # Color picker package, by Mike Rydstrom, rydmike.com (@rydmike).
+  # https://pub.dev/packages/flex_color_picker
+  flex_color_picker: ^2.6.1
+
   # Used for surface colored branded theming. (by rydmike.com)
   # https://pub.dev/packages/flex_color_scheme
-  flex_color_scheme: ^5.0.0
+  flex_color_scheme: ^6.0.1
 
   # The Flutter framework (by Google, flutter.dev)
   # https://flutter.dev
@@ -22,7 +26,7 @@ dependencies:
 
   # Riverpod, next generation version of Provider (by Remi Rousselet).
   # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^1.0.3
+  flutter_riverpod: ^2.0.1
 
   # Hive local storage, by Simon Leir.
   # https://pub.dev/packages/hive

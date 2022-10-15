@@ -100,33 +100,12 @@ class AppTheme {
         // As an example, say we want the primaryContainer color instead of
         // primary as default on all our ElevatedButtons, then we just use
         // that color instead in this Widget's sub-theme.
-        primary: scheme.primaryContainer,
-        // For primary color we could just use the onPrimary as the text/icon
-        // color on this. However, there is no guarantee that the
-        // onPrimary also has correct contrast for primaryContainer, unless you
-        // defined your colors like that. There is also no onPrimaryContainer
-        // property in the ColorScheme class, a clear feature gap imo. We must
-        // thus ourselves ensure we get correct contrasting text/icon color for
-        // the primaryContainer color, we can use the SDK ThemeData static
-        // function that the ThemeData also uses to evaluate correct contrasting
-        // color. For simplicity we just use black and white colors here.
-        //
-        // Generally if you want some custom colors in your theme that otherwise
-        // do no affect built-in Widgets default colors, using primaryContainer
-        // and secondaryContainer and putting the colors there for re-use on
-        // custom sub-themes for built in Widgets is a good idea.
-        // In current SDK the primaryContainer color is only referenced in the
-        // SnackBar Widget's default colors, so be aware of that if you change
-        // it. If you just need one custom color that you can apply to your
-        // built in widgets sub-themes, then using secondaryContainer color
-        // is an even better choice, as currently no built in SDK widget uses it
-        // for its default colors, so defining the color to something that does
-        // not change any default color behavior.
-        onPrimary:
+        foregroundColor:
             ThemeData.estimateBrightnessForColor(scheme.primaryContainer) ==
                     Brightness.dark
                 ? Colors.white
                 : Colors.black,
+        backgroundColor: scheme.primaryContainer,
         minimumSize: minButtonSize,
         shape: const StadiumBorder(), //buttonShape,
         padding: roundButtonPadding,
