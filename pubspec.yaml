@@ -9,7 +9,7 @@ environment:
 dependencies:
   # Used by Cupertino classes for iOS style icons (by Google, flutter.dev).
   # https://pub.dev/packages/cupertino_icons
-  cupertino_icons: ^1.0.4
+  cupertino_icons: ^1.0.5
 
   # Color picker package, by Mike Rydstrom, rydmike.com (@rydmike).
   # https://pub.dev/packages/flex_color_picker
@@ -26,29 +26,29 @@ dependencies:
 
   # Riverpod, next generation version of Provider (by Remi Rousselet).
   # https://pub.dev/packages/flutter_riverpod
-  flutter_riverpod: ^2.0.1
+  flutter_riverpod: ^2.0.2
 
   # Hive local storage, by Simon Leir.
   # https://pub.dev/packages/hive
-  hive: ^2.1.0
+  hive: ^2.2.3
 
   # Material Design Icons, community designed. Used for
   # icons in the Platform selection popup menu.
   # https://materialdesignicons.com/
-  material_design_icons_flutter: ^5.0.6595
+  material_design_icons_flutter: ^5.0.6996
 
   # Commonly used directories on host platform file systems, by Google (flutter.dev).
   # Used to get a working storage path for Hive on Windows.
   # https://pub.dev/packages/path_provider
-  path_provider: ^2.0.9
+  path_provider: ^2.0.11
 
   # Store value pair shared preference data, by Google flutter.dev.
   # https://pub.dev/packages/shared_preferences
-  shared_preferences: ^2.0.13
+  shared_preferences: ^2.0.15
 
   # Used for launching a WEB URL (by Google flutter.dev).
   # https://pub.dev/packages/url_launcher
-  url_launcher: ^6.1.0
+  url_launcher: ^6.1.6
 
 dev_dependencies:
   flutter_test:
