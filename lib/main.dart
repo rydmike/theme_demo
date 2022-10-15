@@ -12,6 +12,7 @@ import 'utils/app_const.dart';
 import 'utils/app_scroll_behavior.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final KeyValueRepository keyValueRepository = await keyValueRepositoryInit();
 
   runApp(
