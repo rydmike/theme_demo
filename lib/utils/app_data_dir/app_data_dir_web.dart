@@ -8,7 +8,8 @@
 /// Flutter Web apps that store data typically use Web IndexDB instead and
 /// don't need a document path to store data.
 ///
-/// This dummy version of [getAppDataDir] returns an empty string as the path.
+/// This dummy version of [getAppDataDir] returns an empty string as the path,
+/// for the WEB case as application directory.
 Future<String> getAppDataDir() async {
   return '';
 }
