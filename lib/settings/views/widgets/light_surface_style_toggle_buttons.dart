@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/settings_providers.dart';
+import '../../controllers/settings_providers.dart';
 
 /// Toggle the surface mode of the application.
 ///

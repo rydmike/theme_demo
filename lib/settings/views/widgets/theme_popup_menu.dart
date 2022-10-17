@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_insets.dart';
 import '../../../../theme/models/app_theme.dart';
-import '../../providers/settings_providers.dart';
+import '../../controllers/settings_providers.dart';
 
 // This is a theme selector using a ListTile with a Popup-up menu theme
 // selection widget.

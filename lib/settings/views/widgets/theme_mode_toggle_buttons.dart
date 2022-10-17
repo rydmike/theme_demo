@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_icons.dart';
-import '../../../../theme/providers/theme_providers.dart';
+import '../../../../theme/controllers/theme_providers.dart';
 
 /// Toggle the surface style of the application.
 ///

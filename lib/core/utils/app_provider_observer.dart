@@ -22,9 +22,10 @@ class AppProviderObserver extends ProviderObserver {
       Object? newValue,
       ProviderContainer container) async {
     if (_debug) {
-      debugPrint('PROVIDER: ${provider.name ?? provider.runtimeType}\n'
-          '  old value: $previousValue\n'
-          '  new value: $newValue');
+      debugPrint('PROVIDER    : ${provider.name ?? '<NO NAME>'}\n'
+          '  Type      : ${provider.runtimeType}\n'
+          '  Old value : $previousValue\n'
+          '  New value : $newValue');
     }
   }
 }

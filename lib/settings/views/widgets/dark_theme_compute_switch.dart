@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../widgets/universal/switch_list_tile_adaptive.dart';
-import '../../providers/settings_providers.dart';
+import '../../../core/views/widgets/universal/switch_list_tile_adaptive.dart';
+import '../../controllers/settings_providers.dart';
 
 class DarkThemeComputeSwitch extends ConsumerWidget {
   const DarkThemeComputeSwitch({super.key});

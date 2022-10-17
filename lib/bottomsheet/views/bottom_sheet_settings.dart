@@ -12,7 +12,7 @@ import '../../../settings/views/widgets/light_colors_swap_switch.dart';
 import '../../../settings/views/widgets/theme_mode_toggle_buttons.dart';
 import '../../../settings/views/widgets/theme_popup_menu.dart';
 import '../../../settings/views/widgets/true_black_switch.dart';
-import '../../../widgets/universal/animated_hide.dart';
+import '../../core/views/widgets/universal/animated_hide.dart';
 
 /// A widget that allows us to change some of the theme settings. Intended
 /// to be used in a BottomSheet.

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_icons.dart';
-import '../../providers/settings_providers.dart';
+import '../../controllers/settings_providers.dart';
 
 /// Toggle the AppBar style of the application for dark theme mode.
 ///

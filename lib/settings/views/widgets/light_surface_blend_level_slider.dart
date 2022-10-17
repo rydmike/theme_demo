@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/settings_providers.dart';
+import '../../controllers/settings_providers.dart';
 
 class LightSurfaceBlendLevelSlider extends ConsumerWidget {
   const LightSurfaceBlendLevelSlider({super.key});

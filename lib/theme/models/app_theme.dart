@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/app_const.dart';
+import '../../constants/app_fonts.dart';
 
 /// The theme for this app are defined here.
 class AppTheme {

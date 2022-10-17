@@ -4,7 +4,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/app_const.dart';
+import '../../../../constants/app_const.dart';
 import 'copy_color_to_clipboard.dart';
 
 /// This is just simple SizedBox in a Card, with a passed in label, background

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../constants/app_const.dart';
 import '../../constants/app_icons.dart';
 import '../../constants/app_insets.dart';
-import '../../widgets/universal/link_text_span.dart';
+import '../../core/views/widgets/universal/link_text_span.dart';
 
 /// An about icon button used on the example's app bar.
 class AboutIconButton extends StatelessWidget {
@@ -46,8 +46,11 @@ void showAppAboutDialog(BuildContext context) {
               TextSpan(
                 style: aboutTextStyle,
                 text: 'This example shows some of the features of the '
-                    'FlexColorScheme theming package. To learn more, check '
-                    'out the package on ',
+                    'FlexColorScheme theming package together with Riverpod 2 '
+                    'and 3 different settings implementations, volatile mem '
+                    'only, SharedPreferences and Hive.\n\n'
+                    'To learn more '
+                    'about FlexColorScheme, check out the package on ',
               ),
               LinkTextSpan(
                 style: linkStyle,
@@ -56,8 +59,7 @@ void showAppAboutDialog(BuildContext context) {
               ),
               TextSpan(
                 style: aboutTextStyle,
-                text: '. It contains extensive documentation and the source '
-                    'of this example application.\n\n',
+                text: '. It contains extensive documentation.\n\n',
               ),
               TextSpan(
                 style: footerStyle,
