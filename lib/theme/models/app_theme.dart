@@ -1,8 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants/app_const.dart';
-import '../../constants/app_insets.dart';
 
 /// The theme for this app are defined here.
 class AppTheme {
@@ -27,24 +27,17 @@ class AppTheme {
       surfaceMode: surfaceMode,
       blendLevel: blendLevel,
       appBarElevation: appBarElevation,
+      subThemesData: const FlexSubThemesData(),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
+      typography: Typography.material2021(platform: defaultTargetPlatform),
     );
     // Get the ColorScheme defined by our used FlexColorScheme, we will use
     // the colors in it, in an example to customize the default colors in
     // some Widgets sub-themes.
-    final ColorScheme colorScheme = flexScheme.toScheme;
+    // final ColorScheme colorScheme = flexScheme.toScheme;
     // Convert FlexColorScheme to ThemeData, apply sub-themes and return it.
-    return flexScheme.toTheme.copyWith(
-      // Add our custom button shape and padding theming.
-      elevatedButtonTheme: elevatedButtonTheme(colorScheme),
-      outlinedButtonTheme: outlinedButtonTheme(
-        colorScheme,
-        const Color(0x1F000000),
-      ),
-      textButtonTheme: textButtonTheme,
-      toggleButtonsTheme: toggleButtonsTheme(colorScheme),
-    );
+    return flexScheme.toTheme;
   }
 
   /// Returns the dark theme based on properties passed to it.
@@ -71,104 +64,18 @@ class AppTheme {
       blendLevel: blendLevel,
       appBarElevation: appBarElevation,
       darkIsTrueBlack: darkIsTrueBlack,
+      subThemesData: const FlexSubThemesData(),
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
+      typography: Typography.material2021(platform: defaultTargetPlatform),
     );
     // Get the ColorScheme defined by our used FlexColorScheme, we will use
     // the colors in it, in an example to customize the default colors in
     // some Widgets sub-themes.
-    final ColorScheme colorScheme = flexScheme.toScheme;
+    // final ColorScheme colorScheme = flexScheme.toScheme;
     // Convert FlexColorScheme to ThemeData, apply sub-themes and return it.
-    return flexScheme.toTheme.copyWith(
-      // Add our custom button shape, colors and padding theming.
-      elevatedButtonTheme: elevatedButtonTheme(colorScheme),
-      outlinedButtonTheme: outlinedButtonTheme(
-        colorScheme,
-        const Color(0x1FFFFFFF),
-      ),
-      textButtonTheme: textButtonTheme,
-      toggleButtonsTheme: toggleButtonsTheme(colorScheme),
-    );
+    return flexScheme.toTheme;
   }
-
-  // These theme definitions are used to give all Material buttons a
-  // a Stadium rounded design. This is just to demonstrate more involved
-  // sub-theming with FlexColorScheme.
-  static ElevatedButtonThemeData elevatedButtonTheme(ColorScheme scheme) =>
-      ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-        // As an example, say we want the primaryContainer color instead of
-        // primary as default on all our ElevatedButtons, then we just use
-        // that color instead in this Widget's sub-theme.
-        foregroundColor:
-            ThemeData.estimateBrightnessForColor(scheme.primaryContainer) ==
-                    Brightness.dark
-                ? Colors.white
-                : Colors.black,
-        backgroundColor: scheme.primaryContainer,
-        minimumSize: minButtonSize,
-        shape: const StadiumBorder(), //buttonShape,
-        padding: roundButtonPadding,
-        elevation: 0,
-      ));
-
-  static OutlinedButtonThemeData outlinedButtonTheme(
-          ColorScheme scheme, Color disabledColor) =>
-      OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-        minimumSize: minButtonSize,
-        shape: const StadiumBorder(),
-        padding: roundButtonPadding,
-      ).copyWith(side: MaterialStateProperty.resolveWith<BorderSide?>(
-              (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
-          return BorderSide(
-            color: disabledColor,
-            width: 0.5,
-          );
-        }
-        if (states.contains(MaterialState.error)) {
-          return BorderSide(
-            color: scheme.error,
-            width: AppInsets.outlineThickness,
-          );
-        }
-        return BorderSide(
-          color: scheme.primary,
-          width: AppInsets.outlineThickness,
-        );
-      })));
-
-  static TextButtonThemeData get textButtonTheme => TextButtonThemeData(
-          style: TextButton.styleFrom(
-        minimumSize: minButtonSize,
-        shape: const StadiumBorder(),
-        padding: roundButtonPadding,
-      ));
-
-  // The stadium rounded buttons generally need a bit more padding to look good,
-  // adjust here to tune the padding for all of them globally in the app.
-  static const EdgeInsets roundButtonPadding = EdgeInsets.symmetric(
-    horizontal: AppInsets.l,
-    vertical: AppInsets.s,
-  );
-
-  // The old buttons had a minimum size that looked OK, we keep that.
-  static const Size minButtonSize = Size(88, 36);
-
-  /// ToggleButtons theme
-  static ToggleButtonsThemeData toggleButtonsTheme(ColorScheme colorScheme) =>
-      ToggleButtonsThemeData(
-        selectedColor: colorScheme.onPrimary,
-        color: colorScheme.primary.withOpacity(0.85),
-        fillColor: colorScheme.primary.withOpacity(0.85),
-        hoverColor: colorScheme.primary.withOpacity(0.2),
-        focusColor: colorScheme.primary.withOpacity(0.3),
-        borderWidth: AppInsets.outlineThickness,
-        borderColor: colorScheme.primary,
-        selectedBorderColor: colorScheme.primary,
-        borderRadius: BorderRadius.circular(AppInsets.cornerRadius),
-      );
 
   // We could also use the FlexSchemeColor.from() constructor and define less
   // color properties and get some of them computed by the from factory.

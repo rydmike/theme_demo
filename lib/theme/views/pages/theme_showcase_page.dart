@@ -83,25 +83,25 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (int value) {
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int value) {
             setState(() {
               _buttonIndex = value;
             });
           },
-          currentIndex: _buttonIndex,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
+          selectedIndex: _buttonIndex,
+          destinations: const <NavigationDestination>[
+            NavigationDestination(
               icon: Icon(Icons.chat_bubble),
               label: 'Chat',
               tooltip: '',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(Icons.beenhere),
               label: 'Tasks',
               tooltip: '',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(Icons.create_new_folder),
               label: 'Archive',
               tooltip: '',

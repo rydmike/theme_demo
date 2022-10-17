@@ -39,28 +39,35 @@ class ThemeShowcase extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        const SizedBox(height: 8),
+        const TextInputField(),
+        const Divider(),
         const ElevatedButtonShowcase(),
         const SizedBox(height: 8),
         const OutlinedButtonShowcase(),
         const SizedBox(height: 8),
         const TextButtonShowcase(),
         const SizedBox(height: 8),
+        const ToggleButtonsShowcase(),
         const Divider(),
         const FabShowcase(),
         const SizedBox(height: 16),
-        const ToggleButtonsShowcase(),
+        const ChipShowcase(),
+        const Divider(),
+        const SizedBox(height: 8),
+        const PopupMenuShowcase(),
+        const SizedBox(height: 8),
+        const SizedBox(height: 8),
+        const IconButtonCircleAvatarDropdownTooltipShowcase(),
+        const Divider(),
         const SwitchShowcase(),
         const CheckboxShowcase(),
         const RadioShowcase(),
-        const PopupMenuShowcase(),
         const SizedBox(height: 8),
-        const IconButtonCircleAvatarDropdownTooltipShowcase(),
-        const SizedBox(height: 8),
-        const ChipShowcase(),
-        const Divider(),
-        const TextInputField(),
         const Divider(),
         const ListTileShowcase(),
+        const Divider(),
+        const AppBarShowcase(),
         const Divider(),
         const TabBarForAppBarShowcase(),
         const SizedBox(height: 8),
@@ -112,7 +119,7 @@ class ThemeShowcase extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text('Primary TextTheme',
-                      style: Theme.of(context).primaryTextTheme.subtitle1),
+                      style: Theme.of(context).primaryTextTheme.titleMedium),
                 ),
                 const PrimaryTextThemeShowcase(),
               ],
@@ -151,6 +158,68 @@ class ElevatedButtonShowcase extends StatelessWidget {
     );
   }
 }
+
+// These are commented until https://github.com/flutter/flutter/pull/107382
+// lands in master 3.1.0 channel. and makes their way to stable channel.
+// TODO(rydmike): Add these buttons to showcase
+// TODO(rydmike): FCS fix FCS M3 defaults.
+//
+// class FilledButtonShowcase extends StatelessWidget {
+//   const FilledButtonShowcase({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Wrap(
+//       crossAxisAlignment: WrapCrossAlignment.center,
+//       spacing: 8,
+//       runSpacing: 8,
+//       children: <Widget>[
+//         FilledButton(
+//           onPressed: () {},
+//           child: const Text('FilledButton button'),
+//         ),
+//         FilledButton.icon(
+//           onPressed: () {},
+//           icon: const Icon(Icons.add),
+//           label: const Text('FilledButton icon'),
+//         ),
+//         const FilledButton(
+//           onPressed: null,
+//           child: Text('FilledButton button'),
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+//
+// class FilledButtonTonalShowcase extends StatelessWidget {
+//   const FilledButtonTonalShowcase({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Wrap(
+//       crossAxisAlignment: WrapCrossAlignment.center,
+//       spacing: 8,
+//       runSpacing: 8,
+//       children: <Widget>[
+//         FilledButton.tonal(
+//           onPressed: () {},
+//           child: const Text('FilledButton.tonal'),
+//         ),
+//         FilledButton.tonal.icon(
+//           onPressed: () {},
+//           icon: const Icon(Icons.add),
+//           label: const Text('FilledButton.tonal icon'),
+//         ),
+//         const FilledButton.tonal(
+//           onPressed: null,
+//           child: Text('FilledButton.tonal button'),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class OutlinedButtonShowcase extends StatelessWidget {
   const OutlinedButtonShowcase({super.key});
@@ -208,8 +277,16 @@ class TextButtonShowcase extends StatelessWidget {
   }
 }
 
-class ToggleButtonsShowcase extends StatelessWidget {
-  const ToggleButtonsShowcase({super.key});
+class ToggleButtonsShowcase extends StatefulWidget {
+  const ToggleButtonsShowcase({this.showOutlinedButton, super.key});
+  final bool? showOutlinedButton;
+
+  @override
+  State<ToggleButtonsShowcase> createState() => _ToggleButtonsShowcaseState();
+}
+
+class _ToggleButtonsShowcaseState extends State<ToggleButtonsShowcase> {
+  List<bool> selected = <bool>[true, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -219,14 +296,23 @@ class ToggleButtonsShowcase extends StatelessWidget {
       runSpacing: 4,
       children: <Widget>[
         ToggleButtons(
-          isSelected: const <bool>[true, false, false],
-          onPressed: (int newIndex) {},
+          isSelected: selected,
+          onPressed: (int toggledIndex) {
+            setState(() {
+              selected[toggledIndex] = !selected[toggledIndex];
+            });
+          },
           children: const <Widget>[
             Icon(Icons.adb),
             Icon(Icons.phone),
             Icon(Icons.account_circle),
           ],
         ),
+        if (widget.showOutlinedButton ?? false)
+          OutlinedButton(
+            onPressed: () {},
+            child: const Text('Outlined'),
+          ),
         ToggleButtons(
           isSelected: const <bool>[true, false, false],
           onPressed: null,
@@ -236,6 +322,11 @@ class ToggleButtonsShowcase extends StatelessWidget {
             Icon(Icons.account_circle),
           ],
         ),
+        if (widget.showOutlinedButton ?? false)
+          const OutlinedButton(
+            onPressed: null,
+            child: Text('Outlined'),
+          ),
       ],
     );
   }
@@ -251,15 +342,14 @@ class FabShowcase extends StatelessWidget {
       spacing: 8,
       runSpacing: 4,
       children: <Widget>[
-        FloatingActionButton(
-          heroTag: null,
+        FloatingActionButton.small(
+          heroTag: 'FAB small',
           onPressed: () {},
-          mini: true,
-          tooltip: 'Tooltip on mini\nFloatingActionButton',
+          tooltip: 'Tooltip on small\nFloatingActionButton',
           child: const Icon(Icons.accessibility),
         ),
         FloatingActionButton.extended(
-          heroTag: null,
+          heroTag: 'FAB extended false',
           isExtended: false,
           onPressed: () {},
           tooltip: 'Tooltip on extended:false\nFloatingActionButton.extended',
@@ -267,7 +357,7 @@ class FabShowcase extends StatelessWidget {
           label: const Text('Extended'),
         ),
         FloatingActionButton.extended(
-          heroTag: null,
+          heroTag: 'FAB extended true',
           isExtended: true,
           onPressed: () {},
           tooltip: 'Tooltip on extended:true\nFloatingActionButton.extended',
@@ -275,9 +365,15 @@ class FabShowcase extends StatelessWidget {
           label: const Text('Extended'),
         ),
         FloatingActionButton(
-          heroTag: null,
+          heroTag: 'FAB standard',
           onPressed: () {},
           tooltip: 'Tooltip on default\nFloatingActionButton',
+          child: const Icon(Icons.accessibility),
+        ),
+        FloatingActionButton.large(
+          heroTag: 'FAB large',
+          onPressed: () {},
+          tooltip: 'Tooltip on large\nFloatingActionButton',
           child: const Icon(Icons.accessibility),
         ),
       ],
@@ -285,8 +381,15 @@ class FabShowcase extends StatelessWidget {
   }
 }
 
-class SwitchShowcase extends StatelessWidget {
+class SwitchShowcase extends StatefulWidget {
   const SwitchShowcase({super.key});
+
+  @override
+  State<SwitchShowcase> createState() => _SwitchShowcaseState();
+}
+
+class _SwitchShowcaseState extends State<SwitchShowcase> {
+  bool isOn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -296,9 +399,30 @@ class SwitchShowcase extends StatelessWidget {
       runSpacing: 4,
       children: <Widget>[
         Switch(
-          value: true,
-          onChanged: (bool value) {},
+          value: isOn,
+          onChanged: (bool value) {
+            setState(() {
+              isOn = value;
+            });
+          },
         ),
+        // TODO(rydmike): New M3 Switch features, only master. Add later.
+        // Switch(
+        //   thumbIcon: MaterialStateProperty.resolveWith<Icon?>(
+        //       (Set<MaterialState> states) {
+        //     if (states.contains(MaterialState.selected)) {
+        //       return const Icon(Icons.check);
+        //     }
+        //     return const Icon(Icons
+        //         .close); // All other states will use the default thumbIcon.
+        //   }),
+        //   value: isOn,
+        //   onChanged: (bool value) {
+        //     setState(() {
+        //       isOn = value;
+        //     });
+        //   },
+        // ),
         Switch(
           value: false,
           onChanged: (bool value) {},
@@ -430,17 +554,13 @@ class _PopupMenuButton extends StatelessWidget {
       child: AbsorbPointer(
         child: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-            foregroundColor: scheme.onSecondary,
             elevation: 0,
-            backgroundColor: scheme.secondary,
-            disabledForegroundColor: scheme.onSurface.withOpacity(0.38),
-            disabledBackgroundColor: scheme.onSurface.withOpacity(0.12),
-            shape: radius != null
-                ? RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(radius ?? 4)),
-                  )
-                : null,
+            backgroundColor: scheme.primary,
+            foregroundColor: scheme.onPrimary,
+            disabledForegroundColor: scheme.onSurface,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(radius ?? 8)),
+            ),
           ),
           onPressed: enabled ? () {} : null,
           icon: const Icon(Icons.expand_more_outlined),
@@ -520,8 +640,17 @@ class _DropDownButtonFormFieldState extends State<_DropDownButtonFormField> {
   }
 }
 
-class IconButtonCircleAvatarDropdownTooltipShowcase extends StatelessWidget {
+class IconButtonCircleAvatarDropdownTooltipShowcase extends StatefulWidget {
   const IconButtonCircleAvatarDropdownTooltipShowcase({super.key});
+
+  @override
+  State<IconButtonCircleAvatarDropdownTooltipShowcase> createState() =>
+      _IconButtonCircleAvatarDropdownTooltipShowcaseState();
+}
+
+class _IconButtonCircleAvatarDropdownTooltipShowcaseState
+    extends State<IconButtonCircleAvatarDropdownTooltipShowcase> {
+  bool isLockOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -536,6 +665,20 @@ class IconButtonCircleAvatarDropdownTooltipShowcase extends StatelessWidget {
             icon: const Icon(Icons.accessibility),
             tooltip: 'Tooltip on\nIconButton',
             onPressed: () {},
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: IconButton(
+            icon: const Icon(Icons.lock_outlined),
+            selectedIcon: const Icon(Icons.lock_open_outlined),
+            tooltip: isLockOpen ? 'In M3 tap to close' : 'In M3 tap to open',
+            isSelected: isLockOpen,
+            onPressed: () {
+              setState(() {
+                isLockOpen = !isLockOpen;
+              });
+            },
           ),
         ),
         const Tooltip(
@@ -569,32 +712,68 @@ class ChipShowcase extends StatelessWidget {
           onDeleted: () {},
         ),
         const Chip(
-          label: Text('Avatar Chip'),
+          label: Text('Chip'),
           avatar: FlutterLogo(),
         ),
-        InputChip(
-          label: const Text('Input Chip'),
+        ActionChip(
+          label: const Text('ActionChip'),
+          avatar: const Icon(Icons.settings),
+          onPressed: () {},
+        ),
+        ActionChip(
+          label: const Text('ActionChip'),
+          avatar: const Icon(Icons.settings),
+          // TODO(rydmike): Uncomment in 3.1.0 to get disabled ActionChip.
+          // The onPressed is required in 3.0.5 stable, but not in 3.1.0 master.
+          onPressed: () {},
+        ),
+        FilterChip(
+          label: const Text('FilterChip'),
+          selected: true,
           onSelected: (bool value) {},
+        ),
+        FilterChip(
+          label: const Text('FilterChip'),
+          selected: false,
+          onSelected: (bool value) {},
+        ),
+        const FilterChip(
+          label: Text('FilterChip'),
+          selected: true,
+          onSelected: null,
+        ),
+        ChoiceChip(
+          label: const Text('ChoiceChip'),
+          selected: true,
+          onSelected: (bool value) {},
+        ),
+        ChoiceChip(
+          label: const Text('ChoiceChip'),
+          selected: false,
+          onSelected: (bool value) {},
+        ),
+        const ChoiceChip(
+          label: Text('ChoiceChip'),
+          selected: true,
+        ),
+        InputChip(
+          label: const Text('InputChip'),
+          onSelected: (bool value) {},
+          onDeleted: () {},
         ),
         InputChip(
           showCheckmark: true,
           selected: true,
-          label: const Text('Chip check'),
+          label: const Text('InputChip'),
           onSelected: (bool value) {},
+          onDeleted: () {},
         ),
-        const InputChip(
-          label: Text('Disabled Chip'),
+        InputChip(
+          label: const Text('InputChip'),
           isEnabled: false,
-        ),
-        ChoiceChip(
-          label: const Text('Selected Chip'),
-          selected: true,
           onSelected: (bool value) {},
-        ),
-        ChoiceChip(
-          label: const Text('Not selected Chip'),
-          selected: false,
-          onSelected: (bool value) {},
+          onDeleted: () {},
+          // onDeleted: () {},
         ),
       ],
     );
@@ -602,7 +781,8 @@ class ChipShowcase extends StatelessWidget {
 }
 
 class TextInputField extends StatefulWidget {
-  const TextInputField({super.key});
+  const TextInputField({this.filled, super.key});
+  final bool? filled;
 
   @override
   State<TextInputField> createState() => _TextInputFieldState();
@@ -645,8 +825,9 @@ class _TextInputFieldState extends State<TextInputField> {
           key: const Key('TextField1'),
           controller: _textController1,
           decoration: InputDecoration(
+            filled: widget.filled ?? true,
             hintText: 'Write something...',
-            labelText: 'Text entry',
+            labelText: 'TextField - Underline border, if not defined',
             errorText: _errorState1
                 ? "Any entry without an 'a' will trigger this error"
                 : null,
@@ -666,8 +847,12 @@ class _TextInputFieldState extends State<TextInputField> {
           key: const Key('TextField2'),
           controller: _textController2,
           decoration: InputDecoration(
+            filled: widget.filled ?? true,
+            border: const OutlineInputBorder(),
             hintText: 'Write something...',
-            labelText: 'Another text entry',
+            labelText: 'TextField - Outline border, if not defined',
+            prefixIcon: const Icon(Icons.search),
+            suffixIcon: const Icon(Icons.info),
             errorText: _errorState2
                 ? "Any entry without an 'a' will trigger this error"
                 : null,
@@ -677,12 +862,145 @@ class _TextInputFieldState extends State<TextInputField> {
         const TextField(
           enabled: false,
           decoration: InputDecoration(
-            labelText: 'Disabled text input',
+            labelText: 'TextField - Disabled',
           ),
         ),
         const SizedBox(height: 8),
         const _DropDownButtonFormField(),
       ],
+    );
+  }
+}
+
+class AppBarShowcase extends StatelessWidget {
+  const AppBarShowcase({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MediaQuery.removePadding(
+      context: context,
+      removeBottom: true,
+      removeTop: true,
+      child: Column(
+        children: <Widget>[
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              const _BehindAppBar(),
+              AppBar(
+                leading: IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () {},
+                ),
+                title: const Text('Standard AppBar'),
+                actions: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+            ],
+          ),
+          // A bit nasty usage of CustomScrollViews and Slivers and shrinkWraps,
+          // to show what the SliverAppBars look like, don't do this in a
+          // production app. With just a few widgets, we can get away with it.
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              const _BehindAppBar(),
+              CustomScrollView(
+                shrinkWrap: true,
+                slivers: <Widget>[
+                  SliverAppBar(
+                    leading: IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () {},
+                    ),
+                    title: const Text('SliverAppBar'),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () {},
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              const _BehindAppBar(),
+              CustomScrollView(
+                shrinkWrap: true,
+                slivers: <Widget>[
+                  SliverAppBar.medium(
+                    leading: IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () {},
+                    ),
+                    title: const Text('SliverAppBar.medium'),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () {},
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              const _BehindAppBar(),
+              CustomScrollView(
+                shrinkWrap: true,
+                slivers: <Widget>[
+                  SliverAppBar.large(
+                    leading: IconButton(
+                      icon: const Icon(Icons.menu),
+                      onPressed: () {},
+                    ),
+                    title: const Text('SliverAppBar.large'),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.search),
+                        onPressed: () {},
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BehindAppBar extends StatelessWidget {
+  const _BehindAppBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
+        const Text('Behind AppBar'),
+        const CircleAvatar(child: Text('AV')),
+        InputChip(
+          showCheckmark: true,
+          selected: true,
+          label: const Text('Chip check'),
+          onSelected: (bool value) {},
+        ),
+      ]),
     );
   }
 }
@@ -837,28 +1155,51 @@ class _BottomNavigationBarShowcaseState
         MediaQuery.removePadding(
           context: context,
           removeBottom: true,
-          child: BottomNavigationBar(
-            currentIndex: buttonIndex,
-            onTap: (int value) {
-              setState(() {
-                buttonIndex = value;
-              });
-            },
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.chat_bubble),
-                label: 'Chat',
-                // title: Text('Item 1'),
+          removeTop: true,
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
+                  const Text('Behind Bottom'),
+                  FloatingActionButton.small(
+                    heroTag: 'Behind Bottom',
+                    onPressed: () {},
+                    child: const Icon(Icons.add),
+                  ),
+                  InputChip(
+                    showCheckmark: true,
+                    selected: true,
+                    label: const Text('Chip check'),
+                    onSelected: (bool value) {},
+                  ),
+                ]),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.beenhere),
-                label: 'Tasks',
-                // title: Text('Item 2'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.create_new_folder),
-                label: 'Folder',
-                // title: Text('Item 3'),
+              BottomNavigationBar(
+                currentIndex: buttonIndex,
+                onTap: (int value) {
+                  setState(() {
+                    buttonIndex = value;
+                  });
+                },
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.chat_bubble),
+                    label: 'Chat',
+                    // title: Text('Item 1'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.beenhere),
+                    label: 'Tasks',
+                    // title: Text('Item 2'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.create_new_folder),
+                    label: 'Folder',
+                    // title: Text('Item 3'),
+                  ),
+                ],
               ),
             ],
           ),
@@ -874,9 +1215,9 @@ class _BottomNavigationBarShowcaseState
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
           child: Text(
             'Default SDK background color is theme canvasColor via Material, '
-            'and theme.canvasColor is set to theme.colorScheme.background, '
-            'elevation is 8. FlexColorScheme sub-theme default is '
-            'colorScheme.background and elevation 0.',
+            'and canvasColor is set to color scheme background, elevation '
+            'is 8. FCS sub-theme default is color scheme background and '
+            'elevation 0.',
             style: denseBody,
           ),
         ),
@@ -909,25 +1250,48 @@ class _NavigationBarShowcaseState extends State<NavigationBarShowcase> {
         MediaQuery.removePadding(
           context: context,
           removeBottom: true,
-          child: NavigationBar(
-            selectedIndex: buttonIndex,
-            onDestinationSelected: (int value) {
-              setState(() {
-                buttonIndex = value;
-              });
-            },
-            destinations: const <NavigationDestination>[
-              NavigationDestination(
-                icon: Icon(Icons.chat_bubble),
-                label: 'Chat',
+          removeTop: true,
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Wrap(spacing: 8, runSpacing: 8, children: <Widget>[
+                  const Text('Behind NavBar'),
+                  FloatingActionButton.small(
+                    heroTag: 'Behind NavBar',
+                    onPressed: () {},
+                    child: const Icon(Icons.add),
+                  ),
+                  InputChip(
+                    showCheckmark: true,
+                    selected: true,
+                    label: const Text('Chip check'),
+                    onSelected: (bool value) {},
+                  ),
+                ]),
               ),
-              NavigationDestination(
-                icon: Icon(Icons.beenhere),
-                label: 'Tasks',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.create_new_folder),
-                label: 'Folder',
+              NavigationBar(
+                selectedIndex: buttonIndex,
+                onDestinationSelected: (int value) {
+                  setState(() {
+                    buttonIndex = value;
+                  });
+                },
+                destinations: const <NavigationDestination>[
+                  NavigationDestination(
+                    icon: Icon(Icons.chat_bubble),
+                    label: 'Chat',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.beenhere),
+                    label: 'Tasks',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.create_new_folder),
+                    label: 'Folder',
+                  ),
+                ],
               ),
             ],
           ),
@@ -942,9 +1306,10 @@ class _NavigationBarShowcaseState extends State<NavigationBarShowcase> {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
           child: Text(
-            'Default SDK background color is theme.colorScheme.surface with '
-            'an onSurface overlay color with elevation 3. FlexColorScheme '
-            'sub-theme default is colorScheme.background and elevation 0.',
+            'Default background color is surface with an onSurface overlay '
+            'color in M2, and primary in M3, with elevation 3. '
+            'FlexColorScheme component theme default is color scheme '
+            'background, with used surface blend and elevation 0.',
             style: denseBody,
           ),
         ),
@@ -1029,37 +1394,44 @@ class _NavigationRailShowcaseState extends State<NavigationRailShowcase> {
               maxHeight: 1200,
               child: Row(
                 children: <Widget>[
-                  NavigationRail(
-                    extended: isExtended,
-                    useIndicator: widget.useAssertWorkAround ? true : null,
-                    minExtendedWidth: 150,
-                    indicatorColor:
-                        widget.useAssertWorkAround ? Colors.transparent : null,
-                    labelType: isExtended ? NavigationRailLabelType.none : null,
-                    selectedIndex: buttonIndex,
-                    onDestinationSelected: (int value) {
-                      setState(() {
-                        buttonIndex = value;
-                      });
-                    },
-                    destinations: const <NavigationRailDestination>[
-                      NavigationRailDestination(
-                        icon: Icon(Icons.chat_bubble),
-                        label: Text('Chat'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.beenhere),
-                        label: Text('Tasks'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.create_new_folder),
-                        label: Text('Folder'),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.logout),
-                        label: Text('Logout'),
-                      ),
-                    ],
+                  MediaQuery.removePadding(
+                    context: context,
+                    removeBottom: true,
+                    removeTop: true,
+                    child: NavigationRail(
+                      extended: isExtended,
+                      useIndicator: widget.useAssertWorkAround ? true : null,
+                      minExtendedWidth: 150,
+                      indicatorColor: widget.useAssertWorkAround
+                          ? Colors.transparent
+                          : null,
+                      labelType:
+                          isExtended ? NavigationRailLabelType.none : null,
+                      selectedIndex: buttonIndex,
+                      onDestinationSelected: (int value) {
+                        setState(() {
+                          buttonIndex = value;
+                        });
+                      },
+                      destinations: const <NavigationRailDestination>[
+                        NavigationRailDestination(
+                          icon: Icon(Icons.chat_bubble),
+                          label: Text('Chat'),
+                        ),
+                        NavigationRailDestination(
+                          icon: Icon(Icons.beenhere),
+                          label: Text('Tasks'),
+                        ),
+                        NavigationRailDestination(
+                          icon: Icon(Icons.create_new_folder),
+                          label: Text('Folder'),
+                        ),
+                        NavigationRailDestination(
+                          icon: Icon(Icons.logout),
+                          label: Text('Logout'),
+                        ),
+                      ],
+                    ),
                   ),
                   const VerticalDivider(width: 1),
                   Expanded(
@@ -1229,7 +1601,6 @@ class AlertDialogShowcase extends StatelessWidget {
         TextButton(onPressed: () {}, child: const Text('CANCEL')),
         TextButton(onPressed: () {}, child: const Text('ALLOW')),
       ],
-      actionsPadding: const EdgeInsets.symmetric(horizontal: 16),
     );
   }
 }
@@ -1268,6 +1639,310 @@ class MaterialAndBottomSheetShowcase extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        Text('Material elevation and tint', style: denseHeader),
+        Text(
+          'When useMaterial3 is true, Material gets no elevation, '
+          'unless its shadowColor is also specified, which is not needed when '
+          'it is false and using M2. To in M3 give it surface elevated '
+          'tint, also specify its surfaceTint color.',
+          style: denseBody,
+        ),
+        const SizedBox(height: 12),
+        Text('Material type canvas', style: denseHeader),
+        Text(
+          'Default background color is theme canvasColor, and '
+          'theme canvasColor is set to theme colorScheme background. The '
+          'color canvasColor is going to be deprecated in Flutter SDK',
+          style: denseBody,
+        ),
+        const Divider(),
+        const SizedBox(height: 8),
+        const Material(
+          type: MaterialType.canvas,
+          elevation: 0,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type canvas, elevation 0, '
+                  'default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SizedBox(height: 8),
+        const Material(
+          type: MaterialType.canvas,
+          elevation: 1,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type canvas, elevation 1, '
+                  'default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.canvas,
+          elevation: 1,
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type canvas, elevation 1, '
+                  'with surfaceTint, no shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.canvas,
+          elevation: 1,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: colorScheme.shadow,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type canvas, elevation 1, '
+                  'with surfaceTint, and shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SizedBox(height: 8),
+        const Material(
+          type: MaterialType.canvas,
+          elevation: 6,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type canvas, elevation 6, '
+                  'default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.canvas,
+          elevation: 6,
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type canvas, elevation 6, '
+                  'with surfaceTint, no shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.canvas,
+          elevation: 6,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: colorScheme.shadow,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type canvas, elevation 6, '
+                  'with surfaceTint, and shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SizedBox(height: 8),
+        Text('Material type card', style: denseHeader),
+        Text(
+          'Default background color is theme cardColor, and '
+          'theme cardColor is set to theme colorScheme surface. The '
+          'color cardColor is going to be deprecated in Flutter SDK',
+          style: denseBody,
+        ),
+        const Divider(),
+        const SizedBox(height: 8),
+        const Material(
+          type: MaterialType.card,
+          elevation: 0,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type card, elevation 0, '
+                  'default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SizedBox(height: 8),
+        const Material(
+          type: MaterialType.card,
+          elevation: 1,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type card, elevation 1, '
+                  'default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.card,
+          elevation: 1,
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type card, elevation 1, '
+                  'with surfaceTint, no shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.card,
+          elevation: 1,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: colorScheme.shadow,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type card, elevation 1, '
+                  'with surfaceTint, and shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SizedBox(height: 8),
+        const Material(
+          type: MaterialType.card,
+          elevation: 6,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type card, elevation 6, '
+                  'default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.card,
+          elevation: 6,
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type card, elevation 6, '
+                  'with surfaceTint, no shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Material(
+          type: MaterialType.card,
+          elevation: 6,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: colorScheme.shadow,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Material type card, elevation 6, '
+                  'with surfaceTint, and shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SizedBox(height: 8),
+        const Divider(height: 1),
         MaterialBanner(
           padding: const EdgeInsets.all(20),
           content: const Text('Hello, I am a Material Banner'),
@@ -1282,74 +1957,6 @@ class MaterialAndBottomSheetShowcase extends StatelessWidget {
               onPressed: () {},
             ),
           ],
-        ),
-        const SizedBox(height: 12),
-        Text('Material type canvas', style: denseHeader),
-        Text(
-          'Default background color is theme canvasColor, and '
-          'theme canvasColor is set to theme colorScheme background. The '
-          'color canvasColor is going to be deprecated in Flutter SDK',
-          style: denseBody,
-        ),
-        const Material(
-          type: MaterialType.canvas,
-          elevation: 0,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Material type canvas, elevation 0')),
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Material(
-          type: MaterialType.canvas,
-          elevation: 1,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Material type canvas, elevation 1')),
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Material(
-          type: MaterialType.canvas,
-          elevation: 4,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Material type canvas, elevation 4')),
-          ),
-        ),
-        const SizedBox(height: 32),
-        Text('Material type card', style: denseHeader),
-        Text(
-          'Default background color is theme cardColor, and '
-          'theme cardColor is set to theme colorScheme surface. The '
-          'color cardColor is going to be deprecated in Flutter SDK',
-          style: denseBody,
-        ),
-        const Material(
-          elevation: 0,
-          type: MaterialType.card,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Material type card, elevation 0')),
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Material(
-          elevation: 1,
-          type: MaterialType.card,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Material type card, elevation 1')),
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Material(
-          elevation: 4,
-          type: MaterialType.card,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Material type card, elevation 4')),
-          ),
         ),
         const SizedBox(height: 24),
         AbsorbPointer(
@@ -1377,6 +1984,8 @@ class MaterialAndBottomSheetShowcase extends StatelessWidget {
                     Material(
                       color: snackBackground,
                       elevation: 0,
+                      surfaceTintColor: colorScheme.surfaceTint,
+                      shadowColor: colorScheme.shadow,
                       child: SizedBox(
                         height: 40,
                         child: Center(
@@ -1403,6 +2012,7 @@ class CardShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
     final TextStyle denseHeader = theme.textTheme.titleMedium!.copyWith(
       fontSize: 13,
     );
@@ -1418,39 +2028,178 @@ class CardShowcase extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Default background color comes from Material of type card',
+            'Default background color comes from Material of type card. '
+            'When useMaterial3 is true, Card gets elevation based '
+            'surfaceTint, when it is false and using M2, surfaceTint has no '
+            'effect even if specified.',
             style: denseBody,
           ),
         ),
-        const Card(
+        Card(
           elevation: 0,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Card, elevation 0')),
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Card, elevation 0',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 10),
         const Card(
           elevation: 1,
           child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Card, elevation 1')),
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                  child: Text(
+                'Card, elevation 1, default',
+                textAlign: TextAlign.center,
+              )),
+            ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 2),
+        Card(
+          elevation: 1,
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Card, elevation 1, with surfaceTint',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 2),
+        Card(
+          elevation: 1,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: Colors.transparent,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Card, elevation 1,  with surfaceTint, '
+                  'transparent shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const Divider(),
         const Card(
           elevation: 4,
           child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Card, elevation 4')),
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Card, elevation 4, default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Card(
+          elevation: 4,
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Center(
+              child: Text(
+                'Card, elevation 4, with surfaceTint',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Card(
+          elevation: 4,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: Colors.transparent,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Card, elevation 4, with surfaceTint, '
+                  'transparent shadow',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const Divider(),
+        const Card(
+          elevation: 10,
+          child: SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Card, elevation 10, default',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 10),
-        const Card(
-          elevation: 8,
-          child: SizedBox(
-            height: 50,
-            child: Center(child: Text('Card, elevation 8')),
+        Card(
+          elevation: 10,
+          surfaceTintColor: colorScheme.surfaceTint,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  'Card, elevation 10, with surfaceTint',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Card(
+          elevation: 10,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: Colors.transparent,
+          child: const SizedBox(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(
+                  child: Text(
+                'Card, elevation 10, with surfaceTint, '
+                'transparent shadow',
+                textAlign: TextAlign.center,
+              )),
+            ),
           ),
         ),
       ],
