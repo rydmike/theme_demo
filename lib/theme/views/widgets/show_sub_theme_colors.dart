@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/app_const.dart';
-import '../../../widgets/app/color_card.dart';
+import '../../../core/views/widgets/app/color_card.dart';
 
 /// Draw a number of boxes showing the colors of key sub theme color properties
 /// in the ColorScheme of the inherited ThemeData and its color properties.

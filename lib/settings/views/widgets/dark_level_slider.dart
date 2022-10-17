@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../widgets/universal/animated_hide.dart';
-import '../../providers/settings_providers.dart';
+import '../../../core/views/widgets/universal/animated_hide.dart';
+import '../../controllers/settings_providers.dart';
 
 class DarkLevelSlider extends ConsumerWidget {
   const DarkLevelSlider({super.key});

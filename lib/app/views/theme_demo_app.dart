@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../constants/app_const.dart';
+import '../../core/utils/app_scroll_behavior.dart';
 import '../../home/views/home_page.dart';
 import '../../splash/views/splash_page.dart';
-import '../../theme/providers/theme_providers.dart';
+import '../../theme/controllers/theme_providers.dart';
 import '../../theme/views/pages/theme_showcase_page.dart';
-import '../../utils/app_scroll_behavior.dart';
 
 // We are using a Consumer Widget to access the Riverpod providers we
 // use to control the used light and dark themes, as well as mode.

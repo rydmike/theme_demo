@@ -21,9 +21,6 @@ class AppInsets {
   // Outline thickness on outline and toggle buttons.
   static const double outlineThickness = 1.5;
 
-  // Bottom sheet elevation
-  static const double bottomSheetElevation = 6;
-
   // The max dp width used for layout content on the screen in the available
   // body area. Wider content gets growing side padding, kind of like on most
   // web pages when they are used on super wide screen. Just a design used for

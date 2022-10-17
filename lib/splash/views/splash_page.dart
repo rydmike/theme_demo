@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../widgets/universal/colored_text.dart';
+import '../../core/views/widgets/universal/colored_text.dart';
 
 /// SplashPageOne splash example page.
 class SplashPage extends StatelessWidget {

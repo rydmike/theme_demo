@@ -6,12 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../about/views/about.dart';
 import '../../constants/app_icons.dart';
 import '../../constants/app_insets.dart';
+import '../../core/views/widgets/universal/page_body.dart';
 import '../../drawer/views/app_drawer.dart';
 import '../../settings/views/widgets/theme_settings.dart';
 import '../../theme/views/widgets/show_color_scheme_colors.dart';
 import '../../theme/views/widgets/show_theme_data_colors.dart';
-import '../../widgets/universal/page_body.dart';
-import '../providers/counter_provider.dart';
+import '../controllers/counter_provider.dart';
 
 /// Home page showing with a simple Riverpod count and theme controls.
 ///

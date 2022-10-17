@@ -2,8 +2,8 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../widgets/universal/animated_hide.dart';
-import '../../providers/settings_providers.dart';
+import '../../../core/views/widgets/universal/animated_hide.dart';
+import '../../controllers/settings_providers.dart';
 import 'app_bar_elevation_slider.dart';
 import 'dark_app_bar_style_toggle_buttons.dart';
 import 'dark_colors_swap_switch.dart';
