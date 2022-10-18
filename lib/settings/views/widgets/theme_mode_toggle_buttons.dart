@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_icons.dart';
-import '../../../../theme/controllers/theme_providers.dart';
+import '../../controllers/settings.dart';
 
 /// Toggle the surface style of the application.
 ///
@@ -15,7 +15,7 @@ class ThemeModeToggleButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ThemeMode themeMode = ref.watch(themeModeProvider);
+    final ThemeMode themeMode = ref.watch(Settings.themeModeProvider);
     final List<bool> isSelected = <bool>[
       themeMode == ThemeMode.light,
       themeMode == ThemeMode.system,
@@ -23,13 +23,13 @@ class ThemeModeToggleButtons extends ConsumerWidget {
     ];
     return ToggleButtons(
       isSelected: isSelected,
-      onPressed: (int newIndex) async {
+      onPressed: (int newIndex) {
         if (newIndex == 0) {
-          await ref.read(themeModeProvider.notifier).set(ThemeMode.light);
+          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.light);
         } else if (newIndex == 1) {
-          await ref.read(themeModeProvider.notifier).set(ThemeMode.system);
+          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.system);
         } else {
-          await ref.read(themeModeProvider.notifier).set(ThemeMode.dark);
+          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.dark);
         }
       },
       children: const <Widget>[

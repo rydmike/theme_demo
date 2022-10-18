@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_icons.dart';
-import '../../controllers/settings_providers.dart';
+import '../../controllers/settings.dart';
 
 /// Toggle the AppBar style of the application for light theme mode.
 ///
@@ -17,7 +17,7 @@ class LightAppBarStyleToggleButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeData theme = Theme.of(context);
-    final FlexAppBarStyle style = ref.watch(lightAppBarStyleProvider);
+    final FlexAppBarStyle style = ref.watch(Settings.lightAppBarStyleProvider);
     final MaterialColor primarySwatch =
         FlexColorScheme.createPrimarySwatch(theme.colorScheme.primary);
     final List<bool> isSelected = <bool>[
@@ -29,8 +29,8 @@ class LightAppBarStyleToggleButtons extends ConsumerWidget {
     ];
     return ToggleButtons(
       isSelected: isSelected,
-      onPressed: (int newIndex) async {
-        await ref.read(lightAppBarStyleProvider.notifier).set(
+      onPressed: (int newIndex) {
+        ref.read(Settings.lightAppBarStyleProvider.notifier).set(
               FlexAppBarStyle.values[newIndex],
             );
       },

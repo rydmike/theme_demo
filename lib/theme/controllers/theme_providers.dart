@@ -1,25 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../persistence/key_value/key_value.dart';
-import '../../settings/controllers/settings_providers.dart';
-import '../../settings/models/settings.dart';
+import '../../settings/controllers/settings.dart';
 import '../models/app_theme.dart';
-
-/// The themeModeProvider represents a [StateProvider] to provide the state of
-/// the [ThemeMode], so to be able to toggle the application wide theme mode.
-final StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
-    themeModeProvider =
-    StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>(
-  (StateNotifierProviderRef<SettingsEntry<ThemeMode>, ThemeMode> ref) {
-    return SettingsEntry<ThemeMode>(
-      ref,
-      defaultValue: KeyValue.defaultThemeMode,
-      key: KeyValue.keyThemeMode,
-    );
-  },
-  name: '${KeyValue.keyThemeMode}Provider',
-);
 
 /// The light [ThemeData] provider.
 ///
@@ -31,12 +14,12 @@ final StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
 final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
   (ProviderRef<ThemeData> ref) {
     return AppTheme.light(
-      usedTheme: ref.watch(schemeProvider),
-      swapColors: ref.watch(lightSwapColorsProvider),
-      appBarStyle: ref.watch(lightAppBarStyleProvider),
-      appBarElevation: ref.watch(appBarElevationProvider),
-      surfaceMode: ref.watch(lightSurfaceModeProvider),
-      blendLevel: ref.watch(lightBlendLevelProvider),
+      usedTheme: ref.watch(Settings.schemeIndexProvider),
+      surfaceMode: ref.watch(Settings.lightSurfaceModeProvider),
+      blendLevel: ref.watch(Settings.lightBlendLevelProvider),
+      swapColors: ref.watch(Settings.lightSwapColorsProvider),
+      appBarElevation: ref.watch(Settings.appBarElevationProvider),
+      appBarStyle: ref.watch(Settings.lightAppBarStyleProvider),
     );
   },
   name: 'lightThemeProvider',
@@ -48,15 +31,15 @@ final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
 final Provider<ThemeData> darkThemeProvider = Provider<ThemeData>(
   (ProviderRef<ThemeData> ref) {
     return AppTheme.dark(
-      usedTheme: ref.watch(schemeProvider),
-      swapColors: ref.watch(darkSwapColorsProvider),
-      appBarStyle: ref.watch(darkAppBarStyleProvider),
-      appBarElevation: ref.watch(appBarElevationProvider),
-      surfaceMode: ref.watch(darkSurfaceModeProvider),
-      blendLevel: ref.watch(darkBlendLevelProvider),
-      darkIsTrueBlack: ref.watch(darkIsTrueBlackProvider),
-      computeDark: ref.watch(computeDarkThemeProvider),
-      darkLevel: ref.watch(darkLevelProvider),
+      usedTheme: ref.watch(Settings.schemeIndexProvider),
+      surfaceMode: ref.watch(Settings.darkSurfaceModeProvider),
+      blendLevel: ref.watch(Settings.darkBlendLevelProvider),
+      swapColors: ref.watch(Settings.darkSwapColorsProvider),
+      appBarElevation: ref.watch(Settings.appBarElevationProvider),
+      appBarStyle: ref.watch(Settings.darkAppBarStyleProvider),
+      darkIsTrueBlack: ref.watch(Settings.darkIsTrueBlackProvider),
+      computeDark: ref.watch(Settings.darkComputeThemeProvider),
+      darkLevel: ref.watch(Settings.darkLevelProvider),
     );
   },
   name: 'darkThemeProvider',

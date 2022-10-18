@@ -1,6 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../constants/app_const.dart';
+import '../../../constants/app_const.dart';
 import 'key_value_db.dart';
 import 'key_value_db_hive.dart';
 import 'key_value_db_mem.dart';
@@ -28,13 +26,3 @@ enum UsedKeyValueDb {
     }
   }
 }
-
-/// A [StateProvider] to provide the state of the [UsedKeyValueDb], used to
-/// toggle the application used [KeyValueDb] implementation.
-///
-/// Must be overridden at the top to provide a start implementation value.
-final StateProvider<UsedKeyValueDb> usedKeyValueDbProvider =
-    StateProvider<UsedKeyValueDb>(
-  (final StateProviderRef<UsedKeyValueDb> ref) => UsedKeyValueDb.hive,
-  name: 'usedKeyValueDbProvider',
-);

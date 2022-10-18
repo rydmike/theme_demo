@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/settings_providers.dart';
+import '../../controllers/settings.dart';
 
 class LightSurfaceBlendLevelSlider extends ConsumerWidget {
   const LightSurfaceBlendLevelSlider({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final int level = ref.watch(lightBlendLevelProvider);
+    final int level = ref.watch(Settings.lightBlendLevelProvider);
     final TextTheme textTheme = Theme.of(context).textTheme;
     return ListTile(
       title: Column(
@@ -19,8 +19,8 @@ class LightSurfaceBlendLevelSlider extends ConsumerWidget {
               divisions: 40,
               label: level.toString(),
               value: level.toDouble(),
-              onChanged: (double value) async {
-                await ref.read(lightBlendLevelProvider.notifier).set(
+              onChanged: (double value) {
+                ref.read(Settings.lightBlendLevelProvider.notifier).set(
                       value.toInt(),
                     );
               }),

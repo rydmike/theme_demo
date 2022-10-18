@@ -5,13 +5,13 @@ import '../../../constants/app_insets.dart';
 import '../../../settings/views/widgets/app_bar_elevation_slider.dart';
 import '../../../settings/views/widgets/dark_app_bar_style_toggle_buttons.dart';
 import '../../../settings/views/widgets/dark_colors_swap_switch.dart';
+import '../../../settings/views/widgets/dark_compute_theme_switch.dart';
 import '../../../settings/views/widgets/dark_level_slider.dart';
-import '../../../settings/views/widgets/dark_theme_compute_switch.dart';
+import '../../../settings/views/widgets/dark_true_black_switch.dart';
 import '../../../settings/views/widgets/light_app_bar_style_toggle_buttons.dart';
 import '../../../settings/views/widgets/light_colors_swap_switch.dart';
 import '../../../settings/views/widgets/theme_mode_toggle_buttons.dart';
 import '../../../settings/views/widgets/theme_popup_menu.dart';
-import '../../../settings/views/widgets/true_black_switch.dart';
 import '../../core/views/widgets/universal/animated_hide.dart';
 
 /// A widget that allows us to change some of the theme settings. Intended
@@ -56,8 +56,8 @@ class BottomSheetSettings extends ConsumerWidget {
                   hide: isLight,
                   child: Column(
                     children: const <Widget>[
-                      TrueBlackSwitch(),
-                      DarkThemeComputeSwitch(),
+                      DarkIsTrueBlackSwitch(),
+                      DarkComputeThemeSwitch(),
                       DarkLevelSlider(),
                     ],
                   ),

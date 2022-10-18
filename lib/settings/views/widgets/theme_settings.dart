@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/views/widgets/universal/animated_hide.dart';
-import '../../controllers/settings_providers.dart';
+import '../../controllers/settings.dart';
 import 'app_bar_elevation_slider.dart';
 import 'dark_app_bar_style_toggle_buttons.dart';
 import 'dark_colors_swap_switch.dart';
+import 'dark_compute_theme_switch.dart';
 import 'dark_level_slider.dart';
 import 'dark_surface_blend_level_slider.dart';
 import 'dark_surface_style_toggle_buttons.dart';
-import 'dark_theme_compute_switch.dart';
+import 'dark_true_black_switch.dart';
 import 'light_app_bar_style_toggle_buttons.dart';
 import 'light_colors_swap_switch.dart';
 import 'light_surface_blend_level_slider.dart';
 import 'light_surface_style_toggle_buttons.dart';
 import 'theme_mode_toggle_buttons.dart';
 import 'theme_popup_menu.dart';
-import 'true_black_switch.dart';
 
 /// A Column widget that allows us to change all app used theme settings.
 ///
@@ -88,8 +88,8 @@ class ThemeSettings extends ConsumerWidget {
           hide: isLight,
           child: Column(
             children: const <Widget>[
-              TrueBlackSwitch(),
-              DarkThemeComputeSwitch(),
+              DarkIsTrueBlackSwitch(),
+              DarkComputeThemeSwitch(),
               DarkLevelSlider(),
             ],
           ),
@@ -99,7 +99,7 @@ class ThemeSettings extends ConsumerWidget {
           ListTile(
             title: const Text('Surface blend mode light'),
             subtitle: Text(
-              explainMode(ref.watch(lightSurfaceModeProvider)),
+              explainMode(ref.watch(Settings.lightSurfaceModeProvider)),
             ),
           ),
           const ListTile(trailing: LightSurfaceStyleToggleButtons()),
@@ -113,7 +113,7 @@ class ThemeSettings extends ConsumerWidget {
           ListTile(
             title: const Text('Surface blend mode dark'),
             subtitle: Text(
-              explainMode(ref.watch(darkSurfaceModeProvider)),
+              explainMode(ref.watch(Settings.darkSurfaceModeProvider)),
             ),
           ),
           const ListTile(trailing: DarkSurfaceStyleToggleButtons()),
