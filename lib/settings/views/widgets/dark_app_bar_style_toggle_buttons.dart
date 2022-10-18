@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_icons.dart';
-import '../../controllers/settings_providers.dart';
+import '../../controllers/settings.dart';
 
 /// Toggle the AppBar style of the application for dark theme mode.
 ///
@@ -18,7 +18,7 @@ class DarkAppBarStyleToggleButtons extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
-    final FlexAppBarStyle style = ref.watch(darkAppBarStyleProvider);
+    final FlexAppBarStyle style = ref.watch(Settings.darkAppBarStyleProvider);
     final MaterialColor primarySwatch =
         FlexColorScheme.createPrimarySwatch(colorScheme.primary);
     final List<bool> isSelected = <bool>[
@@ -30,10 +30,10 @@ class DarkAppBarStyleToggleButtons extends ConsumerWidget {
     ];
     return ToggleButtons(
       isSelected: isSelected,
-      onPressed: (int newIndex) async {
-        await ref.read(darkAppBarStyleProvider.notifier).set(
-              FlexAppBarStyle.values[newIndex],
-            );
+      onPressed: (int newIndex) {
+        ref
+            .read(Settings.darkAppBarStyleProvider.notifier)
+            .set(FlexAppBarStyle.values[newIndex]);
       },
       children: <Widget>[
         Icon(AppIcons.appbarColored,

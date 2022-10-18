@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../constants/app_insets.dart';
 import '../../../../theme/models/app_theme.dart';
-import '../../controllers/settings_providers.dart';
+import '../../controllers/settings.dart';
 
 // This is a theme selector using a ListTile with a Popup-up menu theme
 // selection widget.
@@ -27,13 +27,11 @@ class ThemePopupMenu extends ConsumerWidget {
 
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     final ColorScheme scheme = Theme.of(context).colorScheme;
-    final int selected = ref.watch(schemeProvider);
+    final int selected = ref.watch(Settings.schemeIndexProvider);
 
     return PopupMenuButton<int>(
       padding: EdgeInsets.zero,
-      onSelected: (int newTheme) async {
-        await ref.read(schemeProvider.notifier).set(newTheme);
-      },
+      onSelected: ref.read(Settings.schemeIndexProvider.notifier).set,
       itemBuilder: (BuildContext context) => <PopupMenuItem<int>>[
         for (int i = 0; i < AppTheme.schemes.length; i++)
           PopupMenuItem<int>(

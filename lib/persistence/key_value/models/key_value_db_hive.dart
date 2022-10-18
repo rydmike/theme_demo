@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import '../../core/utils/app_data_dir/app_data_dir_vm.dart';
+import '../../../core/utils/app_data_dir/app_data_dir_vm.dart';
 import 'key_value_db.dart';
 
 // Set the bool flag to true to show debug prints. Even if it is forgotten
@@ -28,6 +30,10 @@ class KeyValueDbHive implements KeyValueDb {
   //before accessing the storage box.
   late final Box<dynamic> _hiveBox;
 
+  // Is true if KeyValueDbHive has already been initialized, if it has
+  // and init() is called again, init() it does nothing.
+  bool _isInitialized = false;
+
   /// [KeyValueDbHive]'s init implementation. Must be called before
   /// accessing the storage box.
   ///
@@ -37,6 +43,13 @@ class KeyValueDbHive implements KeyValueDb {
   /// - Assign box to local Hive box instance.
   @override
   Future<void> init() async {
+    if (!kReleaseMode) {
+      debugPrint('Hive init called, _isInitialized = $_isInitialized');
+    }
+
+    // If init has already been called exit with no-op.
+    if (_isInitialized) return;
+
     // First register all Hive data type adapters. Used for our enum values.
     _registerHiveAdapters();
     // Get platform compatible storage folder for the Hive box,
@@ -60,6 +73,9 @@ class KeyValueDbHive implements KeyValueDb {
     await Hive.openBox<dynamic>(boxName);
     // Assign the box to our instance.
     _hiveBox = Hive.box<dynamic>(boxName);
+
+    // Set _isInitialized to true.
+    _isInitialized = true;
   }
 
   /// [KeyValueDbHive] implementation may close its box if so desired
@@ -69,21 +85,35 @@ class KeyValueDbHive implements KeyValueDb {
   Future<void> dispose() async {
     await _hiveBox.compact();
     await _hiveBox.close();
+
+    // Set _isInitialized to false.
+    _isInitialized = false;
   }
 
   /// Register all custom Hive data adapters.
+  ///
+  /// Don't change the adapter TypeIDs below. If you do make sure to delete
+  /// the Hive storage box and start from a new one.
   void _registerHiveAdapters() {
-    Hive.registerAdapter(ThemeModeAdapter());
-    Hive.registerAdapter(ColorAdapter());
-    Hive.registerAdapter(FlexSchemeAdapter());
-    Hive.registerAdapter(FlexSurfaceModeAdapter());
-    Hive.registerAdapter(FlexInputBorderTypeAdapter());
-    Hive.registerAdapter(FlexTabBarStyleAdapter());
-    Hive.registerAdapter(FlexAppBarStyleAdapter());
-    Hive.registerAdapter(FlexSystemNavBarStyleAdapter());
-    Hive.registerAdapter(FlexSchemeColorAdapter());
-    Hive.registerAdapter(NavigationDestinationLabelBehaviorAdapter());
-    Hive.registerAdapter(NavigationRailLabelTypeAdapter());
+    _safeRegisterAdapter(150, ThemeModeAdapter(150));
+    _safeRegisterAdapter(151, ColorAdapter(151));
+    _safeRegisterAdapter(152, FlexSchemeAdapter(152));
+    _safeRegisterAdapter(153, FlexSurfaceModeAdapter(153));
+    _safeRegisterAdapter(154, FlexInputBorderTypeAdapter(154));
+    _safeRegisterAdapter(155, FlexAppBarStyleAdapter(155));
+    _safeRegisterAdapter(156, FlexTabBarStyleAdapter(156));
+    _safeRegisterAdapter(157, FlexSystemNavBarStyleAdapter(157));
+    _safeRegisterAdapter(158, FlexSchemeColorAdapter(158));
+    _safeRegisterAdapter(159, NavigationDestinationLabelBehaviorAdapter(159));
+    _safeRegisterAdapter(160, NavigationRailLabelTypeAdapter(160));
+  }
+
+  void _safeRegisterAdapter<T>(
+    int typeId,
+    TypeAdapter<T> adapter,
+  ) {
+    if (Hive.isAdapterRegistered(typeId)) return;
+    Hive.registerAdapter(adapter);
   }
 
   /// Load/get a setting from the [KeyValueDbHive], using a key to access
@@ -101,7 +131,7 @@ class KeyValueDbHive implements KeyValueDb {
       }
       return loaded;
     } catch (e) {
-      debugPrint('Hive load (get) ERROR');
+      debugPrint('Hive get (load) ERROR');
       debugPrint(' Error message ...... : $e');
       debugPrint(' Store key .......... : $key');
       debugPrint(' defaultValue ....... : $defaultValue');
@@ -116,24 +146,28 @@ class KeyValueDbHive implements KeyValueDb {
   /// If type <T> is not an atomic Dart type, there must be a
   /// Hive type adapter that converts <T> into one.
   @override
-  Future<void> put<T>(String key, T value) async {
+  Future<void> put<T>(String key, T value) {
     try {
-      await _hiveBox.put(key, value);
       if (_debug) {
         debugPrint('Hive type   : $key as ${value.runtimeType}');
         debugPrint('Hive saved  : $key as $value');
       }
+      return _hiveBox.put(key, value);
     } catch (e) {
-      debugPrint('Hive save (put) ERROR');
+      debugPrint('Hive put (save) ERROR');
       debugPrint(' Error message ...... : $e');
       debugPrint(' Store key .......... : $key');
       debugPrint(' Save value ......... : $value');
+      rethrow;
     }
   }
 }
 
 /// A Hive data type adapter for enum [ThemeMode].
 class ThemeModeAdapter extends TypeAdapter<ThemeMode> {
+  ThemeModeAdapter(this.id);
+  final int id;
+
   @override
   ThemeMode read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -146,11 +180,14 @@ class ThemeModeAdapter extends TypeAdapter<ThemeMode> {
   }
 
   @override
-  int get typeId => 150;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for class [Color].
 class ColorAdapter extends TypeAdapter<Color> {
+  ColorAdapter(this.id);
+  final int id;
+
   @override
   Color read(BinaryReader reader) {
     final int value = reader.readInt();
@@ -163,11 +200,14 @@ class ColorAdapter extends TypeAdapter<Color> {
   }
 
   @override
-  int get typeId => 151;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [FlexScheme].
 class FlexSchemeAdapter extends TypeAdapter<FlexScheme> {
+  FlexSchemeAdapter(this.id);
+  final int id;
+
   @override
   FlexScheme read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -180,11 +220,14 @@ class FlexSchemeAdapter extends TypeAdapter<FlexScheme> {
   }
 
   @override
-  int get typeId => 152;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [FlexSurfaceMode].
 class FlexSurfaceModeAdapter extends TypeAdapter<FlexSurfaceMode> {
+  FlexSurfaceModeAdapter(this.id);
+  final int id;
+
   @override
   FlexSurfaceMode read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -197,11 +240,14 @@ class FlexSurfaceModeAdapter extends TypeAdapter<FlexSurfaceMode> {
   }
 
   @override
-  int get typeId => 153;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [FlexInputBorderType].
 class FlexInputBorderTypeAdapter extends TypeAdapter<FlexInputBorderType> {
+  FlexInputBorderTypeAdapter(this.id);
+  final int id;
+
   @override
   FlexInputBorderType read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -214,11 +260,14 @@ class FlexInputBorderTypeAdapter extends TypeAdapter<FlexInputBorderType> {
   }
 
   @override
-  int get typeId => 154;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [FlexAppBarStyle].
 class FlexAppBarStyleAdapter extends TypeAdapter<FlexAppBarStyle> {
+  FlexAppBarStyleAdapter(this.id);
+  final int id;
+
   @override
   FlexAppBarStyle read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -231,11 +280,14 @@ class FlexAppBarStyleAdapter extends TypeAdapter<FlexAppBarStyle> {
   }
 
   @override
-  int get typeId => 155;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [FlexTabBarStyle].
 class FlexTabBarStyleAdapter extends TypeAdapter<FlexTabBarStyle> {
+  FlexTabBarStyleAdapter(this.id);
+  final int id;
+
   @override
   FlexTabBarStyle read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -248,11 +300,14 @@ class FlexTabBarStyleAdapter extends TypeAdapter<FlexTabBarStyle> {
   }
 
   @override
-  int get typeId => 156;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [FlexSystemNavBarStyle].
 class FlexSystemNavBarStyleAdapter extends TypeAdapter<FlexSystemNavBarStyle> {
+  FlexSystemNavBarStyleAdapter(this.id);
+  final int id;
+
   @override
   FlexSystemNavBarStyle read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -265,7 +320,7 @@ class FlexSystemNavBarStyleAdapter extends TypeAdapter<FlexSystemNavBarStyle> {
   }
 
   @override
-  int get typeId => 157;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [SchemeColor], nullable.
@@ -273,6 +328,9 @@ class FlexSystemNavBarStyleAdapter extends TypeAdapter<FlexSystemNavBarStyle> {
 /// Handles storing <null> value as -1 and returns anything out of enum
 /// index range as null value.
 class FlexSchemeColorAdapter extends TypeAdapter<SchemeColor?> {
+  FlexSchemeColorAdapter(this.id);
+  final int id;
+
   @override
   SchemeColor? read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -289,12 +347,15 @@ class FlexSchemeColorAdapter extends TypeAdapter<SchemeColor?> {
   }
 
   @override
-  int get typeId => 158;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [NavigationDestinationLabelBehavior].
 class NavigationDestinationLabelBehaviorAdapter
     extends TypeAdapter<NavigationDestinationLabelBehavior> {
+  NavigationDestinationLabelBehaviorAdapter(this.id);
+  final int id;
+
   @override
   NavigationDestinationLabelBehavior read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -307,12 +368,15 @@ class NavigationDestinationLabelBehaviorAdapter
   }
 
   @override
-  int get typeId => 159;
+  int get typeId => id;
 }
 
 /// A Hive data type adapter for enum [NavigationRailLabelType].
 class NavigationRailLabelTypeAdapter
     extends TypeAdapter<NavigationRailLabelType> {
+  NavigationRailLabelTypeAdapter(this.id);
+  final int id;
+
   @override
   NavigationRailLabelType read(BinaryReader reader) {
     final int index = reader.readInt();
@@ -325,5 +389,5 @@ class NavigationRailLabelTypeAdapter
   }
 
   @override
-  int get typeId => 160;
+  int get typeId => id;
 }

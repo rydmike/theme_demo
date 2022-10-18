@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../controllers/settings_providers.dart';
+import '../../controllers/settings.dart';
 
 /// Toggle the surface mode of the application.
 ///
@@ -21,7 +21,7 @@ class LightSurfaceStyleToggleButtons extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ColorScheme scheme = Theme.of(context).colorScheme;
-    final FlexSurfaceMode mode = ref.watch(lightSurfaceModeProvider);
+    final FlexSurfaceMode mode = ref.watch(Settings.lightSurfaceModeProvider);
     final List<bool> isSelected = <bool>[
       mode == FlexSurfaceMode.level,
       mode == FlexSurfaceMode.highBackgroundLowScaffold,
@@ -52,8 +52,8 @@ class LightSurfaceStyleToggleButtons extends ConsumerWidget {
     ];
     return ToggleButtons(
       isSelected: isSelected,
-      onPressed: (int newIndex) async {
-        await ref.read(lightSurfaceModeProvider.notifier).set(
+      onPressed: (int newIndex) {
+        ref.read(Settings.lightSurfaceModeProvider.notifier).set(
               option[newIndex],
             );
       },

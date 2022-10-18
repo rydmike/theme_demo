@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/utils/same_types.dart';
+import '../../../core/utils/same_types.dart';
 import 'key_value_db.dart';
 // ignore_for_file: comment_references
 
@@ -487,7 +487,7 @@ class KeyValueDbPrefs implements KeyValueDb {
         return NavigationRailLabelType.values[value] as T;
       }
     } catch (e) {
-      debugPrint('SharedPrefs load ERROR');
+      debugPrint('SharedPrefs get (load) ERROR');
       debugPrint(' Error message ...... : $e');
       debugPrint(' Store key .......... : $key');
       debugPrint(' defaultValue ....... : $defaultValue');
@@ -687,10 +687,11 @@ class KeyValueDbPrefs implements KeyValueDb {
         }
       }
     } catch (e) {
-      debugPrint('SharedPrefs save ERROR');
+      debugPrint('SharedPrefs put (save) ERROR');
       debugPrint(' Error message ...... : $e');
       debugPrint(' Store key .......... : $key');
       debugPrint(' Save value ......... : $value');
+      rethrow;
     }
   }
 }

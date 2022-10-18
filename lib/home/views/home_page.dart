@@ -8,6 +8,7 @@ import '../../constants/app_icons.dart';
 import '../../constants/app_insets.dart';
 import '../../core/views/widgets/universal/page_body.dart';
 import '../../drawer/views/app_drawer.dart';
+import '../../persistence/key_value/views/key_value_db_toggle_buttons.dart';
 import '../../settings/views/widgets/theme_settings.dart';
 import '../../theme/views/widgets/show_color_scheme_colors.dart';
 import '../../theme/views/widgets/show_theme_data_colors.dart';
@@ -75,7 +76,6 @@ class _MyHomePageState extends ConsumerState<HomePage> {
               const Divider(),
               Text('Counter', style: headline4),
               ListTile(
-                contentPadding: EdgeInsets.zero,
                 title: const Text(
                   'You pushed the (+) button this many times',
                 ),
@@ -83,6 +83,11 @@ class _MyHomePageState extends ConsumerState<HomePage> {
                   '${ref.watch(counterProvider)}',
                   style: Theme.of(context).textTheme.headline4,
                 ),
+              ),
+              const Divider(),
+              const ListTile(
+                title: Text('Select key value database'),
+                trailing: KeyValueDbToggleButtons(),
               ),
               const Divider(),
               Text('Theme Settings', style: headline4),

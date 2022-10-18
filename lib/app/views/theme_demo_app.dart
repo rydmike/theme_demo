@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../constants/app_const.dart';
 import '../../core/utils/app_scroll_behavior.dart';
 import '../../home/views/home_page.dart';
+import '../../settings/controllers/settings.dart';
 import '../../splash/views/splash_page.dart';
 import '../../theme/controllers/theme_providers.dart';
 import '../../theme/views/pages/theme_showcase_page.dart';
@@ -24,7 +25,7 @@ class ThemeDemoApp extends ConsumerWidget {
       title: AppConst.appName,
       theme: ref.watch(lightThemeProvider),
       darkTheme: ref.watch(darkThemeProvider),
-      themeMode: ref.watch(themeModeProvider),
+      themeMode: ref.watch(Settings.themeModeProvider),
       initialRoute: HomePage.route,
       routes: <String, WidgetBuilder>{
         SplashPage.route: (BuildContext context) => const SplashPage(),
