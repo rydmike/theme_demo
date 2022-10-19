@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 
 import '../../../core/views/widgets/app/color_scheme_box.dart';
 
+// ignore_for_file: comment_references
+
 /// Widget used to select used AppBarStyle using a popup menu.
 ///
 /// Uses index out out of range of [FlexAppBarStyle] to represent and select
 /// no selection of [FlexAppBarStyle] which sets its value to null in parent,
 /// so we can use a selectable item as null input, to represent default value
-/// via no value definition. A bit ugly/pragmatic approach.
+/// via no value definition. A bit ugly, but a pragmatic approach.
 ///
-/// This is stateless widget version of AppBarStyle Popupmenu selection.
+/// This is a stateless widget version of AppBarStyle Popupmenu selection using
+/// call back. It was designed this way to be state management agnostic.
+/// Widget using this widget can use state management to get and set values
+/// for this widget. In this app see e.g. widgets
+/// [LightAppBarStylePopupMenu] and [DarkAppBarStylePopupMenu].
+///
 class AppBarStylePopupMenu extends StatelessWidget {
   const AppBarStylePopupMenu({
     super.key,
@@ -132,7 +139,7 @@ class AppBarStylePopupMenu extends StatelessWidget {
             child: ListTile(
               dense: true,
               leading: ColorSchemeBox(
-                color: i >= FlexAppBarStyle.values.length
+                backgroundColor: i >= FlexAppBarStyle.values.length
                     ? _appBarStyleColor(null, colorScheme, isLight, useM3)
                     : _appBarStyleColor(
                         FlexAppBarStyle.values[i],
@@ -140,6 +147,8 @@ class AppBarStylePopupMenu extends StatelessWidget {
                         isLight,
                         useM3,
                       ),
+                selected: index == i ||
+                    (i >= FlexAppBarStyle.values.length && useDefault),
                 defaultOption: i >= FlexAppBarStyle.values.length,
               ),
               title: i >= FlexAppBarStyle.values.length
@@ -162,7 +171,7 @@ class AppBarStylePopupMenu extends StatelessWidget {
           ],
         ),
         trailing: ColorSchemeBox(
-          color: enabled && !useDefault
+          backgroundColor: enabled && !useDefault
               ? _appBarStyleColor(
                   FlexAppBarStyle.values[index],
                   colorScheme,

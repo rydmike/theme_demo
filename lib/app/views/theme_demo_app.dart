@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../constants/app_const.dart';
+import '../../core/constants/app_const.dart';
 import '../../core/utils/app_scroll_behavior.dart';
 import '../../home/views/home_page.dart';
 import '../../settings/controllers/settings.dart';
@@ -9,8 +9,10 @@ import '../../splash/views/splash_page.dart';
 import '../../theme/controllers/theme_providers.dart';
 import '../../theme/views/pages/theme_showcase_page.dart';
 
-// We are using a ConsumerWidget to access the Riverpod providers we
-// use to control the used light and dark themes, as well as mode.
+/// The [MaterialApp] widget for the ThemeDemo application.
+///
+/// We are using a ConsumerWidget to access the Riverpod providers we
+/// use to control the used light and dark themes, as well as mode.
 class ThemeDemoApp extends ConsumerWidget {
   const ThemeDemoApp({super.key});
 

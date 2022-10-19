@@ -38,16 +38,20 @@ class Settings {
   static const double _appBarElevation = 0.0;
   static const FlexAppBarStyle _lightAppBarStyle = FlexAppBarStyle.primary;
   static const FlexAppBarStyle _darkAppBarStyle = FlexAppBarStyle.background;
+  // AppBar opacity and scrim
+  static const bool _transparentStatusBar = false;
+  static const double _lightAppBarOpacity = 0.95;
+  static const double _darkAppBarOpacity = 0.91;
   // Dark theme only extra settings, like computed dark theme and true black.
-  static const bool _darkComputeTheme = false;
-  static const int _darkLevel = 25;
   static const bool _darkIsTrueBlack = false;
+  static const bool _darkComputeTheme = false;
+  static const int _darkComputeLevel = 25;
 
   /// Rest all settings entries and their controllers to default values.
   ///
   /// This action is triggered by the user.
-  static void resetAll(Ref ref) {
-    if (_debug) debugPrint('Settings resetAll DB values');
+  static void resetAll(WidgetRef ref) {
+    if (_debug) debugPrint('Settings: resetAll DB values');
     // Use material 3, theme mode and active color scheme.
     ref.read(useMaterial3Provider.notifier).reset();
     ref.read(themeModeProvider.notifier).reset();
@@ -65,17 +69,21 @@ class Settings {
     ref.read(appBarElevationProvider.notifier).reset();
     ref.read(lightAppBarStyleProvider.notifier).reset();
     ref.read(darkAppBarStyleProvider.notifier).reset();
+    // AppBar transparent status bar scrim in Android and opacity.
+    ref.read(transparentStatusBarProvider.notifier).reset();
+    ref.read(lightAppBarOpacityProvider.notifier).reset();
+    ref.read(darkAppBarOpacityProvider.notifier).reset();
     // Dark theme only extra settings, like computed dark theme and true black.
-    ref.read(darkComputeThemeProvider.notifier).reset();
-    ref.read(darkLevelProvider.notifier).reset();
     ref.read(darkIsTrueBlackProvider.notifier).reset();
+    ref.read(darkComputeThemeProvider.notifier).reset();
+    ref.read(darkComputeLevelProvider.notifier).reset();
   }
 
   /// Set all settings entries and their controllers to values from DB.
   ///
   /// This is typically only used when switching DB implementation dynamically.
   static void getAll(Ref ref) {
-    if (_debug) debugPrint('Settings getAll DB values');
+    if (_debug) debugPrint('Settings: getAll DB values');
     // Use material 3, theme mode and active color scheme.
     ref.read(useMaterial3Provider.notifier).get();
     ref.read(themeModeProvider.notifier).get();
@@ -93,10 +101,14 @@ class Settings {
     ref.read(appBarElevationProvider.notifier).get();
     ref.read(lightAppBarStyleProvider.notifier).get();
     ref.read(darkAppBarStyleProvider.notifier).get();
+    // AppBar transparent status bar scrim in Android and opacity.
+    ref.read(transparentStatusBarProvider.notifier).get();
+    ref.read(lightAppBarOpacityProvider.notifier).get();
+    ref.read(darkAppBarOpacityProvider.notifier).get();
     // Dark theme only extra settings, like computed dark theme and true black.
-    ref.read(darkComputeThemeProvider.notifier).get();
-    ref.read(darkLevelProvider.notifier).get();
     ref.read(darkIsTrueBlackProvider.notifier).get();
+    ref.read(darkComputeThemeProvider.notifier).get();
+    ref.read(darkComputeLevelProvider.notifier).get();
   }
 
   /// String key used for defining if we use Material 3 or Material 2.
@@ -367,10 +379,93 @@ class Settings {
     name: '${_keyDarkAppBarStyle}Provider',
   );
 
+  /// String key used for storing android app bar scrim usage.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyTransparentStatusBar = 'transparentStatusBar';
+
+  /// Provider for swapping primary and secondary colors in dark theme mode.
+  ///
+  /// Defaults to [_transparentStatusBar].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+      transparentStatusBarProvider =
+      StateNotifierProvider<SettingsEntry<bool>, bool>(
+    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _transparentStatusBar,
+        key: _keyTransparentStatusBar,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyTransparentStatusBar}Provider',
+  );
+
+  /// String key used for storing the light mode [AppBar] opacity.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyLightAppBarOpacity = 'lightAppBarOpacity';
+
+  /// Provider for the light [AppBar] opacity.
+  ///
+  /// Defaults to [_lightAppBarOpacity].
+  static final StateNotifierProvider<SettingsEntry<double>, double>
+      lightAppBarOpacityProvider =
+      StateNotifierProvider<SettingsEntry<double>, double>(
+    (StateNotifierProviderRef<SettingsEntry<double>, double> ref) {
+      return SettingsEntry<double>(
+        ref,
+        defaultValue: _lightAppBarOpacity,
+        key: _keyLightAppBarOpacity,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyLightAppBarOpacity}Provider',
+  );
+
+  /// String key used for storing the light mode [AppBar] opacity.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyDarkAppBarOpacity = 'darkAppBarOpacity';
+
+  /// Provider for the dark [AppBar] opacity.
+  ///
+  /// Defaults to [_darkAppBarOpacity].
+  static final StateNotifierProvider<SettingsEntry<double>, double>
+      darkAppBarOpacityProvider =
+      StateNotifierProvider<SettingsEntry<double>, double>(
+    (StateNotifierProviderRef<SettingsEntry<double>, double> ref) {
+      return SettingsEntry<double>(
+        ref,
+        defaultValue: _darkAppBarOpacity,
+        key: _keyDarkAppBarOpacity,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyDarkAppBarOpacity}Provider',
+  );
+
   /// String key used for storing bool to define if we use computed dark theme.
   ///
   /// The associated provider uses same name with "Provider" added to it.
   static const String _keyDarkComputeTheme = 'darkComputeTheme';
+
+  /// Provider for using true black, instead of normal dark, in dark theme mode.
+  ///
+  /// Defaults to [_darkIsTrueBlack].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+      darkIsTrueBlackProvider =
+      StateNotifierProvider<SettingsEntry<bool>, bool>(
+    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _darkIsTrueBlack,
+        key: _keyDarkIsTrueBlack,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyDarkIsTrueBlack}Provider',
+  );
 
   /// Option to use dark scheme calculation from light scheme colors, instead
   /// of using the pre-defined dark scheme colors.
@@ -405,7 +500,7 @@ class Settings {
   /// String key used for storing dark saturation level for computed dark theme.
   ///
   /// The associated provider uses same name with "Provider" added to it.
-  static const String _keyDarkLevel = 'darkLevel';
+  static const String _keyDarkComputeLevel = 'darkComputeLevel';
 
   /// Dark scheme brightness level provider, used for adjusting the color
   /// saturation of the dark color scheme calculated from light scheme.
@@ -416,39 +511,22 @@ class Settings {
   /// light scheme colors. What works best depends on how saturated the light
   /// scheme colors are, and personal preferences.
   ///
-  /// Defaults to [_darkLevel]%.
+  /// Defaults to [_darkComputeLevel]%.
   static final StateNotifierProvider<SettingsEntry<int>, int>
-      darkLevelProvider = StateNotifierProvider<SettingsEntry<int>, int>(
+      darkComputeLevelProvider = StateNotifierProvider<SettingsEntry<int>, int>(
     (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
       return SettingsEntry<int>(
         ref,
-        defaultValue: _darkLevel,
-        key: _keyDarkLevel,
+        defaultValue: _darkComputeLevel,
+        key: _keyDarkComputeLevel,
       );
     },
     // Use the unique key-value DB key as provider name, useful for debugging.
-    name: '${_keyDarkLevel}Provider',
+    name: '${_keyDarkComputeLevel}Provider',
   );
 
   /// String key used for storing if dark mode uses true black.
   ///
   /// The associated provider uses same name with "Provider" added to it.
   static const String _keyDarkIsTrueBlack = 'darkIsTrueBlack';
-
-  /// Provider for using true black, instead of normal dark, in dark theme mode.
-  ///
-  /// Defaults to [_darkIsTrueBlack].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      darkIsTrueBlackProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
-      return SettingsEntry<bool>(
-        ref,
-        defaultValue: _darkIsTrueBlack,
-        key: _keyDarkIsTrueBlack,
-      );
-    },
-    // Use the unique key-value DB key as provider name, useful for debugging.
-    name: '${_keyDarkIsTrueBlack}Provider',
-  );
 }

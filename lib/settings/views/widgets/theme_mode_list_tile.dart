@@ -14,10 +14,16 @@ class ThemeModeListTile extends ConsumerWidget {
     return ListTile(
       title: title,
       onTap: () {
-        if (ref.read(Settings.themeModeProvider) != ThemeMode.light) {
-          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.light);
-        } else {
-          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.dark);
+        switch (ref.read(Settings.themeModeProvider)) {
+          case ThemeMode.light:
+            ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.system);
+            break;
+          case ThemeMode.system:
+            ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.dark);
+            break;
+          case ThemeMode.dark:
+            ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.light);
+            break;
         }
       },
       trailing: const ThemeModeToggleButtons(),

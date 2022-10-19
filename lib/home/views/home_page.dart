@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../about/views/about.dart';
-import '../../constants/app_icons.dart';
-import '../../constants/app_insets.dart';
+import '../../core/constants/app_icons.dart';
+import '../../core/constants/app_insets.dart';
 import '../../core/views/widgets/universal/page_body.dart';
 import '../../drawer/views/app_drawer.dart';
-import '../../persistence/key_value/views/key_value_db_toggle_buttons.dart';
+import '../../persistence/key_value/views/key_value_db_list_tile.dart';
 import '../../settings/views/widgets/theme_settings.dart';
 import '../../theme/views/widgets/show_color_scheme_colors.dart';
 import '../../theme/views/widgets/show_sub_theme_colors.dart';
@@ -50,8 +50,16 @@ class _MyHomePageState extends ConsumerState<HomePage> {
     final ThemeData theme = Theme.of(context);
     final TextTheme textTheme = theme.textTheme;
     final TextStyle headline4 = textTheme.headline4!;
+    final MediaQueryData media = MediaQuery.of(context);
+    final double topPadding = media.padding.top + kToolbarHeight;
+    final double bottomPadding =
+        media.padding.bottom + kBottomNavigationBarHeight;
+    final bool isNarrow = media.size.width < AppInsets.phoneWidthBreakpoint;
+    final double sideMargin = isNarrow ? AppInsets.l : AppInsets.xl;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: AppBar(
         title: const Text('ThemeSettings & Counter'),
         actions: const <Widget>[AboutIconButton()],
@@ -65,7 +73,12 @@ class _MyHomePageState extends ConsumerState<HomePage> {
           controller: scrollController,
           child: ListView(
             controller: scrollController,
-            padding: const EdgeInsets.all(AppInsets.edge),
+            padding: EdgeInsets.fromLTRB(
+              sideMargin,
+              topPadding,
+              sideMargin,
+              bottomPadding,
+            ),
             children: <Widget>[
               Text('Info', style: headline4),
               const Text(
@@ -86,12 +99,7 @@ class _MyHomePageState extends ConsumerState<HomePage> {
                 ),
               ),
               const Divider(),
-              const ListTile(
-                title: Text('Select key value database'),
-                subtitle: Text('You can change used persistence implementation '
-                    'dynamically in the app. Mem is ram and not persisted.'),
-                trailing: KeyValueDbToggleButtons(),
-              ),
+              const ThemeModeListTile(),
               const Divider(),
               Text('Theme Settings', style: headline4),
               const ThemeSettings(),
@@ -99,11 +107,11 @@ class _MyHomePageState extends ConsumerState<HomePage> {
               Text('Theme Colors', style: headline4),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
-                child: ShowThemeDataColors(),
+                child: ShowColorSchemeColors(),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
-                child: ShowColorSchemeColors(),
+                child: ShowThemeDataColors(),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),

@@ -4,7 +4,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../constants/app_const.dart';
+import '../../../constants/app_insets.dart';
 import 'copy_color_to_clipboard.dart';
 
 /// This is just simple SizedBox in a Card, with a passed in label, background
@@ -37,8 +37,8 @@ class ColorCard extends StatelessWidget {
     final String nameThatColor = ColorTools.nameThatColor(color);
     final String space = materialName == '' ? '' : ' ';
     final MediaQueryData media = MediaQuery.of(context);
-    final bool isPhone = media.size.width < AppConst.phoneWidthBreakpoint ||
-        media.size.height < AppConst.phoneHeightBreakpoint;
+    final bool isPhone = media.size.width < AppInsets.phoneWidthBreakpoint ||
+        media.size.height < AppInsets.phoneHeightBreakpoint;
     final double fontSize = isPhone ? 10 : 11;
     final Size effectiveSize =
         size ?? (isPhone ? const Size(74, 54) : const Size(86, 58));

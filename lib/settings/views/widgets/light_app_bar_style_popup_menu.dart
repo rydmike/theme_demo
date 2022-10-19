@@ -31,15 +31,15 @@ class LightAppBarStylePopupMenu extends ConsumerWidget {
         }
       },
       // To access the custom color we defined for AppBars in this
-      // PopupMenu buttons widget, we have to pass it along, or the
+      // PopupMenuButton widget, we have to pass it along, or the
       // entire controller. We chose the color in this case. It is not
       // carried with the theme, so we cannot get it from there in
       // the widget. FlexColorScheme knows the color when
       // you make a theme with it. This color is used to show the
       // correct color on the AppBar custom color option for the not
-      // built-in custom color scheme.
-      // In our examples we only actually have a custom app bar
-      // color in the three custom color examples, and we want to
+      // built-in custom color schemes.
+      // In our examples we only actually have custom app bar
+      // colors in the three custom color examples, and we want to
       // show them as well on the PopupMenu button.
       customAppBarColor: AppTheme
           .schemes[ref.watch(Settings.schemeIndexProvider)].light.appBarColor,

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/constants/app_db.dart';
 import '../models/key_value_db.dart';
 import '../models/used_key_value_db.dart';
 
@@ -10,6 +11,6 @@ import '../models/used_key_value_db.dart';
 /// [KeyValueDb] implementation.
 final StateProvider<UsedKeyValueDb> usedKeyValueDbProvider =
     StateProvider<UsedKeyValueDb>(
-  (final StateProviderRef<UsedKeyValueDb> ref) => UsedKeyValueDb.hive,
+  (final StateProviderRef<UsedKeyValueDb> ref) => AppDb.keyValue,
   name: 'usedKeyValueDbProvider',
 );

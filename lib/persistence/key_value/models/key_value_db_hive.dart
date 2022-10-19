@@ -85,7 +85,6 @@ class KeyValueDbHive implements KeyValueDb {
   Future<void> dispose() async {
     await _hiveBox.compact();
     await _hiveBox.close();
-
     // Set _isInitialized to false.
     _isInitialized = false;
   }
@@ -108,6 +107,12 @@ class KeyValueDbHive implements KeyValueDb {
     _safeRegisterAdapter(160, NavigationRailLabelTypeAdapter(160));
   }
 
+  /// Hive keeps registered type adapters in a singleton that is not
+  /// released even if we close the box. For it not to throw if we init it
+  /// again, we check if the adapter id we plan to use is already registered.
+  /// If it is, we skip registration. We could also use
+  /// Hive.registerAdapter(adapter, override: true), but that also screams
+  /// an ugly warning in the console. This gets around both cases.
   void _safeRegisterAdapter<T>(
     int typeId,
     TypeAdapter<T> adapter,

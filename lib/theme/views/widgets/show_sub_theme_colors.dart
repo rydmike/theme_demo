@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/app_const.dart';
+import '../../../core/constants/app_insets.dart';
 import '../../../core/views/widgets/app/color_card.dart';
 
 /// Draw a number of boxes showing the colors of key sub theme color properties
@@ -44,10 +44,11 @@ class ShowSubThemeColors extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colorScheme = theme.colorScheme;
     final bool isDark = colorScheme.brightness == Brightness.dark;
+    final bool useMaterial3 = theme.useMaterial3;
 
     final MediaQueryData media = MediaQuery.of(context);
-    final bool isPhone = media.size.width < AppConst.phoneWidthBreakpoint ||
-        media.size.height < AppConst.phoneHeightBreakpoint;
+    final bool isPhone = media.size.width < AppInsets.phoneWidthBreakpoint ||
+        media.size.height < AppInsets.phoneHeightBreakpoint;
     final double spacing = isPhone ? 3 : 6;
 
     // Get effective background color.
@@ -68,7 +69,7 @@ class ShowSubThemeColors extends StatelessWidget {
       // If border was null, make one matching Card default, but with border
       // side, if it was not null, we leave it as it was.
       border ??= RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        borderRadius: BorderRadius.all(Radius.circular(useMaterial3 ? 12 : 4)),
         side: BorderSide(
           color: theme.dividerColor,
           width: 1,
@@ -92,7 +93,9 @@ class ShowSubThemeColors extends StatelessWidget {
         theme.toggleButtonsTheme.color ?? colorScheme.primary;
     final Color floatingActionButtonColor =
         theme.floatingActionButtonTheme.backgroundColor ??
-            colorScheme.secondary;
+            (theme.useMaterial3
+                ? colorScheme.primaryContainer
+                : colorScheme.secondary);
     final Color switchColor = theme.switchTheme.thumbColor
             ?.resolve(<MaterialState>{MaterialState.selected}) ??
         theme.toggleableActiveColor;
@@ -111,8 +114,13 @@ class ShowSubThemeColors extends StatelessWidget {
             colorScheme.primary;
     final Decoration? tooltipDecoration = theme.tooltipTheme.decoration;
     final Color tooltipColor = tooltipDecoration is BoxDecoration
-        ? tooltipDecoration.color ?? colorScheme.surface
-        : colorScheme.surface;
+        ? tooltipDecoration.color ??
+            (isDark
+                ? Colors.white.withOpacity(0.9)
+                : Colors.grey[700]!.withOpacity(0.9))
+        : (isDark
+            ? Colors.white.withOpacity(0.9)
+            : Colors.grey[700]!.withOpacity(0.9));
     final Color appBarColor = theme.appBarTheme.backgroundColor ??
         (isDark ? colorScheme.surface : colorScheme.primary);
     final Color tabBarColor = theme.tabBarTheme.labelColor ??
@@ -136,22 +144,31 @@ class ShowSubThemeColors extends StatelessWidget {
         theme.bottomNavigationBarTheme.selectedItemColor ??
             (isDark ? colorScheme.secondary : colorScheme.primary);
     final Color navigationBarColor = theme.navigationBarTheme.backgroundColor ??
-        ElevationOverlay.colorWithOverlay(
-            colorScheme.surface, colorScheme.onSurface, 3.0);
+        (useMaterial3
+            ? ElevationOverlay.colorWithOverlay(
+                colorScheme.surface, colorScheme.primary, 3.0)
+            : ElevationOverlay.colorWithOverlay(
+                colorScheme.surface, colorScheme.onSurface, 3.0));
     final Color navigationBarItemColor = theme.navigationBarTheme.iconTheme
             ?.resolve(<MaterialState>{MaterialState.selected})?.color ??
-        colorScheme.onSurface;
+        (useMaterial3
+            ? colorScheme.onSecondaryContainer
+            : colorScheme.onSurface);
     final Color navigationBarIndicatorColor =
         theme.navigationBarTheme.indicatorColor ??
-            colorScheme.secondary.withOpacity(.24);
+            (useMaterial3
+                ? colorScheme.secondaryContainer
+                : colorScheme.secondary.withOpacity(.24));
     final Color navigationRailColor =
         theme.navigationRailTheme.backgroundColor ?? colorScheme.surface;
-    final Color navigationRailItemColor =
-        theme.navigationRailTheme.selectedIconTheme?.color ??
-            colorScheme.primary;
+    final Color navigationRailItemColor = theme
+            .navigationRailTheme.selectedIconTheme?.color ??
+        (useMaterial3 ? colorScheme.onSecondaryContainer : colorScheme.primary);
     final Color navigationRailIndicatorColor =
         theme.navigationRailTheme.indicatorColor ??
-            colorScheme.secondary.withOpacity(.24);
+            (useMaterial3
+                ? colorScheme.onSecondaryContainer
+                : colorScheme.secondary.withOpacity(.24));
     final Color textColor = theme.textTheme.titleMedium?.color ??
         (isDark ? Colors.white : Colors.black);
     final Color primTextColor = theme.primaryTextTheme.titleMedium?.color ??
@@ -193,7 +210,7 @@ class ShowSubThemeColors extends StatelessWidget {
               ColorCard(
                 label: 'Outlined\nButton',
                 color: outlinedButtonColor,
-                textColor: _onColor(elevatedButtonColor, background),
+                textColor: _onColor(outlinedButtonColor, background),
               ),
               ColorCard(
                 label: 'Text\nButton',

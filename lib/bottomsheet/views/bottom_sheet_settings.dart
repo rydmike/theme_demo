@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../constants/app_insets.dart';
+import '../../core/constants/app_insets.dart';
 import '../../core/views/widgets/universal/animated_hide.dart';
 import '../../settings/views/widgets/app_bar_elevation_slider.dart';
 import '../../settings/views/widgets/dark_app_bar_style_popup_menu.dart';
@@ -17,12 +17,14 @@ import '../../settings/views/widgets/theme_popup_menu.dart';
 /// A widget that allows us to change some of the theme settings. Intended
 /// to be used in a BottomSheet.
 ///
-/// In this example we are using this in a BottomSheet, just as an example.
-/// The Widgets we use to control the use Riverpod StateProviders and change
-/// those state properties. Those properties are then used in the the theme
-/// definitions that we use in out MaterialApp. As the state properties are
-/// modified in the UI, the theme changes and the app rebuilds with the new
-/// selected theme applied.
+/// Here we as an example demonstrate using some of our settings widgets
+/// in a bottom sheet.
+///
+/// The Widgets we use Riverpod StateNotifierProviders based controllers to
+/// display their values. These controller are then used in the theme
+/// definitions that we use in out MaterialApp. As the controller value are
+/// manipulated with UI views, the theme changes and the app rebuilds with new
+/// resulting theme applied.
 ///
 /// The Flutter theme handles the animation between theme changes since its
 /// properties lerp between values and use animated theme.
@@ -39,16 +41,14 @@ class BottomSheetSettings extends ConsumerWidget {
           Expanded(
             child: ListView(
               children: <Widget>[
-                const ListTile(
-                  title: Text('BottomSheet Settings Example'),
-                ),
+                const ListTile(title: Text('BottomSheet Settings Example')),
                 const ThemePopupMenu(),
                 const ThemeModeListTile(title: Text('Theme mode')),
                 if (isLight)
                   const LightColorsSwapSwitch()
                 else
                   const DarkColorsSwapSwitch(),
-                // Hide the extra dark mode controls in light theme.
+                // Hide the extra dark mode controls in light theme mode.
                 AnimatedHide(
                   hide: isLight,
                   child: Column(
