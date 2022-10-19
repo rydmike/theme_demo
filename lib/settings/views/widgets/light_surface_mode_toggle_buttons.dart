@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/constants/app_insets.dart';
 import '../../controllers/settings.dart';
 
 /// Toggle the surface mode of the application.
@@ -10,16 +11,13 @@ import '../../controllers/settings.dart';
 /// implementation. This approach is easy to use since there is nothing to
 /// pass around to set its value, just drop in the Widget anywhere in the app.
 @immutable
-class LightSurfaceStyleToggleButtons extends ConsumerWidget {
-  const LightSurfaceStyleToggleButtons({
-    super.key,
-    this.showAllModes = true,
-  });
-
-  final bool showAllModes;
+class LightSurfaceModeToggleButtons extends ConsumerWidget {
+  const LightSurfaceModeToggleButtons({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final MediaQueryData media = MediaQuery.of(context);
+    final bool showAllModes = media.size.width > AppInsets.phoneWidthBreakpoint;
     final ColorScheme scheme = Theme.of(context).colorScheme;
     final FlexSurfaceMode mode = ref.watch(Settings.lightSurfaceModeProvider);
     final List<bool> isSelected = <bool>[
@@ -37,6 +35,7 @@ class LightSurfaceStyleToggleButtons extends ConsumerWidget {
       if (showAllModes)
         mode == FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
     ];
+    // final
     final List<FlexSurfaceMode> option = <FlexSurfaceMode>[
       FlexSurfaceMode.level,
       FlexSurfaceMode.highBackgroundLowScaffold,

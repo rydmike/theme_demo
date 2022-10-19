@@ -1,9 +1,9 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/app_const.dart';
-import '../../constants/app_icons.dart';
-import '../../constants/app_insets.dart';
+import '../../core/constants/app_const.dart';
+import '../../core/constants/app_icons.dart';
+import '../../core/constants/app_insets.dart';
 import '../../core/views/widgets/universal/link_text_span.dart';
 
 /// An about icon button used on the example's app bar.
@@ -89,6 +89,8 @@ class _AboutAppIcon extends StatelessWidget {
         primaryContainer: scheme.primaryContainer,
         secondary: scheme.secondary,
         secondaryContainer: scheme.secondaryContainer,
+        tertiary: scheme.tertiary,
+        tertiaryContainer: scheme.tertiaryContainer,
       ),
       selected: true,
       selectedBorder: BorderSide(

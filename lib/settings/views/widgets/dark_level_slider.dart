@@ -14,10 +14,12 @@ class DarkLevelSlider extends ConsumerWidget {
         title: Slider.adaptive(
           max: 100,
           divisions: 100,
-          label: ref.read(Settings.darkLevelProvider).toString(),
-          value: ref.watch(Settings.darkLevelProvider).toDouble(),
+          label: ref.read(Settings.darkComputeLevelProvider).toString(),
+          value: ref.watch(Settings.darkComputeLevelProvider).toDouble(),
           onChanged: (double value) {
-            ref.read(Settings.darkLevelProvider.notifier).set(value.floor());
+            ref
+                .read(Settings.darkComputeLevelProvider.notifier)
+                .set(value.floor());
           },
         ),
         trailing: Padding(
@@ -30,7 +32,7 @@ class DarkLevelSlider extends ConsumerWidget {
                 style: Theme.of(context).textTheme.caption,
               ),
               Text(
-                '${ref.read(Settings.darkLevelProvider)} %',
+                '${ref.read(Settings.darkComputeLevelProvider)} %',
                 style: Theme.of(context)
                     .textTheme
                     .caption!

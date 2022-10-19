@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../about/views/about.dart';
 import '../../bottomsheet/views/bottom_sheet_settings.dart';
-import '../../constants/app_const.dart';
-import '../../constants/app_icons.dart';
-import '../../constants/app_insets.dart';
+import '../../core/constants/app_const.dart';
+import '../../core/constants/app_icons.dart';
+import '../../core/constants/app_insets.dart';
 import '../../home/views/home_page.dart';
+import '../../settings/controllers/settings.dart';
+import '../../settings/views/dialogs/reset_settings_dialog.dart';
 import '../../settings/views/widgets/theme_mode_list_tile.dart';
 import '../../settings/views/widgets/use_material3_switch.dart';
 import '../../splash/views/splash_page.dart';
@@ -15,11 +18,11 @@ import '../../theme/views/pages/theme_showcase_page.dart';
 ///
 /// The Drawer shows that for example that our ThemeModeSwitch() widget can
 /// just be dropped in the drawer to control theme mode from there as well.
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends ConsumerWidget {
   const AppDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final ThemeData theme = Theme.of(context);
     return Drawer(
       child: ListView(
@@ -59,11 +62,6 @@ class AppDrawer extends StatelessWidget {
                   context, ThemeShowcasePage.route);
             },
           ),
-          // The logout option is only shown if we are logged in.
-          const Divider(),
-          const _Header('Theme'),
-          const UseMaterial3Switch(),
-          const ThemeModeListTile(title: Text('Theme')),
           ListTile(
             title: const Text('Bottom sheet'),
             trailing: const Icon(AppIcons.menuItemOpen),
@@ -75,8 +73,6 @@ class AppDrawer extends StatelessWidget {
               );
             },
           ),
-          const Divider(),
-          const _Header('General'),
           ListTile(
             title: const Text('Splash'),
             trailing: const Icon(AppIcons.menuItemOpen),
@@ -85,6 +81,30 @@ class AppDrawer extends StatelessWidget {
               await Navigator.pushNamed(context, SplashPage.route);
             },
           ),
+          // The logout option is only shown if we are logged in.
+          const Divider(),
+          const _Header('Theme'),
+          const UseMaterial3Switch(),
+          const ThemeModeListTile(title: Text('Theme')),
+          ListTile(
+            title: const Text('Reset theme'),
+            trailing: const Icon(AppIcons.menuItemOpen),
+            onTap: () async {
+              final bool? reset = await showDialog<bool?>(
+                context: context,
+                builder: (BuildContext context) {
+                  return const ResetSettingsDialog();
+                },
+              );
+              if (reset ?? false) {
+                Settings.resetAll(ref);
+              }
+              // Navigator.pop(context);
+            },
+          ),
+          const Divider(),
+          const _Header('About'),
+
           ListTile(
             title: const Text('About ${AppConst.appName}'),
             trailing: const Icon(AppIcons.menuItemOpen),

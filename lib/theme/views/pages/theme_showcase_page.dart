@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../about/views/about.dart';
-import '../../../constants/app_insets.dart';
+import '../../../core/constants/app_insets.dart';
 import '../../../core/views/widgets/universal/page_body.dart';
 import '../../../drawer/views/app_drawer.dart';
 import '../widgets/show_color_scheme_colors.dart';
@@ -26,6 +26,12 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
 
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData media = MediaQuery.of(context);
+    final double topPadding = media.padding.top + kToolbarHeight * 2;
+    final double bottomPadding =
+        media.padding.bottom + kBottomNavigationBarHeight + AppInsets.l;
+    final bool isNarrow = media.size.width < AppInsets.phoneWidthBreakpoint;
+    final double sideMargin = isNarrow ? AppInsets.l : AppInsets.xl;
     final ThemeData theme = Theme.of(context);
     final TextTheme textTheme = theme.textTheme;
     final TextStyle headline4 = textTheme.headline4!;
@@ -33,6 +39,8 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
         appBar: AppBar(
           title: const Text('Theme Showcase'),
           actions: const <Widget>[AboutIconButton()],
@@ -53,7 +61,12 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
           child: PageBody(
             child: ListView(
               primary: true,
-              padding: const EdgeInsets.all(AppInsets.edge),
+              padding: EdgeInsets.fromLTRB(
+                sideMargin,
+                topPadding,
+                sideMargin,
+                bottomPadding,
+              ),
               children: <Widget>[
                 Text('Theme demo', style: headline4),
                 const Text(

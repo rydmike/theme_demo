@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/app_const.dart';
+import '../../../core/constants/app_insets.dart';
 import '../../../core/views/widgets/app/color_card.dart';
 
 /// Draw a number of boxes showing the colors of key theme color properties
@@ -47,8 +47,8 @@ class ShowColorSchemeColors extends StatelessWidget {
     final bool isDark = colorScheme.brightness == Brightness.dark;
 
     final MediaQueryData media = MediaQuery.of(context);
-    final bool isPhone = media.size.width < AppConst.phoneWidthBreakpoint ||
-        media.size.height < AppConst.phoneHeightBreakpoint;
+    final bool isPhone = media.size.width < AppInsets.phoneWidthBreakpoint ||
+        media.size.height < AppInsets.phoneHeightBreakpoint;
     final double spacing = isPhone ? 3 : 6;
 
     // Grab the card border from the theme card shape

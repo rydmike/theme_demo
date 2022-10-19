@@ -22,11 +22,13 @@ class AppIcons {
   static const IconData systemTheme = Icons.phone_iphone;
   static const IconData darkTheme = Icons.bedtime;
 
+  // TODO(rydmike): Clean out unused icons and add missing ones.
+
   // Surface style icons
-  static const IconData customSurface = Icons.lens;
-  static const IconData defaultSurface = Icons.block;
+  // static const IconData customSurface = Icons.lens;
+  // static const IconData defaultSurface = Icons.block;
 
   // AppBar style icons
-  static const IconData appbarColored = Icons.panorama_wide_angle_select;
-  static const IconData appbarSurface = Icons.panorama_wide_angle_outlined;
+  // static const IconData appbarColored = Icons.panorama_wide_angle_select;
+  // static const IconData appbarSurface = Icons.panorama_wide_angle_outlined;
 }

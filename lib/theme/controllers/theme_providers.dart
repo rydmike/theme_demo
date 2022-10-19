@@ -21,6 +21,8 @@ final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
       swapColors: ref.watch(Settings.lightSwapColorsProvider),
       appBarElevation: ref.watch(Settings.appBarElevationProvider),
       appBarStyle: ref.watch(Settings.lightAppBarStyleProvider),
+      appBarOpacity: ref.watch(Settings.lightAppBarOpacityProvider),
+      transparentStatusBar: ref.watch(Settings.transparentStatusBarProvider),
     );
   },
   name: 'lightThemeProvider',
@@ -39,9 +41,11 @@ final Provider<ThemeData> darkThemeProvider = Provider<ThemeData>(
       swapColors: ref.watch(Settings.darkSwapColorsProvider),
       appBarElevation: ref.watch(Settings.appBarElevationProvider),
       appBarStyle: ref.watch(Settings.darkAppBarStyleProvider),
+      appBarOpacity: ref.watch(Settings.darkAppBarOpacityProvider),
+      transparentStatusBar: ref.watch(Settings.transparentStatusBarProvider),
       darkIsTrueBlack: ref.watch(Settings.darkIsTrueBlackProvider),
       computeDark: ref.watch(Settings.darkComputeThemeProvider),
-      darkLevel: ref.watch(Settings.darkLevelProvider),
+      darkLevel: ref.watch(Settings.darkComputeLevelProvider),
     );
   },
   name: 'darkThemeProvider',

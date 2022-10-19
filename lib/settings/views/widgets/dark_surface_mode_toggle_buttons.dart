@@ -10,8 +10,8 @@ import '../../controllers/settings.dart';
 /// implementation. This approach is easy to use since there is nothing to
 /// pass around to set its value, just drop in the Widget anywhere in the app.
 @immutable
-class DarkSurfaceStyleToggleButtons extends ConsumerWidget {
-  const DarkSurfaceStyleToggleButtons({
+class DarkSurfaceModeToggleButtons extends ConsumerWidget {
+  const DarkSurfaceModeToggleButtons({
     super.key,
     this.showAllModes = true,
   });

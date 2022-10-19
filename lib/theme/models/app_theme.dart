@@ -2,7 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants/app_fonts.dart';
+import '../../core/constants/app_fonts.dart';
 
 /// The theme for this app are defined here.
 class AppTheme {
@@ -18,6 +18,8 @@ class AppTheme {
     required bool swapColors,
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
+    required double appBarOpacity,
+    required bool transparentStatusBar,
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
     // to other theme's, so we create it first.
@@ -28,6 +30,8 @@ class AppTheme {
       blendLevel: blendLevel,
       appBarElevation: appBarElevation,
       appBarStyle: appBarStyle,
+      appBarOpacity: appBarOpacity,
+      transparentStatusBar: transparentStatusBar,
       subThemesData: const FlexSubThemesData(),
       //
       useMaterial3: useMaterial3,
@@ -48,6 +52,8 @@ class AppTheme {
     required bool swapColors,
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
+    required double appBarOpacity,
+    required bool transparentStatusBar,
     required bool computeDark,
     required int darkLevel,
     required bool darkIsTrueBlack,
@@ -63,6 +69,8 @@ class AppTheme {
       blendLevel: blendLevel,
       appBarElevation: appBarElevation,
       appBarStyle: appBarStyle,
+      appBarOpacity: appBarOpacity,
+      transparentStatusBar: transparentStatusBar,
       darkIsTrueBlack: darkIsTrueBlack,
       subThemesData: const FlexSubThemesData(),
       //

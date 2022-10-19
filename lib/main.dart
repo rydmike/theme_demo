@@ -17,7 +17,7 @@ Future<void> main() async {
     observers: <ProviderObserver>[AppProviderObserver()],
   );
 
-  // Get default keyValueDb implementation and initialize it, so it can be used.
+  // Get default keyValueDb implementation and initialize it for use.
   await container.read(keyValueDbProvider).init();
   // The app will also listen to state changes in keyValueDbProvider.
   // This allows us to swap the keyValueDb implementation used in the app
