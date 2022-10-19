@@ -9,11 +9,8 @@ import '../../splash/views/splash_page.dart';
 import '../../theme/controllers/theme_providers.dart';
 import '../../theme/views/pages/theme_showcase_page.dart';
 
-// We are using a Consumer Widget to access the Riverpod providers we
+// We are using a ConsumerWidget to access the Riverpod providers we
 // use to control the used light and dark themes, as well as mode.
-//
-// If your app is using a StatefulWidget then you can use StatefulConsumerWidget
-// instead, and ConsumerState<T> instead of State<T>.
 class ThemeDemoApp extends ConsumerWidget {
   const ThemeDemoApp({super.key});
 

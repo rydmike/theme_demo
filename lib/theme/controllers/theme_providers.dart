@@ -14,6 +14,7 @@ import '../models/app_theme.dart';
 final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
   (ProviderRef<ThemeData> ref) {
     return AppTheme.light(
+      useMaterial3: ref.watch(Settings.useMaterial3Provider),
       usedTheme: ref.watch(Settings.schemeIndexProvider),
       surfaceMode: ref.watch(Settings.lightSurfaceModeProvider),
       blendLevel: ref.watch(Settings.lightBlendLevelProvider),
@@ -31,6 +32,7 @@ final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
 final Provider<ThemeData> darkThemeProvider = Provider<ThemeData>(
   (ProviderRef<ThemeData> ref) {
     return AppTheme.dark(
+      useMaterial3: ref.watch(Settings.useMaterial3Provider),
       usedTheme: ref.watch(Settings.schemeIndexProvider),
       surfaceMode: ref.watch(Settings.darkSurfaceModeProvider),
       blendLevel: ref.watch(Settings.darkBlendLevelProvider),

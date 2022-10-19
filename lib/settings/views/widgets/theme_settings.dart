@@ -5,19 +5,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/views/widgets/universal/animated_hide.dart';
 import '../../controllers/settings.dart';
 import 'app_bar_elevation_slider.dart';
-import 'dark_app_bar_style_toggle_buttons.dart';
+import 'dark_app_bar_style_popup_menu.dart';
 import 'dark_colors_swap_switch.dart';
 import 'dark_compute_theme_switch.dart';
 import 'dark_level_slider.dart';
 import 'dark_surface_blend_level_slider.dart';
 import 'dark_surface_style_toggle_buttons.dart';
 import 'dark_true_black_switch.dart';
-import 'light_app_bar_style_toggle_buttons.dart';
+import 'light_app_bar_style_popup_menu.dart';
 import 'light_colors_swap_switch.dart';
 import 'light_surface_blend_level_slider.dart';
 import 'light_surface_style_toggle_buttons.dart';
-import 'theme_mode_toggle_buttons.dart';
+import 'theme_mode_list_tile.dart';
 import 'theme_popup_menu.dart';
+import 'use_material3_switch.dart';
 
 /// A Column widget that allows us to change all app used theme settings.
 ///
@@ -74,11 +75,9 @@ class ThemeSettings extends ConsumerWidget {
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     return Column(
       children: <Widget>[
+        const UseMaterial3Switch(),
         const ThemePopupMenu(),
-        const ListTile(
-          title: Text('Theme mode'),
-          trailing: ThemeModeToggleButtons(),
-        ),
+        const ThemeModeListTile(title: Text('Theme mode')),
         if (isLight)
           const LightColorsSwapSwitch()
         else
@@ -125,12 +124,10 @@ class ThemeSettings extends ConsumerWidget {
           const DarkSurfaceBlendLevelSlider(),
         ],
         const Divider(),
-        const ListTile(title: Text('AppBar style')),
-        ListTile(
-          trailing: isLight
-              ? const LightAppBarStyleToggleButtons()
-              : const DarkAppBarStyleToggleButtons(),
-        ),
+        if (isLight)
+          const LightAppBarStylePopupMenu()
+        else
+          const DarkAppBarStylePopupMenu(),
         const AppBarElevationSlider(),
       ],
     );

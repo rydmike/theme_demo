@@ -11,6 +11,7 @@ import '../../drawer/views/app_drawer.dart';
 import '../../persistence/key_value/views/key_value_db_toggle_buttons.dart';
 import '../../settings/views/widgets/theme_settings.dart';
 import '../../theme/views/widgets/show_color_scheme_colors.dart';
+import '../../theme/views/widgets/show_sub_theme_colors.dart';
 import '../../theme/views/widgets/show_theme_data_colors.dart';
 import '../controllers/counter_provider.dart';
 
@@ -69,9 +70,9 @@ class _MyHomePageState extends ConsumerState<HomePage> {
               Text('Info', style: headline4),
               const Text(
                 'This page shows resulting FlexColorScheme theme based colors '
-                'and the other settings. It shows how simple Riverpod based '
+                'and theme settings. It demonstrates how simple Riverpod based '
                 'widgets can be used here, as well as in the Drawer and in a '
-                'BottomSheet to control theme settings.',
+                'BottomSheet to control persisted theme settings.',
               ),
               const Divider(),
               Text('Counter', style: headline4),
@@ -87,6 +88,8 @@ class _MyHomePageState extends ConsumerState<HomePage> {
               const Divider(),
               const ListTile(
                 title: Text('Select key value database'),
+                subtitle: Text('You can change used persistence implementation '
+                    'dynamically in the app. Mem is ram and not persisted.'),
                 trailing: KeyValueDbToggleButtons(),
               ),
               const Divider(),
@@ -101,6 +104,10 @@ class _MyHomePageState extends ConsumerState<HomePage> {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
                 child: ShowColorSchemeColors(),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
+                child: ShowSubThemeColors(),
               ),
               const SizedBox(height: AppInsets.xl),
             ],

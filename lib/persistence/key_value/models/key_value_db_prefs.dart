@@ -7,11 +7,11 @@ import '../../../core/utils/same_types.dart';
 import 'key_value_db.dart';
 // ignore_for_file: comment_references
 
-// Set the bool flag to true to show debug prints. Even if it is forgotten
+// Set the bool flag to true to show debug prints. Even if you forgot
 // to set it to false, debug prints will not show in release builds.
 // The handy part is that if it gets in the way in debugging, it is an easy
-// toggle to turn it off there too. Often I just leave them true if it is one
-// I want to see in dev mode, unless it is too chatty.
+// toggle to turn it off here too for just this feature. You can leave it true
+// below to see this features logs in debug mode.
 const bool _debug = !kReleaseMode && true;
 
 /// A [KeyValueDb] implementation that stores and retrieves key-value
