@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../about/views/about.dart';
 import '../../bottomsheet/views/bottom_sheet_settings.dart';
-import '../../bottomsheet/views/in_bottom_sheet.dart';
 import '../../constants/app_const.dart';
 import '../../constants/app_icons.dart';
 import '../../constants/app_insets.dart';
 import '../../home/views/home_page.dart';
-import '../../settings/views/widgets/theme_mode_toggle_buttons.dart';
+import '../../settings/views/widgets/theme_mode_list_tile.dart';
+import '../../settings/views/widgets/use_material3_switch.dart';
 import '../../splash/views/splash_page.dart';
 import '../../theme/views/pages/theme_showcase_page.dart';
 
@@ -62,16 +62,17 @@ class AppDrawer extends StatelessWidget {
           // The logout option is only shown if we are logged in.
           const Divider(),
           const _Header('Theme'),
-          const ListTile(
-            title: Text('Mode'),
-            trailing: ThemeModeToggleButtons(),
-          ),
+          const UseMaterial3Switch(),
+          const ThemeModeListTile(title: Text('Theme')),
           ListTile(
             title: const Text('Bottom sheet'),
             trailing: const Icon(AppIcons.menuItemOpen),
             onTap: () {
               Navigator.pop(context);
-              inBottomSheet(context, child: const BottomSheetSettings());
+              showBottomSheet<void>(
+                context: context,
+                builder: (BuildContext context) => const BottomSheetSettings(),
+              );
             },
           ),
           const Divider(),

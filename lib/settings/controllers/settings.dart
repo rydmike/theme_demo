@@ -1,16 +1,26 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/settings_entry.dart';
 
+// Set the bool flag to true to show debug prints. Even if you forgot
+// to set it to false, debug prints will not show in release builds.
+// The handy part is that if it gets in the way in debugging, it is an easy
+// toggle to turn it off here too for just this feature. You can leave it true
+// below to see this features logs in debug mode.
+const bool _debug = !kReleaseMode && true;
+
 class Settings {
+  // This constructor prevents external instantiation and extension.
   Settings._();
 
   // Default values for all the settings entries.
   // They are collected here at the top to be easy to modify.
   //
-  // Theme mode and active color scheme.
+  // Use material 3, theme mode and active color scheme.
+  static const bool _useMaterial3 = false;
   static const ThemeMode _themeMode = ThemeMode.system;
   static const int _schemeIndex = 0;
   // Surface mode defaults
@@ -30,24 +40,32 @@ class Settings {
   static const FlexAppBarStyle _darkAppBarStyle = FlexAppBarStyle.background;
   // Dark theme only extra settings, like computed dark theme and true black.
   static const bool _darkComputeTheme = false;
-  static const int _darkLevel = 35;
+  static const int _darkLevel = 25;
   static const bool _darkIsTrueBlack = false;
 
   /// Rest all settings entries and their controllers to default values.
   ///
   /// This action is triggered by the user.
   static void resetAll(Ref ref) {
-    debugPrint('Settings resetAll DB values');
+    if (_debug) debugPrint('Settings resetAll DB values');
+    // Use material 3, theme mode and active color scheme.
+    ref.read(useMaterial3Provider.notifier).reset();
     ref.read(themeModeProvider.notifier).reset();
     ref.read(schemeIndexProvider.notifier).reset();
+    // Surface mode.
     ref.read(lightSurfaceModeProvider.notifier).reset();
     ref.read(darkSurfaceModeProvider.notifier).reset();
+    // Surface blend levels.
     ref.read(lightBlendLevelProvider.notifier).reset();
     ref.read(darkBlendLevelProvider.notifier).reset();
+    // Swap primary and secondary colors.
+    ref.read(lightSwapColorsProvider.notifier).reset();
+    ref.read(darkSwapColorsProvider.notifier).reset();
+    // AppBar elevation and color.
+    ref.read(appBarElevationProvider.notifier).reset();
     ref.read(lightAppBarStyleProvider.notifier).reset();
     ref.read(darkAppBarStyleProvider.notifier).reset();
-    ref.read(darkSwapColorsProvider.notifier).reset();
-    ref.read(appBarElevationProvider.notifier).reset();
+    // Dark theme only extra settings, like computed dark theme and true black.
     ref.read(darkComputeThemeProvider.notifier).reset();
     ref.read(darkLevelProvider.notifier).reset();
     ref.read(darkIsTrueBlackProvider.notifier).reset();
@@ -57,21 +75,50 @@ class Settings {
   ///
   /// This is typically only used when switching DB implementation dynamically.
   static void getAll(Ref ref) {
-    debugPrint('Settings getAll DB values');
+    if (_debug) debugPrint('Settings getAll DB values');
+    // Use material 3, theme mode and active color scheme.
+    ref.read(useMaterial3Provider.notifier).get();
     ref.read(themeModeProvider.notifier).get();
     ref.read(schemeIndexProvider.notifier).get();
+    // Surface mode.
     ref.read(lightSurfaceModeProvider.notifier).get();
     ref.read(darkSurfaceModeProvider.notifier).get();
+    // Surface blend levels.
     ref.read(lightBlendLevelProvider.notifier).get();
     ref.read(darkBlendLevelProvider.notifier).get();
+    // Swap primary and secondary colors.
+    ref.read(lightSwapColorsProvider.notifier).get();
+    ref.read(darkSwapColorsProvider.notifier).get();
+    // AppBar elevation and color.
+    ref.read(appBarElevationProvider.notifier).get();
     ref.read(lightAppBarStyleProvider.notifier).get();
     ref.read(darkAppBarStyleProvider.notifier).get();
-    ref.read(darkSwapColorsProvider.notifier).get();
-    ref.read(appBarElevationProvider.notifier).get();
+    // Dark theme only extra settings, like computed dark theme and true black.
     ref.read(darkComputeThemeProvider.notifier).get();
     ref.read(darkLevelProvider.notifier).get();
     ref.read(darkIsTrueBlackProvider.notifier).get();
   }
+
+  /// String key used for defining if we use Material 3 or Material 2.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyUseMaterial3 = 'useMaterial3';
+
+  /// Provider for swapping primary and secondary colors in light theme mode.
+  ///
+  /// Defaults to [_useMaterial3].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+      useMaterial3Provider = StateNotifierProvider<SettingsEntry<bool>, bool>(
+    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _useMaterial3,
+        key: _keyUseMaterial3,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyUseMaterial3}Provider',
+  );
 
   /// String key used for storing the last used app theme mode.
   ///
@@ -278,12 +325,12 @@ class Settings {
   ///
   /// Defaults to [_lightAppBarStyle].
   /// Primary color is the default for Material 2 apps.
-  static final StateNotifierProvider<SettingsEntry<FlexAppBarStyle>,
-          FlexAppBarStyle> lightAppBarStyleProvider =
-      StateNotifierProvider<SettingsEntry<FlexAppBarStyle>, FlexAppBarStyle>(
-    (StateNotifierProviderRef<SettingsEntry<FlexAppBarStyle>, FlexAppBarStyle>
+  static final StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>,
+          FlexAppBarStyle?> lightAppBarStyleProvider =
+      StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>(
+    (StateNotifierProviderRef<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>
         ref) {
-      return SettingsEntry<FlexAppBarStyle>(
+      return SettingsEntry<FlexAppBarStyle?>(
         ref,
         defaultValue: _lightAppBarStyle,
         key: _keyLightAppBarStyle,
@@ -305,12 +352,12 @@ class Settings {
   /// the Material background color  for active theme mode. The used default
   /// here [FlexAppBarStyle.background] is the background color that gets
   /// primary color branding based on the current [FlexSurfaceMode] setting.
-  static final StateNotifierProvider<SettingsEntry<FlexAppBarStyle>,
-          FlexAppBarStyle> darkAppBarStyleProvider =
-      StateNotifierProvider<SettingsEntry<FlexAppBarStyle>, FlexAppBarStyle>(
-    (StateNotifierProviderRef<SettingsEntry<FlexAppBarStyle>, FlexAppBarStyle>
+  static final StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>,
+          FlexAppBarStyle?> darkAppBarStyleProvider =
+      StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>(
+    (StateNotifierProviderRef<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>
         ref) {
-      return SettingsEntry<FlexAppBarStyle>(
+      return SettingsEntry<FlexAppBarStyle?>(
         ref,
         defaultValue: _darkAppBarStyle,
         key: _keyDarkAppBarStyle,

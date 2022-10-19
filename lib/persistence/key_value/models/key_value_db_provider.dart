@@ -5,6 +5,13 @@ import '../../../settings/controllers/settings.dart';
 import '../controllers/used_key_value_db_provider.dart';
 import 'key_value_db.dart';
 
+// Set the bool flag to true to show debug prints. Even if you forgot
+// to set it to false, debug prints will not show in release builds.
+// The handy part is that if it gets in the way in debugging, it is an easy
+// toggle to turn it off here too for just this feature. You can leave it true
+// below to see this features logs in debug mode.
+const bool _debug = !kReleaseMode && true;
+
 /// Provides a [KeyValueDb] DB repository.
 ///
 /// The value returned depends on the controller [usedKeyValueDbProvider].
@@ -28,21 +35,23 @@ final Provider<KeyValueDbListener> keyValueDbListenerProvider =
 class KeyValueDbListener {
   // Pass a Ref argument to the constructor
   KeyValueDbListener(this.ref) {
+    if (_debug) debugPrint('KeyValueDbListener: create');
     // Call _init as soon as the object is created
     _init();
   }
   final Ref ref;
 
   void _init() {
-    debugPrint('DynamicKeyValueDb setup');
-
-    /// Listen to state changes in keyValueDbProvider.state.
+    if (_debug) debugPrint('KeyValueDbListener: _init() setup listen');
+    // Listen to state changes in keyValueDbProvider.state.
     ref.listen<StateController<KeyValueDb>>(keyValueDbProvider.state,
         (StateController<KeyValueDb>? previous,
             StateController<KeyValueDb> current) async {
       // This callback executes when the keyValueDbProvider value changes.
-      debugPrint('KeyValueDbListener: listen called');
-      debugPrint('  new  : ${current.state}');
+      if (_debug) {
+        debugPrint('KeyValueDbListener: listen called');
+        debugPrint('  new  : ${current.state}');
+      }
       final KeyValueDb keyValueDb = current.state;
       await keyValueDb.init();
       // We changed key valued DB, we must update all settings controls.
