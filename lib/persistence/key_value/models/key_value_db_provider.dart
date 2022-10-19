@@ -23,7 +23,7 @@ final StateProvider<KeyValueDb> keyValueDbProvider =
 /// A provider used to read and activate a [KeyValueDbListener].
 final Provider<KeyValueDbListener> keyValueDbListenerProvider =
     Provider<KeyValueDbListener>((ProviderRef<KeyValueDbListener> ref) {
-  debugPrint('keyValueDbListenerProvider called');
+  if (_debug) debugPrint('keyValueDbListenerProvider called');
   return KeyValueDbListener(ref);
 });
 

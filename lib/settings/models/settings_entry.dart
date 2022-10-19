@@ -26,7 +26,9 @@ class SettingsEntry<T> extends StateNotifier<T> {
   void get() {
     final KeyValueDb db = ref.read(keyValueDbProvider);
     // The db getter returns the default value if key does not exist.
-    state = db.get(key, defaultValue);
+    final T newValue = db.get(key, defaultValue);
+    // don't set db value to state, if it is same as before.
+    if (state != newValue) state = newValue;
   }
 
   /// Update settings state value with a new value.
