@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/views/widgets/universal/animated_hide.dart';
 import 'app_bar_elevation_slider.dart';
-import 'app_bar_scrim.dart';
 import 'dark_app_bar_opacity.dart';
 import 'dark_app_bar_style_popup_menu.dart';
 import 'dark_colors_swap_switch.dart';
@@ -20,6 +19,7 @@ import 'light_surface_mode_popup_menu.dart';
 import 'light_surface_mode_toggle_buttons.dart';
 import 'theme_mode_list_tile.dart';
 import 'theme_popup_menu.dart';
+import 'transparent_status_bar_switch.dart';
 import 'use_material3_switch.dart';
 
 /// A Column widget that allows us to change all app used theme settings.
