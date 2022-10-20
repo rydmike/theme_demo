@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/settings.dart';
-import 'surface_mode_popup_menu.dart';
+import 'surface_mode_widgets.dart';
 
 /// Toggle the surface mode of the application for light theme mode.
 ///

@@ -25,21 +25,21 @@ class Settings {
   static const int _schemeIndex = 0;
   // Surface mode defaults
   static const FlexSurfaceMode _lightSurfaceMode =
-      FlexSurfaceMode.highSurfaceLowScaffold;
+      FlexSurfaceMode.highBackgroundLowScaffold;
   static const FlexSurfaceMode _darkSurfaceMode =
-      FlexSurfaceMode.highScaffoldLowSurface;
+      FlexSurfaceMode.highBackgroundLowScaffold;
   // surface blend level defaults
   static const int _lightBlendLevel = 10;
-  static const int _darkBlendLevel = 15;
+  static const int _darkBlendLevel = 25;
   // Swap primary and secondary colors.
   static const bool _lightSwapColors = false;
   static const bool _darkSwapColors = false;
   // AppBar elevation and color defaults.
   static const double _appBarElevation = 0.0;
-  static const FlexAppBarStyle _lightAppBarStyle = FlexAppBarStyle.primary;
+  static const FlexAppBarStyle _lightAppBarStyle = FlexAppBarStyle.background;
   static const FlexAppBarStyle _darkAppBarStyle = FlexAppBarStyle.background;
   // AppBar opacity and scrim
-  static const bool _transparentStatusBar = false;
+  static const bool _transparentStatusBar = true;
   static const double _lightAppBarOpacity = 0.95;
   static const double _darkAppBarOpacity = 0.91;
   // Dark theme only extra settings, like computed dark theme and true black.

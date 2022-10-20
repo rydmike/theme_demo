@@ -6,7 +6,7 @@ import '../../bottomsheet/views/bottom_sheet_settings.dart';
 import '../../core/constants/app_const.dart';
 import '../../core/constants/app_icons.dart';
 import '../../core/constants/app_insets.dart';
-import '../../home/views/home_page.dart';
+import '../../home/views/pages/home_page.dart';
 import '../../settings/controllers/settings.dart';
 import '../../settings/views/dialogs/reset_settings_dialog.dart';
 import '../../settings/views/widgets/theme_mode_list_tile.dart';
@@ -40,8 +40,8 @@ class AppDrawer extends ConsumerWidget {
               ),
             ),
             child: Text(
-              'Theme Demo',
-              style: Theme.of(context).primaryTextTheme.headline4,
+              AppConst.appName,
+              style: theme.primaryTextTheme.headlineMedium,
             ),
           ),
           const _Header('Pages'),
@@ -87,8 +87,7 @@ class AppDrawer extends ConsumerWidget {
           const UseMaterial3Switch(),
           const ThemeModeListTile(title: Text('Theme')),
           ListTile(
-            title: const Text('Reset theme'),
-            trailing: const Icon(AppIcons.menuItemOpen),
+            title: const Text('Reset settings'),
             onTap: () async {
               final bool? reset = await showDialog<bool?>(
                 context: context,
@@ -99,7 +98,6 @@ class AppDrawer extends ConsumerWidget {
               if (reset ?? false) {
                 Settings.resetAll(ref);
               }
-              // Navigator.pop(context);
             },
           ),
           const Divider(),

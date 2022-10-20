@@ -45,12 +45,11 @@ void showAppAboutDialog(BuildContext context) {
             children: <TextSpan>[
               TextSpan(
                 style: aboutTextStyle,
-                text: 'This example shows some of the features of the '
-                    'FlexColorScheme theming package together with Riverpod 2 '
-                    'and 3 different settings implementations, volatile mem '
-                    'only, SharedPreferences and Hive.\n\n'
-                    'To learn more '
-                    'about FlexColorScheme, check out the package on ',
+                text: 'This app demos FlexColorScheme theming, '
+                    'together with Riverpod and three different '
+                    'settings persistence implementations, volatile memory, '
+                    'SharedPreferences and Hive.\n\n'
+                    'Check out FlexColorScheme package on ',
               ),
               LinkTextSpan(
                 style: linkStyle,
@@ -59,7 +58,7 @@ void showAppAboutDialog(BuildContext context) {
               ),
               TextSpan(
                 style: aboutTextStyle,
-                text: '. It contains extensive documentation.\n\n',
+                text: '.\n\n',
               ),
               TextSpan(
                 style: footerStyle,

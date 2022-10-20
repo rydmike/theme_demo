@@ -18,8 +18,8 @@ class LightAppBarStylePopupMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBarStylePopupMenu(
-      title: const Text('Light theme AppBarStyle'),
-      labelForDefault: 'default',
+      title: const Text('Light AppBar style'),
+      labelForDefault: 'Default',
       index: ref.watch(Settings.lightAppBarStyleProvider)?.index ?? -1,
       onChanged: (int index) {
         if (index < 0 || index >= FlexAppBarStyle.values.length) {

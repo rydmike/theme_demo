@@ -32,7 +32,10 @@ class AppTheme {
       appBarStyle: appBarStyle,
       appBarOpacity: appBarOpacity,
       transparentStatusBar: transparentStatusBar,
-      subThemesData: const FlexSubThemesData(),
+      subThemesData: const FlexSubThemesData(
+        thinBorderWidth: 1,
+        thickBorderWidth: 2,
+      ),
       //
       useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -72,7 +75,10 @@ class AppTheme {
       appBarOpacity: appBarOpacity,
       transparentStatusBar: transparentStatusBar,
       darkIsTrueBlack: darkIsTrueBlack,
-      subThemesData: const FlexSubThemesData(),
+      subThemesData: const FlexSubThemesData(
+        thinBorderWidth: 1,
+        thickBorderWidth: 2,
+      ),
       //
       useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,

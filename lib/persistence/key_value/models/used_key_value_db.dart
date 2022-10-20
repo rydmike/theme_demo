@@ -33,7 +33,7 @@ enum UsedKeyValueDb {
       case UsedKeyValueDb.memory:
         return 'Memory';
       case UsedKeyValueDb.sharedPreferences:
-        return 'SharedPreferences';
+        return 'Shared Preferences';
       case UsedKeyValueDb.hive:
         return 'Hive';
     }

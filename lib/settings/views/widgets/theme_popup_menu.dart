@@ -45,13 +45,12 @@ class ThemePopupMenu extends ConsumerWidget {
                   flexSchemeColor: isLight
                       ? AppTheme.schemes[i].light
                       : AppTheme.schemes[i].dark,
-                  selected: true,
+                  selected: selected == i,
                   selectedBorder: BorderSide(
-                    color: isLight
-                        ? AppTheme.schemes[i].light.primary
-                        : AppTheme.schemes[i].dark.primary,
-                    width: AppInsets.outlineThickness,
+                    color: scheme.onSurfaceVariant,
+                    width: 4,
                   ),
+                  unselectedBorder: BorderSide.none,
                   backgroundColor: scheme.background,
                   width: width,
                   height: height,
@@ -80,11 +79,8 @@ class ThemePopupMenu extends ConsumerWidget {
               tertiary: scheme.tertiary,
               tertiaryContainer: scheme.tertiaryContainer,
             ),
-            selected: true,
-            selectedBorder: BorderSide(
-              color: scheme.primary,
-              width: AppInsets.outlineThickness,
-            ),
+            selected: false,
+            unselectedBorder: BorderSide.none,
             backgroundColor: scheme.background,
             width: width,
             height: height,

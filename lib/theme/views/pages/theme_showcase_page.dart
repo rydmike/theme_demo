@@ -7,6 +7,7 @@ import '../../../core/constants/app_insets.dart';
 import '../../../core/views/widgets/universal/page_body.dart';
 import '../../../drawer/views/app_drawer.dart';
 import '../widgets/show_color_scheme_colors.dart';
+import '../widgets/show_sub_theme_colors.dart';
 import '../widgets/show_theme_data_colors.dart';
 import '../widgets/theme_showcase.dart';
 
@@ -26,15 +27,17 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final TextTheme textTheme = theme.textTheme;
+    final TextStyle medium = textTheme.headlineMedium!;
+
     final MediaQueryData media = MediaQuery.of(context);
     final double topPadding = media.padding.top + kToolbarHeight * 2;
     final double bottomPadding =
         media.padding.bottom + kBottomNavigationBarHeight + AppInsets.l;
+
     final bool isNarrow = media.size.width < AppInsets.phoneWidthBreakpoint;
-    final double sideMargin = isNarrow ? AppInsets.l : AppInsets.xl;
-    final ThemeData theme = Theme.of(context);
-    final TextTheme textTheme = theme.textTheme;
-    final TextStyle headline4 = textTheme.headline4!;
+    final double sideMargin = isNarrow ? 0 : AppInsets.l;
 
     return DefaultTabController(
       length: 4,
@@ -68,30 +71,47 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
                 bottomPadding,
               ),
               children: <Widget>[
-                Text('Theme demo', style: headline4),
-                const Text(
-                  'This page shows resulting theme colors and the '
-                  'FlexColorScheme based theme applied on common widgets. '
-                  'It also has a BottomNavigationBar and TabBar in the AppBar, '
-                  "to show what they look like, but they don't do anything.",
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppInsets.l),
+                  child: Text('Theme Showcase', style: medium),
                 ),
-                const Divider(),
-                // Show all key active theme colors.
-                Text('ThemeData Colors', style: headline4),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
-                  child: ShowThemeDataColors(),
+                  padding: EdgeInsets.symmetric(horizontal: AppInsets.l),
+                  child: Text(
+                    'Shows theme colors and the FlexColorScheme based theme '
+                    'applied on common widgets. '
+                    'It also has a NavigationBar and TabBar in the AppBar, '
+                    "to show what they look like, but they don't do anything.",
+                  ),
                 ),
                 const Divider(),
                 // Show all key active theme colors.
-                Text('ColorScheme Colors', style: headline4),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text('Colors', style: medium),
+                ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
                   child: ShowColorSchemeColors(),
                 ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
+                  child: ShowThemeDataColors(),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
+                  child: ShowSubThemeColors(),
+                ),
                 const Divider(),
-                Text('Theme Showcase', style: headline4),
-                const ThemeShowcase(),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: AppInsets.edge),
+                  child: Text('Showcase', style: medium),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
+                  child: ThemeShowcase(),
+                ),
               ],
             ),
           ),
