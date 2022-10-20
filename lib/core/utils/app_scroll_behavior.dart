@@ -56,3 +56,20 @@ class AppleScrollBehavior extends ScrollBehavior {
   ScrollPhysics getScrollPhysics(BuildContext context) =>
       const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics());
 }
+
+/// Scroll behaviour that can be used with scrolling views that should
+/// never have any scroll glow or bounce.
+///
+/// The no effect could e.g. be for a side drawer or rail that just needs to
+/// scroll because it is in a very small height limited viewport. Bounce
+/// and scroll in this case often feels wrong.
+///
+/// Found this solution here:
+/// https://stackoverflow.com/questions/51119795/how-to-remove-scroll-glow
+class ScrollNoEdgeEffect extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+}
