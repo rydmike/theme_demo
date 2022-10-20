@@ -12,7 +12,7 @@ import '../../settings/views/dialogs/reset_settings_dialog.dart';
 import '../../settings/views/widgets/theme_mode_list_tile.dart';
 import '../../settings/views/widgets/use_material3_switch.dart';
 import '../../splash/views/splash_page.dart';
-import '../../theme/views/pages/theme_showcase_page.dart';
+import '../../theme_show_case/views/pages/theme_showcase_page.dart';
 
 /// An AppDrawer widget used on two pages in this demo application.
 ///

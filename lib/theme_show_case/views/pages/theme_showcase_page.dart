@@ -6,10 +6,10 @@ import '../../../about/views/about.dart';
 import '../../../core/constants/app_insets.dart';
 import '../../../core/views/widgets/universal/page_body.dart';
 import '../../../drawer/views/app_drawer.dart';
-import '../widgets/show_color_scheme_colors.dart';
-import '../widgets/show_sub_theme_colors.dart';
-import '../widgets/show_theme_data_colors.dart';
-import '../widgets/theme_showcase.dart';
+import '../../../theme/views/widgets/show_color_scheme_colors.dart';
+import '../../../theme/views/widgets/show_sub_theme_colors.dart';
+import '../../../theme/views/widgets/show_theme_data_colors.dart';
+import '../../../theme/views/widgets/theme_showcase.dart';
 
 /// This page is used as a demo to show a page using the FlexColorScheme
 /// based theme. The widgets and content on it don't really do anything.
