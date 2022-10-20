@@ -7,7 +7,7 @@ import '../../home/views/pages/home_page.dart';
 import '../../settings/controllers/settings.dart';
 import '../../splash/views/splash_page.dart';
 import '../../theme/controllers/theme_providers.dart';
-import '../../theme_show_case/views/pages/theme_showcase_page.dart';
+import '../../theme_showcase/views/pages/theme_showcase_page.dart';
 
 /// The [MaterialApp] widget for the ThemeDemo application.
 ///
