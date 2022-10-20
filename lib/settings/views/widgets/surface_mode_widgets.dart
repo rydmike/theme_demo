@@ -144,7 +144,7 @@ class SurfaceModePopupMenu extends StatelessWidget {
     final List<Widget> modeWidgets = _getModeWidget(scheme);
 
     final IconThemeData selectedIconTheme =
-        theme.iconTheme.copyWith(color: scheme.onPrimary);
+        theme.iconTheme.copyWith(color: scheme.onPrimary.withAlpha(0xE5));
     final IconThemeData unSelectedIconTheme =
         theme.iconTheme.copyWith(color: scheme.primary);
 

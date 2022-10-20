@@ -120,7 +120,7 @@ class SwitchListTileAdaptive extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
 
     /// As long as Flutter SDK stable does not included the new M3 switch and
-    /// its theme. We should d this for all platforms, later when it is
+    /// its theme. We should do this for all platforms now, later when it is
     /// defined, we can use this logic only on iOS and macOS and let
     /// the switch get correct color on other platforms via theme default.
     //
