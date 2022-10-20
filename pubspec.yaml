@@ -60,8 +60,3 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
-  # all image assets used by the program.
-  assets:
-    # All used images assets.
-    - assets/images/
