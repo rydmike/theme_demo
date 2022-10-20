@@ -1,8 +1,8 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constants/app_fonts.dart';
+import 'flex_tone.dart';
 
 /// The theme for this app are defined here.
 class AppTheme {
@@ -13,13 +13,18 @@ class AppTheme {
   static ThemeData light({
     required bool useMaterial3,
     required int usedTheme,
+    required bool swapColors,
+    required bool usePrimaryKeyColor,
+    required bool useSecondaryKeyColor,
+    required bool useTertiaryKeyColor,
+    required int usedFlexTone,
     required FlexSurfaceMode surfaceMode,
     required int blendLevel,
-    required bool swapColors,
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
     required double appBarOpacity,
     required bool transparentStatusBar,
+    required TargetPlatform platform,
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
     // to other theme's, so we create it first.
@@ -36,11 +41,18 @@ class AppTheme {
         thinBorderWidth: 1,
         thickBorderWidth: 2,
       ),
+      keyColors: FlexKeyColors(
+        useKeyColors: usePrimaryKeyColor,
+        useSecondary: useSecondaryKeyColor,
+        useTertiary: useTertiaryKeyColor,
+      ),
+      tones: FlexTone.values[usedFlexTone].tones(Brightness.light),
       //
       useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
-      typography: Typography.material2021(platform: defaultTargetPlatform),
+      typography: Typography.material2021(platform: platform),
+      platform: platform,
     );
     // Convert FlexColorScheme to ThemeData.
     return flexScheme.toTheme;
@@ -50,9 +62,13 @@ class AppTheme {
   static ThemeData dark({
     required bool useMaterial3,
     required int usedTheme,
+    required bool swapColors,
+    required bool usePrimaryKeyColor,
+    required bool useSecondaryKeyColor,
+    required bool useTertiaryKeyColor,
+    required int usedFlexTone,
     required FlexSurfaceMode surfaceMode,
     required int blendLevel,
-    required bool swapColors,
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
     required double appBarOpacity,
@@ -60,6 +76,7 @@ class AppTheme {
     required bool computeDark,
     required int darkLevel,
     required bool darkIsTrueBlack,
+    required TargetPlatform platform,
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
     // to sub-theme's, so we create it first.
@@ -79,11 +96,18 @@ class AppTheme {
         thinBorderWidth: 1,
         thickBorderWidth: 2,
       ),
+      keyColors: FlexKeyColors(
+        useKeyColors: usePrimaryKeyColor,
+        useSecondary: useSecondaryKeyColor,
+        useTertiary: useTertiaryKeyColor,
+      ),
+      tones: FlexTone.values[usedFlexTone].tones(Brightness.dark),
       //
       useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
-      typography: Typography.material2021(platform: defaultTargetPlatform),
+      typography: Typography.material2021(platform: platform),
+      platform: platform,
     );
     // Convert FlexColorScheme to ThemeData.
     return flexScheme.toTheme;
