@@ -5,17 +5,15 @@ import '../controllers/used_key_value_db_provider.dart';
 import '../models/used_key_value_db.dart';
 import 'key_value_db_toggle_buttons.dart';
 
-class ThemeModeListTile extends ConsumerWidget {
-  const ThemeModeListTile({super.key});
+class KeyValueDbListTile extends ConsumerWidget {
+  const KeyValueDbListTile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String usedDb =
-        ref.watch(usedKeyValueDbProvider.notifier).state.describe;
+    final String usedDb = ref.watch(usedKeyValueDbProvider).describe;
     return ListTile(
-      title: Text('Used key value database - $usedDb'),
-      subtitle: const Text('You can change used persistence implementation '
-          'dynamically in the app. Mem is ram and not persisted.'),
+      title: const Text('Storage'),
+      subtitle: Text(usedDb),
       onTap: () {
         switch (ref.read(usedKeyValueDbProvider.notifier).state) {
           case UsedKeyValueDb.memory:

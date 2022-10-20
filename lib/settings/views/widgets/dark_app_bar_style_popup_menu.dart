@@ -18,8 +18,8 @@ class DarkAppBarStylePopupMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppBarStylePopupMenu(
-      title: const Text('Dark theme AppBarStyle'),
-      labelForDefault: 'default',
+      title: const Text('Dark AppBar style'),
+      labelForDefault: 'Default',
       index: ref.watch(Settings.darkAppBarStyleProvider)?.index ?? -1,
       onChanged: (int index) {
         if (index < 0 || index >= FlexAppBarStyle.values.length) {

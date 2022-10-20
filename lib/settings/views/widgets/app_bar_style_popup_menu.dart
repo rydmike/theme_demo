@@ -1,6 +1,7 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/string_case_extensions.dart';
 import '../../../core/views/widgets/app/color_scheme_box.dart';
 
 // ignore_for_file: comment_references
@@ -112,7 +113,7 @@ class AppBarStylePopupMenu extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final bool isLight = theme.brightness == Brightness.light;
     final bool useM3 = theme.useMaterial3;
-    final ColorScheme colorScheme = theme.colorScheme;
+    final ColorScheme scheme = theme.colorScheme;
     final TextStyle txtStyle = theme.textTheme.labelLarge!;
     final bool enabled = onChanged != null;
     // Negative value, or index over range are used as null and default value.
@@ -140,13 +141,17 @@ class AppBarStylePopupMenu extends StatelessWidget {
               dense: true,
               leading: ColorSchemeBox(
                 backgroundColor: i >= FlexAppBarStyle.values.length
-                    ? _appBarStyleColor(null, colorScheme, isLight, useM3)
+                    ? _appBarStyleColor(null, scheme, isLight, useM3)
                     : _appBarStyleColor(
                         FlexAppBarStyle.values[i],
-                        colorScheme,
+                        scheme,
                         isLight,
                         useM3,
                       ),
+                borderColor: index == i ||
+                        (i >= FlexAppBarStyle.values.length && useDefault)
+                    ? scheme.primary
+                    : scheme.outline,
                 selected: index == i ||
                     (i >= FlexAppBarStyle.values.length && useDefault),
                 defaultOption: i >= FlexAppBarStyle.values.length,
@@ -154,7 +159,10 @@ class AppBarStylePopupMenu extends StatelessWidget {
               title: i >= FlexAppBarStyle.values.length
                   // If we reached max length make default label.
                   ? Text(popupLabelDefault ?? labelForDefault, style: txtStyle)
-                  : Text(FlexAppBarStyle.values[i].name, style: txtStyle),
+                  : Text(
+                      FlexAppBarStyle.values[i].name.sentenceCase(),
+                      style: txtStyle,
+                    ),
             ),
           )
       ],
@@ -174,11 +182,14 @@ class AppBarStylePopupMenu extends StatelessWidget {
           backgroundColor: enabled && !useDefault
               ? _appBarStyleColor(
                   FlexAppBarStyle.values[index],
-                  colorScheme,
+                  scheme,
                   isLight,
                   useM3,
                 )
-              : _appBarStyleColor(null, colorScheme, isLight, useM3),
+              : _appBarStyleColor(null, scheme, isLight, useM3),
+          borderColor: index == FlexAppBarStyle.custom.index
+              ? Colors.transparent
+              : scheme.primary,
           defaultOption: useDefault,
         ),
       ),

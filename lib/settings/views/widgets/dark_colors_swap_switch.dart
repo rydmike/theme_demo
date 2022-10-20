@@ -10,8 +10,8 @@ class DarkColorsSwapSwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchListTileAdaptive(
-      title: const Text('Dark mode swap colors'),
-      subtitle: const Text('Turn ON to swap primary and secondary colors'),
+      title: const Text('Swap colors'),
+      subtitle: const Text('Swap primary and secondary dark colors'),
       value: ref.watch(Settings.darkSwapColorsProvider),
       onChanged: ref.read(Settings.darkSwapColorsProvider.notifier).set,
     );

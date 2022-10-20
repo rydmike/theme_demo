@@ -10,7 +10,8 @@ class TransparentStatusBarSwitch extends ConsumerWidget {
   @override
   Widget build(final BuildContext context, final WidgetRef ref) {
     return SwitchListTileAdaptive(
-      title: const Text('Use scrim on Android AppBar'),
+      title: const Text('No status bar scrim'),
+      subtitle: const Text('Only affects Android top status bar'),
       value: ref.watch(Settings.transparentStatusBarProvider),
       onChanged: ref.read(Settings.transparentStatusBarProvider.notifier).set,
     );

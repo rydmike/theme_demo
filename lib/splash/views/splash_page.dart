@@ -57,6 +57,8 @@ class SplashPage extends StatelessWidget {
                     textAlign: TextAlign.center),
                 const SizedBox(height: 8),
                 const ColoredText('I am ColoredText, primary by default'),
+                ColoredText('and colored via direct property.',
+                    color: theme.colorScheme.tertiaryContainer),
                 const ColoredText(
                   'I can be bold easily',
                   fontWeight: FontWeight.bold,

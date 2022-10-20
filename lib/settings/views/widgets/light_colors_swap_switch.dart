@@ -10,8 +10,8 @@ class LightColorsSwapSwitch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SwitchListTileAdaptive(
-      title: const Text('Light mode swap colors'),
-      subtitle: const Text('Turn ON to swap primary and secondary colors'),
+      title: const Text('Swap colors'),
+      subtitle: const Text('Swap primary and secondary light colors'),
       value: ref.watch(Settings.lightSwapColorsProvider),
       onChanged: ref.read(Settings.lightSwapColorsProvider.notifier).set,
     );

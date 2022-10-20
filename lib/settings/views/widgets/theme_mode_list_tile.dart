@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/utils/string_case_extensions.dart';
 import '../../controllers/settings.dart';
 import 'theme_mode_toggle_buttons.dart';
 
@@ -11,8 +12,10 @@ class ThemeModeListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode mode = ref.watch(Settings.themeModeProvider);
     return ListTile(
       title: title,
+      subtitle: Text(mode.name.sentenceCase()),
       onTap: () {
         switch (ref.read(Settings.themeModeProvider)) {
           case ThemeMode.light:

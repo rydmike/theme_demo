@@ -12,7 +12,7 @@ class ResetSettingsDialog extends ConsumerWidget {
     final String usedDb =
         ref.read(usedKeyValueDbProvider.notifier).state.describe;
     return AlertDialog(
-      title: Text('Reset $usedDb Theme Settings'),
+      title: const Text('Reset Theme Settings'),
       content: Text('Reset all $usedDb theme settings back to their '
           'default values?\n'
           'Persisted theme settings will also be updated to default '
@@ -22,12 +22,12 @@ class ResetSettingsDialog extends ConsumerWidget {
             onPressed: () {
               Navigator.of(context).pop(false);
             },
-            child: const Text('CANCEL')),
+            child: const Text('Cancel')),
         TextButton(
             onPressed: () {
               Navigator.of(context).pop(true);
             },
-            child: const Text('RESET')),
+            child: const Text('Reset')),
       ],
     );
   }
