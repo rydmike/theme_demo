@@ -24,6 +24,8 @@ class AppTheme {
     required FlexAppBarStyle? appBarStyle,
     required double appBarOpacity,
     required bool transparentStatusBar,
+    required bool useSubTheme,
+    required double? defaultRadius,
     required TargetPlatform platform,
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
@@ -33,20 +35,26 @@ class AppTheme {
       swapColors: swapColors,
       surfaceMode: surfaceMode,
       blendLevel: blendLevel,
+      //
       appBarElevation: appBarElevation,
       appBarStyle: appBarStyle,
       appBarOpacity: appBarOpacity,
       transparentStatusBar: transparentStatusBar,
-      subThemesData: const FlexSubThemesData(
-        thinBorderWidth: 1,
-        thickBorderWidth: 2,
-      ),
+      //
       keyColors: FlexKeyColors(
         useKeyColors: usePrimaryKeyColor,
         useSecondary: useSecondaryKeyColor,
         useTertiary: useTertiaryKeyColor,
       ),
       tones: FlexTone.values[usedFlexTone].tones(Brightness.light),
+      //
+      subThemesData: useSubTheme
+          ? FlexSubThemesData(
+              defaultRadius: defaultRadius,
+              thinBorderWidth: 1,
+              thickBorderWidth: 2,
+            )
+          : null,
       //
       useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -76,6 +84,8 @@ class AppTheme {
     required bool computeDark,
     required int darkLevel,
     required bool darkIsTrueBlack,
+    required bool useSubTheme,
+    required double? defaultRadius,
     required TargetPlatform platform,
   }) {
     // We need to use the ColorScheme defined by used FlexColorScheme as input
@@ -87,21 +97,28 @@ class AppTheme {
       swapColors: swapColors,
       surfaceMode: surfaceMode,
       blendLevel: blendLevel,
+      //
       appBarElevation: appBarElevation,
       appBarStyle: appBarStyle,
       appBarOpacity: appBarOpacity,
       transparentStatusBar: transparentStatusBar,
+      //
       darkIsTrueBlack: darkIsTrueBlack,
-      subThemesData: const FlexSubThemesData(
-        thinBorderWidth: 1,
-        thickBorderWidth: 2,
-      ),
+      //
       keyColors: FlexKeyColors(
         useKeyColors: usePrimaryKeyColor,
         useSecondary: useSecondaryKeyColor,
         useTertiary: useTertiaryKeyColor,
       ),
       tones: FlexTone.values[usedFlexTone].tones(Brightness.dark),
+      //
+      subThemesData: useSubTheme
+          ? FlexSubThemesData(
+              defaultRadius: defaultRadius,
+              thinBorderWidth: 1,
+              thickBorderWidth: 2,
+            )
+          : null,
       //
       useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
