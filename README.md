@@ -28,7 +28,7 @@ Some settings Widget are also used in the App drawer, and even more can be found
 
 ## Key-Value database Persistence
 
-Another feature is that this demo persists all theme settings. The implementation used to persist the settings can be switched dynamically in the app between:
+Another feature is that this demo persists all theme settings. The implementation used to persist the settings **can be switched dynamically in the app UI** between:
 
 1. Memory - volatile, just session based, not really persisted.
 2. [Shared preferences](https://pub.dev/packages/shared_preferences)
@@ -77,7 +77,7 @@ We also did not want to use
 
 When the app starts, it set the state for each setting by checking if the key exist in the DB, reads it and uses uses hard coded defaults for each setting if  
 
-### Demo
+### Screenshots
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme toggle demo" width="350"/>
 

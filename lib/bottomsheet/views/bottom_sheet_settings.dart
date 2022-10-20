@@ -42,6 +42,8 @@ class BottomSheetSettings extends ConsumerWidget {
           const _CloseBottomSheetHandle(),
           Expanded(
             child: ListView(
+              controller: ScrollController(),
+              primary: false,
               children: <Widget>[
                 const ListTile(title: Text('BottomSheet Settings Example')),
                 const Divider(),
