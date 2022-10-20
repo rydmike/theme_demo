@@ -16,7 +16,7 @@ class AppConst {
   static const String packageVersion = '6.0.1';
 
   /// Build with Flutter version.
-  static const String flutterVersion = 'Channel stable v3.3.4';
+  static const String flutterVersion = 'Channel stable v3.3.5';
 
   /// Copyright years notice.
   static const String copyright = '© 2021, 2022';

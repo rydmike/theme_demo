@@ -46,6 +46,11 @@ class Settings {
   static const bool _darkIsTrueBlack = false;
   static const bool _darkComputeTheme = false;
   static const int _darkComputeLevel = 25;
+  // Use seeded color scheme and custom tones.
+  static const bool _usePrimaryKeyColor = false;
+  static const bool _useSecondaryKeyColor = false;
+  static const bool _useTertiaryKeyColor = false;
+  static const int _usedFlexTone = 1;
 
   /// Rest all settings entries and their controllers to default values.
   ///
@@ -77,6 +82,10 @@ class Settings {
     ref.read(darkIsTrueBlackProvider.notifier).reset();
     ref.read(darkComputeThemeProvider.notifier).reset();
     ref.read(darkComputeLevelProvider.notifier).reset();
+    // Use seeded color scheme and custom tones.
+    ref.read(usePrimaryKeyColorProvider.notifier).reset();
+    ref.read(useSecondaryKeyColorProvider.notifier).reset();
+    ref.read(useTertiaryKeyColorProvider.notifier).reset();
   }
 
   /// Set all settings entries and their controllers to values from DB.
@@ -109,6 +118,10 @@ class Settings {
     ref.read(darkIsTrueBlackProvider.notifier).get();
     ref.read(darkComputeThemeProvider.notifier).get();
     ref.read(darkComputeLevelProvider.notifier).get();
+    // Seeded color key usage.
+    ref.read(usePrimaryKeyColorProvider.notifier).get();
+    ref.read(useSecondaryKeyColorProvider.notifier).get();
+    ref.read(useTertiaryKeyColorProvider.notifier).get();
   }
 
   /// String key used for defining if we use Material 3 or Material 2.
@@ -445,10 +458,10 @@ class Settings {
     name: '${_keyDarkAppBarOpacity}Provider',
   );
 
-  /// String key used for storing bool to define if we use computed dark theme.
+  /// String key used for storing if dark mode uses true black.
   ///
   /// The associated provider uses same name with "Provider" added to it.
-  static const String _keyDarkComputeTheme = 'darkComputeTheme';
+  static const String _keyDarkIsTrueBlack = 'darkIsTrueBlack';
 
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
@@ -466,6 +479,11 @@ class Settings {
     // Use the unique key-value DB key as provider name, useful for debugging.
     name: '${_keyDarkIsTrueBlack}Provider',
   );
+
+  /// String key used for storing bool to define if we use computed dark theme.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyDarkComputeTheme = 'darkComputeTheme';
 
   /// Option to use dark scheme calculation from light scheme colors, instead
   /// of using the pre-defined dark scheme colors.
@@ -525,8 +543,100 @@ class Settings {
     name: '${_keyDarkComputeLevel}Provider',
   );
 
-  /// String key used for storing if dark mode uses true black.
+  /// String key used for storing bool to define if we use seeded color scheme
+  /// by enabling primary color as seed key.
   ///
   /// The associated provider uses same name with "Provider" added to it.
-  static const String _keyDarkIsTrueBlack = 'darkIsTrueBlack';
+  static const String _keyUsePrimaryKeyColor = 'usePrimaryKeyColor';
+
+  /// Provider for using true black, instead of normal dark, in dark theme mode.
+  ///
+  /// Defaults to [_usePrimaryKeyColor].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+      usePrimaryKeyColorProvider =
+      StateNotifierProvider<SettingsEntry<bool>, bool>(
+    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _usePrimaryKeyColor,
+        key: _keyUsePrimaryKeyColor,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyUsePrimaryKeyColor}Provider',
+  );
+
+  /// String key used for storing bool to define if we use seeded color scheme
+  /// for secondary color by enabling secondary color as seed key.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyUseSecondaryKeyColor = 'useSecondaryKeyColor';
+
+  /// Provider for using true black, instead of normal dark, in dark theme mode.
+  ///
+  /// Defaults to [_usePrimaryKeyColor].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+      useSecondaryKeyColorProvider =
+      StateNotifierProvider<SettingsEntry<bool>, bool>(
+    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _useSecondaryKeyColor,
+        key: _keyUseSecondaryKeyColor,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyUseSecondaryKeyColor}Provider',
+  );
+
+  /// String key used for storing bool to define if we use seeded color scheme
+  /// for tertiary color by enabling tertiary color as seed key.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyUseTertiaryKeyColor = 'useTertiaryKeyColor';
+
+  /// Provider for using true black, instead of normal dark, in dark theme mode.
+  ///
+  /// Defaults to [_usePrimaryKeyColor].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+      useTertiaryKeyColorProvider =
+      StateNotifierProvider<SettingsEntry<bool>, bool>(
+    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _useTertiaryKeyColor,
+        key: _keyUseTertiaryKeyColor,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyUseTertiaryKeyColor}Provider',
+  );
+
+  /// String key used for storing used FlexToneSetup.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyUsedFlexTone = 'usedFlexTone';
+
+  // TODO(any): As an exercise change this to an enum that can be stored.
+  /// Selects which of the built in FlexTones setups is used by the
+  /// FlexSeedScheme algorithm
+  ///
+  /// This would be better and safer represented as an enum entry, but we
+  /// did not want to create yet another enum storage adapter. You can of course
+  /// store the enums as ints and convert in the app too. This may serve as an
+  /// example of that, until I change it to an enum :)
+  ///
+  /// Defaults to [_usedFlexTone].
+  static final StateNotifierProvider<SettingsEntry<int>, int>
+      usedFlexToneProvider = StateNotifierProvider<SettingsEntry<int>, int>(
+    (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+      return SettingsEntry<int>(
+        ref,
+        defaultValue: _usedFlexTone,
+        key: _keyUsedFlexTone,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyUsedFlexTone}Provider',
+  );
 }

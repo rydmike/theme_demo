@@ -9,7 +9,8 @@ class DarkLevelSlider extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AnimatedHide(
-      hide: !ref.watch(Settings.darkComputeThemeProvider),
+      hide: !ref.watch(Settings.darkComputeThemeProvider) ||
+          ref.watch(Settings.usePrimaryKeyColorProvider),
       child: ListTile(
         title: Slider.adaptive(
           max: 100,

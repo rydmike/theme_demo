@@ -72,11 +72,12 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
               ),
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppInsets.l),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: AppInsets.edge),
                   child: Text('Theme Showcase', style: medium),
                 ),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppInsets.l),
+                  padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
                   child: Text(
                     'Shows theme colors and the FlexColorScheme based theme '
                     'applied on common widgets. '

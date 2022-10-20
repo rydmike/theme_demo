@@ -16,6 +16,8 @@ import '../../../theme/views/widgets/show_color_scheme_colors.dart';
 import '../../../theme/views/widgets/show_sub_theme_colors.dart';
 import '../../../theme/views/widgets/show_theme_data_colors.dart';
 import '../../controllers/counter_provider.dart';
+import '../../controllers/platform_provider.dart';
+import '../widgets/platform_popup_menu.dart';
 import '../widgets/theme_settings.dart';
 
 /// Home page showing with a simple Riverpod count and theme controls.
@@ -145,23 +147,29 @@ class _MyHomePageState extends ConsumerState<HomePage> {
               ),
               const ThemeSettings(),
               const Divider(),
+              PlatformPopupMenu(
+                platform: ref.watch(platformProvider),
+                onChanged: (TargetPlatform newPlatform) {
+                  ref.read(platformProvider.notifier).state = newPlatform;
+                },
+              ),
+              const Divider(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppInsets.l),
+                padding: const EdgeInsets.symmetric(horizontal: AppInsets.edge),
                 child: Text('Theme Colors', style: medium),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppInsets.l),
+                padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
                 child: ShowColorSchemeColors(),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppInsets.l),
+                padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
                 child: ShowThemeDataColors(),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppInsets.l),
+                padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
                 child: ShowSubThemeColors(),
               ),
-              const SizedBox(height: AppInsets.xl),
             ],
           ),
         ),
