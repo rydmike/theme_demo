@@ -27,9 +27,6 @@ class AppConst {
   /// License info.
   static const String license = 'BSD 3-Clause License';
 
-  /// App icon used inside the app.
-  static const String icon = 'assets/images/app_icon.png';
-
   /// Link to the FlexColorScheme package.
   static final Uri packageUri = Uri(
     scheme: 'https',
