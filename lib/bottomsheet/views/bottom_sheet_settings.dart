@@ -13,6 +13,8 @@ import '../../settings/views/widgets/light_app_bar_style_popup_menu.dart';
 import '../../settings/views/widgets/light_colors_swap_switch.dart';
 import '../../settings/views/widgets/theme_mode_list_tile.dart';
 import '../../settings/views/widgets/theme_popup_menu.dart';
+import '../../settings/views/widgets/use_material3_switch.dart';
+import '../../settings/views/widgets/use_sub_themes_list_tile.dart';
 
 /// A widget that allows us to change some of the theme settings. Intended
 /// to be used in a BottomSheet.
@@ -42,7 +44,14 @@ class BottomSheetSettings extends ConsumerWidget {
             child: ListView(
               children: <Widget>[
                 const ListTile(title: Text('BottomSheet Settings Example')),
+                const Divider(),
                 const ThemePopupMenu(),
+                const UseMaterial3Switch(),
+                const UseSubThemesListTile(
+                  title: Text('Use component themes'),
+                  subtitle:
+                      Text('Enable FlexColorScheme opinionated sub themes'),
+                ),
                 const ThemeModeListTile(title: Text('Theme mode')),
                 if (isLight)
                   const LightColorsSwapSwitch()

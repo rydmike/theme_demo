@@ -51,6 +51,12 @@ class Settings {
   static const bool _useSecondaryKeyColor = false;
   static const bool _useTertiaryKeyColor = false;
   static const int _usedFlexTone = 1;
+  // Enable FlexColorScheme opinionated component themes.
+  static const bool _useSubThemes = true;
+  // Component theme global border radius, nullable and null used as default,
+  // this results in separate defaults being used in FCS, M2 and M3 mode,
+  // if global radius is not selected with its slider.
+  static const double? _defaultRadius = null;
 
   /// Rest all settings entries and their controllers to default values.
   ///
@@ -86,6 +92,10 @@ class Settings {
     ref.read(usePrimaryKeyColorProvider.notifier).reset();
     ref.read(useSecondaryKeyColorProvider.notifier).reset();
     ref.read(useTertiaryKeyColorProvider.notifier).reset();
+    // Use FlexColorScheme opinionated component themes.
+    ref.read(useSubThemesProvider.notifier).reset();
+    // Component theme global border radius.
+    ref.read(defaultRadiusProvider.notifier).reset();
   }
 
   /// Set all settings entries and their controllers to values from DB.
@@ -122,6 +132,10 @@ class Settings {
     ref.read(usePrimaryKeyColorProvider.notifier).get();
     ref.read(useSecondaryKeyColorProvider.notifier).get();
     ref.read(useTertiaryKeyColorProvider.notifier).get();
+    // Use FlexColorScheme opinionated component themes.
+    ref.read(useSubThemesProvider.notifier).get();
+    // Component theme global border radius.
+    ref.read(defaultRadiusProvider.notifier).get();
   }
 
   /// String key used for defining if we use Material 3 or Material 2.
@@ -574,7 +588,7 @@ class Settings {
 
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
-  /// Defaults to [_usePrimaryKeyColor].
+  /// Defaults to [_useSecondaryKeyColor].
   static final StateNotifierProvider<SettingsEntry<bool>, bool>
       useSecondaryKeyColorProvider =
       StateNotifierProvider<SettingsEntry<bool>, bool>(
@@ -597,7 +611,7 @@ class Settings {
 
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
-  /// Defaults to [_usePrimaryKeyColor].
+  /// Defaults to [_useTertiaryKeyColor].
   static final StateNotifierProvider<SettingsEntry<bool>, bool>
       useTertiaryKeyColorProvider =
       StateNotifierProvider<SettingsEntry<bool>, bool>(
@@ -638,5 +652,48 @@ class Settings {
     },
     // Use the unique key-value DB key as provider name, useful for debugging.
     name: '${_keyUsedFlexTone}Provider',
+  );
+
+  /// String key used to toggle FCS sub themes on and off.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyUseSubThemes = 'useSubThemes';
+
+  /// Provider for using true black, instead of normal dark, in dark theme mode.
+  ///
+  /// Defaults to [_useSubThemes].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+      useSubThemesProvider = StateNotifierProvider<SettingsEntry<bool>, bool>(
+    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _useSubThemes,
+        key: _keyUseSubThemes,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyUseSubThemes}Provider',
+  );
+
+  /// String key used for storing the default border radius.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyDefaultRadius = 'defaultRadius';
+
+  /// Provider for the default border radius.
+  ///
+  /// Defaults to [_defaultRadius].
+  static final StateNotifierProvider<SettingsEntry<double?>, double?>
+      defaultRadiusProvider =
+      StateNotifierProvider<SettingsEntry<double?>, double?>(
+    (StateNotifierProviderRef<SettingsEntry<double?>, double?> ref) {
+      return SettingsEntry<double?>(
+        ref,
+        defaultValue: _defaultRadius,
+        key: _keyDefaultRadius,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyDefaultRadius}Provider',
   );
 }

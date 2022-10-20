@@ -13,6 +13,7 @@ import '../../../settings/views/widgets/dark_surface_blend_level_slider.dart';
 import '../../../settings/views/widgets/dark_surface_mode_list_tile.dart';
 import '../../../settings/views/widgets/dark_surface_mode_popup_menu.dart';
 import '../../../settings/views/widgets/dark_true_black_switch.dart';
+import '../../../settings/views/widgets/default_border_radius_slider.dart';
 import '../../../settings/views/widgets/flex_tone_config_popup_menu.dart';
 import '../../../settings/views/widgets/light_app_bar_opacity.dart';
 import '../../../settings/views/widgets/light_app_bar_style_popup_menu.dart';
@@ -25,6 +26,7 @@ import '../../../settings/views/widgets/theme_popup_menu.dart';
 import '../../../settings/views/widgets/transparent_status_bar_switch.dart';
 import '../../../settings/views/widgets/use_key_colors_toggle_buttons.dart';
 import '../../../settings/views/widgets/use_material3_switch.dart';
+import '../../../settings/views/widgets/use_sub_themes_list_tile.dart';
 import '../../../theme/models/flex_tone.dart';
 
 /// A Column widget that allows us to change all app used theme settings.
@@ -42,6 +44,7 @@ class ThemeSettings extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bool isLight = Theme.of(context).brightness == Brightness.light;
+    final bool useSubThemes = ref.watch(Settings.useSubThemesProvider);
     final bool useSeed = ref.watch(Settings.usePrimaryKeyColorProvider);
     final int flexTone = ref.watch(Settings.usedFlexToneProvider);
     final int usedFlexTone =
@@ -53,12 +56,34 @@ class ThemeSettings extends ConsumerWidget {
       children: <Widget>[
         const ThemeModeListTile(title: Text('Theme mode')),
         const UseMaterial3Switch(),
+        const UseSubThemesListTile(
+          title: Text('Use component themes'),
+          subtitle: Text('Enable FlexColorScheme opinionated sub themes'),
+        ),
+        AnimatedHide(
+          hide: !useSubThemes,
+          child: Column(
+            children: const <Widget>[
+              ListTile(
+                title: Text('Global border radius on components'),
+                subtitle: Text(
+                  'Default setting uses mostly Material 3 design '
+                  'values, where radius spec varies per component. '
+                  'Material 2 design uses 4 on all components.',
+                ),
+              ),
+              DefaultBorderRadiusSlider(),
+            ],
+          ),
+        ),
+        const Divider(),
         const ThemePopupMenu(),
         if (isLight)
           const LightColorsSwapSwitch()
         else
           const DarkColorsSwapSwitch(),
         const Divider(),
+
         const ListTileExplainUsedSeed(),
         const ListTile(trailing: UseKeyColorsToggleButtons()),
         AnimatedHide(

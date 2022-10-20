@@ -11,6 +11,7 @@ import '../../settings/controllers/settings.dart';
 import '../../settings/views/dialogs/reset_settings_dialog.dart';
 import '../../settings/views/widgets/theme_mode_list_tile.dart';
 import '../../settings/views/widgets/use_material3_switch.dart';
+import '../../settings/views/widgets/use_sub_themes_list_tile.dart';
 import '../../splash/views/splash_page.dart';
 import '../../theme_showcase/views/pages/theme_showcase_page.dart';
 
@@ -85,7 +86,11 @@ class AppDrawer extends ConsumerWidget {
           const Divider(),
           const _Header('Theme'),
           const UseMaterial3Switch(),
+          const UseSubThemesListTile(
+            title: Text('Component themes'),
+          ),
           const ThemeModeListTile(title: Text('Theme')),
+
           ListTile(
             title: const Text('Reset settings'),
             onTap: () async {

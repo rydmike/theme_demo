@@ -37,6 +37,8 @@ final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
       appBarStyle: ref.watch(Settings.lightAppBarStyleProvider),
       appBarOpacity: ref.watch(Settings.lightAppBarOpacityProvider),
       transparentStatusBar: ref.watch(Settings.transparentStatusBarProvider),
+      useSubTheme: ref.watch(Settings.useSubThemesProvider),
+      defaultRadius: ref.watch(Settings.defaultRadiusProvider),
       platform: ref.watch(platformProvider),
     );
   },
@@ -73,6 +75,8 @@ final Provider<ThemeData> darkThemeProvider = Provider<ThemeData>(
       darkIsTrueBlack: ref.watch(Settings.darkIsTrueBlackProvider),
       computeDark: ref.watch(Settings.darkComputeThemeProvider),
       darkLevel: ref.watch(Settings.darkComputeLevelProvider),
+      useSubTheme: ref.watch(Settings.useSubThemesProvider),
+      defaultRadius: ref.watch(Settings.defaultRadiusProvider),
       platform: ref.watch(platformProvider),
     );
   },
