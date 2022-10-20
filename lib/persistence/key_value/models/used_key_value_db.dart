@@ -14,7 +14,6 @@ enum UsedKeyValueDb {
   const UsedKeyValueDb([this._filename = '']);
 
   /// Get initialized [KeyValueDb] implementation based on enum value.
-  // Future<KeyValueDb> get init async {
   KeyValueDb get get {
     switch (this) {
       case UsedKeyValueDb.memory:
@@ -27,7 +26,6 @@ enum UsedKeyValueDb {
   }
 
   /// Get initialized [KeyValueDb] implementation based on enum value.
-  // Future<KeyValueDb> get init async {
   String get describe {
     switch (this) {
       case UsedKeyValueDb.memory:
