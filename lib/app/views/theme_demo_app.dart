@@ -11,8 +11,8 @@ import '../../theme_showcase/views/pages/theme_showcase_page.dart';
 
 /// The [MaterialApp] widget for the ThemeDemo application.
 ///
-/// We are using a ConsumerWidget to access the Riverpod providers we
-/// use to control the used light and dark themes, as well as mode.
+/// We use a ConsumerWidget to access the Riverpod providers we
+/// use to control the used light and dark themes, as well as theme mode.
 class ThemeDemoApp extends ConsumerWidget {
   const ThemeDemoApp({super.key});
 
