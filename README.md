@@ -1,41 +1,68 @@
 # Persisted Flutter Theming using FlexColorScheme and Riverpod
 
-This Flutter demo application shows one way of using
-[FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with 
-[Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change 
-application theme. It uses  **Riverpod** providers for light `theme` and `darkTheme` 
-in a [MaterialApp](https://api.flutter.dev/flutter/material/MaterialApp-class.html), 
-as well as to toggling the [themeMode](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html) property. 
+This Flutter application shows one way of using [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change application theme. It uses **Riverpod** providers for light `theme` and `darkTheme` in a [MaterialApp](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [themeMode](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). 
 
-## Riverpod 2 and FlexColorScheme 6
+## FlexColorScheme 6 and Riverpod 2
 
-This example has now been updated to be compatible with and use the stable releases
-of **Riverpod 2.x.x** and **FlexColorScheme 6.x.x.**
+This example is updated to be compatible with and use the stable releases of **Riverpod 2.x.x** and **FlexColorScheme 6.x.x.**
 
-This demo uses many FlexColorScheme V5 and V6 theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does however use other more advanced techniques, and is provided as an additional example to the six ones provided with the FlexColorScheme package. This example is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples) 
+This demo uses many advanced FlexColorScheme V5 and V6 theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does however use other more advanced techniques, and is provided as an additional example to the six examples provided with the FlexColorScheme package. This example is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples) 
+
+| Home screen, part 1 | Homes screen part 2 |
+|---------------------|---------------------|
+| Add screen shoot 1  | Add screen shoot 2  |
 
 ## Features
 
 The demo uses several custom [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as Switches, Sliders and PopupMenuButtons, to compose UI widgets used to toggle several input values 
-for the used and demonstrated FlexColorScheme properties. 
+for the used and demonstrated FlexColorScheme features. 
 
-The app demonstrates how the ThemeData, and ThemeMode state of the application can be 
-easily managed using Riverpod, together with StateNotifierProviders, making up the current ThemeData and ThemeMode states. It also shows how simple it is to make UI widgets that can be dropped in anywhere were needed in the app to manipulate modify the used ThemeData for the application. 
+The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `StateNotifierProviders`. That are used to define the current `ThemeData` for light, dark theme and theme mode states. It also shows how simple it is to make UI widgets that can be dropped in anywhere were needed in an app, to manipulate and modify the used `ThemeData` for the application. As the UI view widgets modify Riverpod `StateNotifierProviders` that act as theme property controllers in ThemeData providers. The `MaterialApp` widget watches these providers and rebuilds whenever a single team UI widget is changed anywhere in the application.
 
-The used approach works regardless of how deep in the widget tree the actual theme control widgets are in the widget tree. In this example this is demonstrated by placing all theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page.
+```dart
+class ThemeDemoApp extends ConsumerWidget {
+  const ThemeDemoApp({super.key});
 
-Some settings Widget are also used in the App drawer, and even more can be found in a bottom sheet.
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      scrollBehavior: const AppScrollBehavior(),
+      title: AppConst.appName,
+      theme: ref.watch(lightThemeProvider),
+      darkTheme: ref.watch(darkThemeProvider),
+      themeMode: ref.watch(Settings.themeModeProvider),
+      initialRoute: HomePage.route,
+      routes: <String, WidgetBuilder>{
+        SplashPage.route: (BuildContext context) => const SplashPage(),
+        ThemeShowcasePage.route: (BuildContext context) =>
+            const ThemeShowcasePage(),
+        HomePage.route: (BuildContext context) => const HomePage(),
+      },
+    );
+  }
+}
+```
+
+This approach works regardless of were in the widget tree the actual theme control widgets are. In this example this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page.  Some settings Widgets are also used in an app drawer, and even more can be found in a bottom sheet.
+
+| Home screen, part 1 | Homes screen part 2 |
+|---------------------|---------------------|
+| Add screen shoot 1  | Add screen shoot 2  |
 
 ## Key-Value database Persistence
 
-Another feature is that this demo persists all theme settings. The implementation used to persist the settings **can be switched dynamically in the app UI** between:
+Another feature is that this demo persists all theme settings. The implementation used to persist the settings **can be switched dynamically** in the running app between:
 
-1. Memory - volatile, just session based, not really persisted.
+1. Memory - volatile, just session based, not really persisted
 2. [Shared preferences](https://pub.dev/packages/shared_preferences)
 3. [Hive](https://pub.dev/packages/hive)
 
+This example shows how Riverpod can be used to change the used key-value database dependency from inside the Flutter app UI. This may be interesting to study, since this app needs this dependency to be able to read its settings and start. Yet we can control this from inside the running Flutter app. In this case we are using Riverpod as a service locator and dependency injection replacement.
 
-This example show how Riverpod can be used to change the used key-value database dependency, form inside Flutter app UI. This may be interesting to study, since this Flutter app needs this dependency to be able to read its settings and start.
+To be able to do this we need to define a `ProviderContainer` in just Dart before we start the Flutter app. So we can access the provider that gives us the currently used key-value DB implementation. We perform whatever async initialization the used key-value DB needs. Before we start the Flutter app we also access a provider that sets upp a listener that will run whenever the key-value DB provider is changed.
+
+Below we also define a `ProviderProviderObserver`, we will use it to print debug logs whenever any provider in this demo app changes.
 
 ```dart
 Future<void> main() async {
@@ -46,7 +73,7 @@ Future<void> main() async {
   /// https://github.com/rrousselGit/riverpod/issues/295
   /// https://codewithandrea.com/articles/riverpod-initialize-listener-app-startup/
   final ProviderContainer container = ProviderContainer(
-    // This observer is used for logging changes in all Riverpod providers.
+    // This observer is used for logging changes in all providers.
     observers: <ProviderObserver>[AppProviderObserver()],
   );
 
@@ -66,6 +93,21 @@ Future<void> main() async {
   );
 }
 ```
+To provide `keyValueDbProvider` we use a `StateProvider`, typically just a `Provider` would do if we just want to access one predefined concrete implementation. In this case we want to setup a listener that listens to changes in the `keyValueDbProvider` so we can do some async init and data loading work from it, when we change to another implementation dynamically from inside the app.
+
+```dart
+/// Provides a [KeyValueDb] DB repository.
+///
+/// The value returned depends on the controller [usedKeyValueDbProvider].
+final StateProvider<KeyValueDb> keyValueDbProvider =
+    StateProvider<KeyValueDb>((StateProviderRef<KeyValueDb> ref) {
+  return ref.watch(usedKeyValueDbProvider).get;
+}, name: 'keyValueDbProvider');
+```
+The `keyValueDbListenerProvider` above is just a normal `provider`, that we will access to instantiate it and let it it do its work, where we setup the listener.
+
+
+
 
 ### Key-Value DB Design Requirements
 

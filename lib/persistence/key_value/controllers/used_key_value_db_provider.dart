@@ -7,8 +7,7 @@ import '../models/used_key_value_db.dart';
 /// A [StateProvider] controller used to control which [KeyValueDb]
 /// implementation is used.
 ///
-/// The controller is also used to change state of UI to select used
-/// [KeyValueDb] implementation.
+/// Used by UI widgets to select used [KeyValueDb] implementation.
 final StateProvider<UsedKeyValueDb> usedKeyValueDbProvider =
     StateProvider<UsedKeyValueDb>(
   (final StateProviderRef<UsedKeyValueDb> ref) => AppDb.keyValue,
