@@ -49,9 +49,9 @@ class ThemeDemoApp extends ConsumerWidget {
 
 This approach works regardless of were in the widget tree the actual theme UI widgets are. In this example this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page.  Some settings Widgets are also used in an app drawer, and even more can be found in a bottom sheet.
 
-| Home screen, part 1 | Homes screen part 2 |
-|---------------------|---------------------|
-| Add screen shoot 1  | Add screen shoot 2  |
+| Screen X           | Screen Y            |
+|--------------------|---------------------|
+| Add screen shoot   | Add screen shoot    |
 
 ## Key-Value database Persistence
 
@@ -66,6 +66,9 @@ This example shows how Riverpod can be used to change the used key-value databas
 To be able to do this we need to define a `ProviderContainer` in just Dart before we start the Flutter app. So we can access the provider that gives us the currently used key-value DB implementation. We perform whatever async initialization the used key-value DB needs. Before we start the Flutter app we also access a provider that sets upp a listener that will run whenever the key-value DB provider is changed.
 
 Below we also define a `ProviderProviderObserver`, we will use it to print debug logs whenever any provider in this demo app changes.
+
+### Our `main` function
+
 
 ```dart
 Future<void> main() async {
