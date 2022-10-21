@@ -1,12 +1,12 @@
 # Persisted Flutter Theming using FlexColorScheme and Riverpod
 
-This Flutter application shows one way of using [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change application theme. It uses **Riverpod** providers for light `theme` and `darkTheme` in a [MaterialApp](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [themeMode](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). 
+This Flutter application shows how to us [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change application theme. It uses **Riverpod** providers for light `theme` and `darkTheme` in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). 
 
 ## FlexColorScheme 6 and Riverpod 2
 
-This example is updated to be compatible with and use the stable releases of **Riverpod 2.x.x** and **FlexColorScheme 6.x.x.**
+This example is designed to work with and use the stable releases of **Riverpod 2** and **FlexColorScheme 6**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does however use more advanced state management techniques, and it has a nice feature first folder structure. 
 
-This demo uses many advanced FlexColorScheme V5 and V6 theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does however use other more advanced techniques, and is provided as an additional example to the six examples provided with the FlexColorScheme package. This example is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples) 
+This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. This example is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples). 
 
 | Home screen, part 1 | Homes screen part 2 |
 |---------------------|---------------------|
@@ -14,10 +14,13 @@ This demo uses many advanced FlexColorScheme V5 and V6 theming features, but not
 
 ## Features
 
-The demo uses several custom [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as Switches, Sliders and PopupMenuButtons, to compose UI widgets used to toggle several input values 
-for the used and demonstrated FlexColorScheme features. 
+The demo uses several custom [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as Switches, Sliders and PopupMenuButtons, to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme features. 
 
-The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `StateNotifierProviders`. That are used to define the current `ThemeData` for light, dark theme and theme mode states. It also shows how simple it is to make UI widgets that can be dropped in anywhere were needed in an app, to manipulate and modify the used `ThemeData` for the application. As the UI view widgets modify Riverpod `StateNotifierProviders` that act as theme property controllers in ThemeData providers. The `MaterialApp` widget watches these providers and rebuilds whenever a single team UI widget is changed anywhere in the application.
+The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `StateNotifierProviders`. That are used to define the current `ThemeData` for light, dark theme and theme mode states. It also shows how simple it is to make small UI theme control widgets that can be dropped in anywhere were needed in an app, and then used to manipulate and modify the `ThemeData` for the application. The UI view widgets modify Riverpod `StateNotifierProviders` that act as theme property controllers in `ThemeData` providers. The `MaterialApp` widget watches these providers and rebuilds whenever a single theming UI widget is changed anywhere in the application.
+
+### The `MaterialApp` 
+
+The use `MaterialApp` setup is very compact. As always separate the dark and light theme into separate `ThemeData` objects, here given by providers that we watch. When you use this setup, the usage of supplied light or dark theme is controlled by the `ThemeMode` enum. We use and watch a third provider for it, so it can easily be toggled via UI.  
 
 ```dart
 class ThemeDemoApp extends ConsumerWidget {
@@ -44,7 +47,7 @@ class ThemeDemoApp extends ConsumerWidget {
 }
 ```
 
-This approach works regardless of were in the widget tree the actual theme control widgets are. In this example this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page.  Some settings Widgets are also used in an app drawer, and even more can be found in a bottom sheet.
+This approach works regardless of were in the widget tree the actual theme UI widgets are. In this example this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page.  Some settings Widgets are also used in an app drawer, and even more can be found in a bottom sheet.
 
 | Home screen, part 1 | Homes screen part 2 |
 |---------------------|---------------------|
