@@ -43,8 +43,9 @@ class KeyValueDbHive implements KeyValueDb {
   /// - Assign box to local Hive box instance.
   @override
   Future<void> init() async {
-    if (!kReleaseMode) {
-      debugPrint('Hive init called, _isInitialized = $_isInitialized');
+    if (_debug) {
+      debugPrint(
+          'KeyValueDbHive: init called, _isInitialized = $_isInitialized');
     }
 
     // If init has already been called exit with no-op.
@@ -62,9 +63,9 @@ class KeyValueDbHive implements KeyValueDb {
     // Usually you find the "shared_preferences.json" file in the same folder
     // that the KeyValueDataSourcePrefs creates with SharedPreferences. You
     // cannot set the name on that file, but we can do it with Hive.
-    if (!kReleaseMode) {
+    if (_debug) {
       debugPrint(
-          'Hive using storage path: $appDataDir and file name: $boxName');
+          'KeyValueDbHive storage path: $appDataDir and file name: $boxName');
     }
     // Init the Hive box box giving it the platform usable folder.
     Hive.init(appDataDir);
@@ -83,6 +84,7 @@ class KeyValueDbHive implements KeyValueDb {
   /// Hive docs.
   @override
   Future<void> dispose() async {
+    if (_debug) debugPrint('KeyValueDbHive: disposed');
     await _hiveBox.compact();
     await _hiveBox.close();
     // Set _isInitialized to false.
@@ -129,12 +131,11 @@ class KeyValueDbHive implements KeyValueDb {
   @override
   T get<T>(String key, T defaultValue) {
     try {
-      final T loaded = _hiveBox.get(key, defaultValue: defaultValue) as T;
+      final T value = _hiveBox.get(key, defaultValue: defaultValue) as T;
       if (_debug) {
-        debugPrint('Hive type   : $key as ${defaultValue.runtimeType}');
-        debugPrint('Hive loaded : $key as $loaded with ${loaded.runtimeType}');
+        debugPrint('Hive get    : ["$key"] = $value (${value.runtimeType})');
       }
-      return loaded;
+      return value;
     } catch (e) {
       debugPrint('Hive get (load) ERROR');
       debugPrint(' Error message ...... : $e');
@@ -154,8 +155,7 @@ class KeyValueDbHive implements KeyValueDb {
   Future<void> put<T>(String key, T value) {
     try {
       if (_debug) {
-        debugPrint('Hive type   : $key as ${value.runtimeType}');
-        debugPrint('Hive saved  : $key as $value');
+        debugPrint('Hive put    : ["$key"] = $value (${value.runtimeType})');
       }
       return _hiveBox.put(key, value);
     } catch (e) {

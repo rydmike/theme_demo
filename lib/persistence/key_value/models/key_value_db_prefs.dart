@@ -35,13 +35,16 @@ class KeyValueDbPrefs implements KeyValueDb {
   /// never read back before app is started again.
   @override
   Future<void> init() async {
+    if (_debug) debugPrint('KeyValueDbPrefs: init called');
     // Get the SharedPreferences instance and assign it to our instance.
     _prefs = await SharedPreferences.getInstance();
   }
 
   /// [KeyValueDbPrefs] implementation needs no dispose.
   @override
-  Future<void> dispose() async {}
+  Future<void> dispose() async {
+    if (_debug) debugPrint('KeyValueDbPrefs: dispose called');
+  }
 
   // Load/get a setting from the data source, using a key to access it from
   // the SharedPreferences storage.
@@ -103,15 +106,11 @@ class KeyValueDbPrefs implements KeyValueDb {
   @override
   T get<T>(String key, T defaultValue) {
     try {
-      if (_debug) {
-        debugPrint('SharedPrefs has type .......... : $key '
-            'as ${defaultValue.runtimeType}');
-      }
       // T is boolean nullable value.
       if (sameTypes<T, bool?>()) {
         final bool? value = _prefs.getBool(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded type bool?   : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType}?)');
         }
         // If value is null, we had no key for it, we should return the
         // default value, that may also be null, but it might not be too,
@@ -119,7 +118,6 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value == null) return defaultValue;
         // else we return the value.
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is boolean none nullable value.
       if (sameTypes<T, bool>()) {
@@ -127,16 +125,15 @@ class KeyValueDbPrefs implements KeyValueDb {
         // a key did not exist.
         final bool value = _prefs.getBool(key) ?? defaultValue as bool;
         if (_debug) {
-          debugPrint('SharedPrefs loaded type bool    : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is integer nullable value.
       if (sameTypes<T, int?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded type int?    : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType}?)');
         }
         // If value is null, we had no key for it, we should return the
         // default value, that may also be null, but it might not be too,
@@ -147,7 +144,6 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value < 0) return null as T;
         // else we return the value.
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is integer none nullable value.
       if (sameTypes<T, int>()) {
@@ -155,57 +151,52 @@ class KeyValueDbPrefs implements KeyValueDb {
         // a key did not exist.
         final int value = _prefs.getInt(key) ?? defaultValue as int;
         if (_debug) {
-          debugPrint('SharedPrefs loaded type int     : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         // else we return the value.
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is double nullable value.
       if (sameTypes<T, double?>()) {
         final double? value = _prefs.getDouble(key) ?? defaultValue as double?;
         if (_debug) {
-          debugPrint('SharedPrefs loaded type double? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType}?)');
         }
         if (value == null) return defaultValue;
         if (value < 0.0) return null as T;
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is double none nullable value.
       if (sameTypes<T, double>()) {
         final double value = _prefs.getDouble(key) ?? defaultValue as double;
         if (_debug) {
-          debugPrint('SharedPrefs loaded type double  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is String nullable value.
       if (sameTypes<T, String?>()) {
         final String? value = _prefs.getString(key) ?? defaultValue as String?;
         if (_debug) {
-          debugPrint('SharedPrefs loaded type String? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType}?)');
         }
         if (value == null) return defaultValue;
         if (value == '<NULL>') return null as T;
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is String none nullable value.
       if (sameTypes<T, String>()) {
         final String value = _prefs.getString(key) ?? defaultValue as String;
         if (_debug) {
-          debugPrint('SharedPrefs loaded type String  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         return value as T;
-        // return Future<T>(() => value as T);
       }
       // T is Color nullable value.
       if (sameTypes<T, Color?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded Color?       : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType}?)');
         }
         // If value is null, we had no key for it, we should return the
         // default value, that may also be null, but it might not be too,
@@ -217,13 +208,12 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value > 0xFFFFFFFF) return defaultValue;
         // else we return the value as a Color of type T.
         return Color(value) as T;
-        // return Future<T>(() => Color(value) as T);
       }
       // T is Color none nullable value.
       if (sameTypes<T, Color>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded Color        : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         // If value is null, we had no key for it, we should return the
         // default value, that is a none nullable Color.
@@ -234,7 +224,6 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value > 0xFFFFFFFF) return defaultValue;
         // else we return the value as a Color of type T.
         return Color(value) as T;
-        // return Future<T>(() => Color(value) as T);
       }
       // We have to explicitly handle each Enum type we have stored to be able
       // to convert it back to its type, which we have in its type parameter.
@@ -243,7 +232,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, ThemeMode?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded ThemeMode?   : $key as $value');
+          debugPrint('Prefs load  : ThemeMode? $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         // If value is null, we had no key for it, we should return the
         // default value, that may also be null, but it might not be too,
@@ -260,7 +250,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, ThemeMode>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded ThemeMode    : $key as $value');
+          debugPrint('Prefs load  : ThemeMode    : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         // If value is null, we had no key for it, we should return the
         // default value, that may also be null, but it might not be too,
@@ -280,7 +271,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexScheme?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexScheme?  : $key as $value');
+          debugPrint('Prefs load  : FlexScheme?  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -291,7 +283,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexScheme>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexScheme   : $key as $value');
+          debugPrint('Prefs load  : FlexScheme   : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -302,7 +295,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSurfaceMode?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexSurfaceMode? : $key as $value');
+          debugPrint('Prefs load  : FlexSurfaceMode? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -313,7 +307,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSurfaceMode>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexSurfaceMode  : $key as $value');
+          debugPrint('Prefs load  : FlexSurfaceMode  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -324,8 +319,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexInputBorderType?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs loaded FlexInputBorderType? : $key as $value');
+          debugPrint('Prefs load  : FlexInputBorderType? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -336,8 +331,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexInputBorderType>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs loaded FlexInputBorderType  : $key as $value');
+          debugPrint('Prefs load  : FlexInputBorderType  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -348,7 +343,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexAppBarStyle?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexAppBarStyle? : $key as $value');
+          debugPrint('Prefs load  : FlexAppBarStyle? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -359,7 +355,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexAppBarStyle>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexAppBarStyle  : $key as $value');
+          debugPrint('Prefs load  : FlexAppBarStyle  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -370,7 +367,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexTabBarStyle?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexTabBarStyle? : $key as $value');
+          debugPrint('Prefs load  : FlexTabBarStyle? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -381,7 +379,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexTabBarStyle>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded FlexTabBarStyle  : $key as $value');
+          debugPrint('Prefs load  : FlexTabBarStyle  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -392,8 +391,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSystemNavBarStyle?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs loaded FlexSystemNavBarStyle? : $key as $value');
+          debugPrint('Prefs load  : FlexSystemNavBarStyle? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -404,8 +403,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSystemNavBarStyle>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs loaded FlexSystemNavBarStyle  : $key as $value');
+          debugPrint('Prefs load  : FlexSystemNavBarStyle  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -416,7 +415,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, SchemeColor?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded SchemeColor? : $key as $value');
+          debugPrint('Prefs load  : SchemeColor? : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -427,7 +427,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, SchemeColor>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded SchemeColor  : $key as $value');
+          debugPrint('Prefs load  : SchemeColor  : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -438,8 +439,9 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationDestinationLabelBehavior?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded NavigationDestinationLabelBehavior? '
+          debugPrint('Prefs load  : NavigationDestinationLabelBehavior? '
               ': $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -452,8 +454,9 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationDestinationLabelBehavior>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('SharedPrefs loaded NavigationDestinationLabelBehavior '
+          debugPrint('Prefs load  : NavigationDestinationLabelBehavior '
               ': $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -466,8 +469,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationRailLabelType?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs loaded NavigationRailLabelType?: $key as $value');
+          debugPrint('Prefs load  : NavigationRailLabelType?: $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return null as T;
@@ -478,8 +481,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationRailLabelType>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs loaded NavigationRailLabelType : $key as $value');
+          debugPrint('Prefs load  : NavigationRailLabelType : $key as $value');
+          debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
         if (value < 0) return defaultValue;
@@ -502,7 +505,7 @@ class KeyValueDbPrefs implements KeyValueDb {
   // storage using key, as key for the value.
   //
   // SharedPreferences cannot handle saving "NULL" values like Hive can.
-  // In this app many theme property settings have meaning when they
+  // In many apps many theme property settings have meaning when they
   // are null, it typically means we are using Flutter SDK default theme
   // style. We need to be able to persist and represent this setting.
   // To be able to also use SharedPreferences as a persistence service for
@@ -515,8 +518,8 @@ class KeyValueDbPrefs implements KeyValueDb {
   // Color  : Null is saved as -1
   // bool   : Null is not supported, but allowed, but saved as false.
   //
-  // The app does not need to persist any negative values, nor any null bool,
-  // so for now this works OK for the use case in this scenario.
+  // The theme demo app does not need to persist any negative values, nor any
+  // null bool, so for now this works OK for the use case in this scenario.
   // Generally though, just use Hive for key-value pair storage, it handles
   // this better and is faster.
   @override
@@ -527,13 +530,17 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value == null) {
           await _prefs.setBool(key, false);
           if (_debug) {
-            debugPrint('SharedPrefs saved type bool?    : $key NULL as $value');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type bool? $key NULL as $value');
           }
           return;
         } else {
           await _prefs.setBool(key, value as bool);
           if (_debug) {
-            debugPrint('SharedPrefs saved type bool?    : $key as $value');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type bool? $key as $value');
           }
           return;
         }
@@ -542,7 +549,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, bool>()) {
         await _prefs.setBool(key, value as bool);
         if (_debug) {
-          debugPrint('SharedPrefs saved type bool     : $key as $value');
+          debugPrint('Prefs put   : ["$key"] = $value (${value.runtimeType})');
+          debugPrint('Prefs saved : type bool $key as $value');
         }
         return;
       }
@@ -551,13 +559,17 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value == null) {
           await _prefs.setInt(key, -1);
           if (_debug) {
-            debugPrint('SharedPrefs saved type int?     : $key NULL as -1');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type int? $key NULL as -1');
           }
           return;
         } else {
           await _prefs.setInt(key, value as int);
           if (_debug) {
-            debugPrint('SharedPrefs saved type int?     : $key as $value');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type int? $key as $value');
           }
           return;
         }
@@ -566,7 +578,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, int>()) {
         await _prefs.setInt(key, value as int);
         if (_debug) {
-          debugPrint('SharedPrefs saved type int      : $key as $value');
+          debugPrint('Prefs put   : ["$key"] = $value (${value.runtimeType})');
+          debugPrint('Prefs saved : type int $key as $value');
         }
         return;
       }
@@ -575,13 +588,17 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value == null) {
           await _prefs.setDouble(key, -1.0);
           if (_debug) {
-            debugPrint('SharedPrefs saved type double?  : $key NULL as -1.0');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type double? $key NULL as -1.0');
           }
           return;
         } else {
           await _prefs.setDouble(key, value as double);
           if (_debug) {
-            debugPrint('SharedPrefs saved type double?  : $key as $value');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type double? $key as $value');
           }
           return;
         }
@@ -590,7 +607,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, double>()) {
         await _prefs.setDouble(key, value as double);
         if (_debug) {
-          debugPrint('SharedPrefs saved type double   : $key as $value');
+          debugPrint('Prefs put   : ["$key"] = $value (${value.runtimeType})');
+          debugPrint('Prefs saved : type double $key as $value');
         }
         return;
       }
@@ -599,13 +617,17 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value == null) {
           await _prefs.setString(key, '<NULL>');
           if (_debug) {
-            debugPrint('SharedPrefs saved type String?  : $key NULL as <NULL>');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type String? $key NULL as <NULL>');
           }
           return;
         } else {
           await _prefs.setString(key, value as String);
           if (_debug) {
-            debugPrint('SharedPrefs saved type String?  : $key as $value');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type String? $key as $value');
           }
           return;
         }
@@ -614,7 +636,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, String>()) {
         await _prefs.setString(key, value as String);
         if (_debug) {
-          debugPrint('SharedPrefs saved type String   : $key as $value');
+          debugPrint('Prefs put   : ["$key"] = $value (${value.runtimeType})');
+          debugPrint('Prefs saved : type String $key as $value');
         }
         return;
       }
@@ -623,14 +646,17 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value == null) {
           await _prefs.setInt(key, -1);
           if (_debug) {
-            debugPrint('SharedPrefs saved type Color?   : $key NULL as -1');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type Color? $key NULL as -1');
           }
           return;
         } else {
           await _prefs.setInt(key, (value as Color).value);
           if (_debug) {
             debugPrint(
-                'SharedPrefs saved type Color?   : $key as ${value.value}');
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type Color? $key as ${value.value}');
           }
           return;
         }
@@ -639,13 +665,13 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, Color>()) {
         await _prefs.setInt(key, (value as Color).value);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs saved type Color    : $key as ${value.value}');
+          debugPrint('Prefs put   : ["$key"] = $value (${value.runtimeType})');
+          debugPrint('Prefs saved : type Color $key as ${value.value}');
         }
         return;
       }
       // Store Enums as their int index value. This may break if enum
-      // definitions are changed in any other way than adding more enums to its
+      // definitions are changed in any other way than adding more values to its
       // end. Changing the order of enum value in an enum may break the enum
       // order. The load handles removal of enum value by returning retrieved
       // out of bounds as the provided default enum value.
@@ -654,8 +680,8 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (value is Enum) {
         await _prefs.setInt(key, value.index);
         if (_debug) {
-          debugPrint(
-              'SharedPrefs saved type Enum     : $key as ${value.index}');
+          debugPrint('Prefs put   : ["$key"] = $value (${value.runtimeType})');
+          debugPrint('Prefs saved : type Enum $key as ${value.index}');
         }
         return;
       }
@@ -670,7 +696,9 @@ class KeyValueDbPrefs implements KeyValueDb {
         if (value == null) {
           await _prefs.setInt(key, -1);
           if (_debug) {
-            debugPrint('SharedPrefs saved type Enum?    : $key NULL as -1');
+            debugPrint(
+                'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+            debugPrint('Prefs saved : type Enum? $key NULL as -1');
           }
           return;
         } else {
@@ -680,7 +708,8 @@ class KeyValueDbPrefs implements KeyValueDb {
             await _prefs.setInt(key, value.index);
             if (_debug) {
               debugPrint(
-                  'SharedPrefs saved type Enum?    : $key as ${value.index}');
+                  'Prefs put   : ["$key"] = $value (${value.runtimeType})');
+              debugPrint('Prefs saved : type Enum? $key as ${value.index}');
             }
             return;
           }

@@ -4,9 +4,9 @@ This Flutter application shows how to us [FlexColorScheme](https://pub.dev/packa
 
 ## FlexColorScheme 6 and Riverpod 2
 
-This example is designed to work with and use the stable releases of **Riverpod 2** and **FlexColorScheme 6**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does however use more advanced state management techniques, and it has a nice feature first folder structure. 
+This example is designed to work with and use the stable releases of **FlexColorScheme 6** and **Riverpod 2**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does however use more advanced state management techniques, and it has a feature first folder structure, making it easy to find code by feature. 
 
-This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. This example is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples). 
+This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. It is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples). 
 
 | Home screen, part 1 | Homes screen part 2 |
 |---------------------|---------------------|
@@ -20,7 +20,7 @@ The app demonstrates how the `ThemeData`, and `ThemeMode` state of the applicati
 
 ### The `MaterialApp` 
 
-The use `MaterialApp` setup is very compact. As always separate the dark and light theme into separate `ThemeData` objects, here given by providers that we watch. When you use this setup, the usage of supplied light or dark theme is controlled by the `ThemeMode` enum. We use and watch a third provider for it, so it can easily be toggled via UI.  
+The `MaterialApp` setup is very simple and compact. Provide the light and dark `ThemeData` objects to their respective theme properties in the `MaterialApp`. Here they are given by providers that we watch for changes. When you use this setup, the usage of the currently supplied light and dark theme is controlled by the `ThemeMode` enum given to the `themeMode` property. We use and watch a third provider for this, so dark mode can easily be toggled via UI. If you specify `ThemeMode.system` the application will follow the theme mode used by the host system, many users like this option, so don't just offer light and dark, also offer system as a user choice. A very handy widget to use to allow the user to toggle `ThemeMode` between, light, dark and system is `ToggleButtons`. We will look at that later.  
 
 ```dart
 class ThemeDemoApp extends ConsumerWidget {

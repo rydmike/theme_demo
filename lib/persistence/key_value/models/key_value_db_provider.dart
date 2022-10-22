@@ -17,6 +17,11 @@ const bool _debug = !kReleaseMode && true;
 /// The value returned depends on the controller [usedKeyValueDbProvider].
 final StateProvider<KeyValueDb> keyValueDbProvider =
     StateProvider<KeyValueDb>((StateProviderRef<KeyValueDb> ref) {
+  ref.onDispose(
+    () {
+      if (_debug) debugPrint('keyValueDbProvider: onDispose called');
+    },
+  );
   return ref.watch(usedKeyValueDbProvider).get;
 }, name: 'keyValueDbProvider');
 
@@ -47,12 +52,12 @@ class KeyValueDbListener {
     ref.listen<StateController<KeyValueDb>>(keyValueDbProvider.state,
         (StateController<KeyValueDb>? previous,
             StateController<KeyValueDb> current) async {
+      final KeyValueDb keyValueDb = current.state;
       // This callback executes when the keyValueDbProvider value changes.
       if (_debug) {
-        debugPrint('KeyValueDbListener: listen called');
-        debugPrint('  new  : ${current.state}');
+        debugPrint('KeyValueDbListener: listen called - - - - -');
+        debugPrint('  DB switch : ${current.state}');
       }
-      final KeyValueDb keyValueDb = current.state;
       await keyValueDb.init();
       // We changed key valued DB, we must update all settings controls.
       Settings.getAll(ref);
