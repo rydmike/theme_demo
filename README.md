@@ -109,7 +109,7 @@ Future<void> main() async {
 
 ### Providers in `main`
 
-To provide `keyValueDbProvider` we use a `StateProvider`, typically just a `Provider` would do if we just want to access one predefined concrete implementation. In this case we want to define a listener that listens to changes in the `keyValueDbProvider` so we can do some async init and data loading work, when we change to another implementation dynamically from inside the app.
+To provide `keyValueDbProvider` we use a `StateProvider`. Typically, a plain `Provider` would do if we just want to access one predefined concrete implementation. In this case we want to define a listener that listens to changes in the `keyValueDbProvider`, so we can do some async init and data loading work when we change to another implementation from UI inside the Flutter app.
 
 ```dart
 /// Provides a [KeyValueDb] DB repository.
@@ -126,7 +126,7 @@ StateProvider<KeyValueDb>((StateProviderRef<KeyValueDb> ref) {
 }, name: 'keyValueDbProvider');
 ```
 
-I also like to give Riverpod providers names in its `name`, they are useful for debug purposes. For example in the `AppProviderObserver` we can use it to print the name of the provider that was changed.
+> I like to give Riverpod providers names using their `name` property, they are useful for debug purposes. For example in the `AppProviderObserver` we can use it to print the name of the provider that was changed.
 
 The `keyValueDbListenerProvider` above in `main` is just a normal `provider`, that we use to access `KeyValueDbListener`.
 
