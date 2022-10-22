@@ -8,10 +8,9 @@ import '../models/used_key_value_db.dart';
 /// UI to toggle the used [KeyValueDb] implementation of the application.
 ///
 /// This [ToggleButtons] UI control bakes in a Riverpod [StateProvider] and is
-/// tied to this app
-/// implementation. This approach is easy to use since there is nothing to
-/// pass around to set its value, just drop in the const Widget anywhere in
-/// the app abd use the UI control
+/// tied to this app implementation. This approach is however very easy to use
+/// since there is nothing to pass around to use the UI widget.
+/// Just drop in the const Widget anywhere in the app and use the UI control.
 @immutable
 class KeyValueDbToggleButtons extends ConsumerWidget {
   const KeyValueDbToggleButtons({super.key});

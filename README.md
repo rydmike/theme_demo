@@ -239,11 +239,103 @@ enum UsedKeyValueDb {
 }
 ```
 
+
+### UI to change used Key-Value Db
+
+Lastly we need a bit of UI to actually change the used key-value DB implementation on the fly. We have three different options, so for this use case I like to use a simple `ToggleButtons` implementation that changes state provider `usedKeyValueDbProvider`.  
+
+```dart
+/// UI to toggle the used [KeyValueDb] implementation of the application.
+///
+/// This [ToggleButtons] UI control bakes in a Riverpod [StateProvider] and is
+/// tied to this app implementation. This approach is however very easy to use
+/// since there is nothing to pass around to use the UI widget. 
+/// Just drop in the const Widget anywhere in the app and use the UI control.
+@immutable
+class KeyValueDbToggleButtons extends ConsumerWidget {
+  const KeyValueDbToggleButtons({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final UsedKeyValueDb keyValueDb = ref.watch(usedKeyValueDbProvider);
+    final List<bool> isSelected = <bool>[
+      keyValueDb == UsedKeyValueDb.memory,
+      keyValueDb == UsedKeyValueDb.sharedPreferences,
+      keyValueDb == UsedKeyValueDb.hive,
+    ];
+    return ToggleButtons(
+      isSelected: isSelected,
+      onPressed: (int newIndex) {
+        ref.read(usedKeyValueDbProvider.notifier).state =
+            UsedKeyValueDb.values[newIndex];
+      },
+      children: const <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text('Mem'),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text('Prefs'),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          child: Text('Hive'),
+        ),
+      ],
+    );
+  }
+}
+```
+
+This `ToggleButtons` is small enough to even be dropped into the `trailing` property of a `ListTile` widget, so let's try that. And for even more convenience, we make the `ListTile` tapping be used as a way to cycle through the toggle button option. This is very handy, we can still also select the options directly by tapping the option in the `ToggleButtons`.
+
+```dart
+class KeyValueDbListTile extends ConsumerWidget {
+  const KeyValueDbListTile({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String usedDb = ref.watch(usedKeyValueDbProvider).describe;
+    return ListTile(
+      title: const Text('Storage'),
+      subtitle: Text(usedDb),
+      onTap: () {
+        switch (ref.read(usedKeyValueDbProvider.notifier).state) {
+          case UsedKeyValueDb.memory:
+            ref.read(usedKeyValueDbProvider.notifier).state =
+                UsedKeyValueDb.sharedPreferences;
+            break;
+          case UsedKeyValueDb.sharedPreferences:
+            ref.read(usedKeyValueDbProvider.notifier).state =
+                UsedKeyValueDb.hive;
+            break;
+          case UsedKeyValueDb.hive:
+            ref.read(usedKeyValueDbProvider.notifier).state =
+                UsedKeyValueDb.memory;
+            break;
+        }
+      },
+      trailing: const KeyValueDbToggleButtons(),
+    );
+  }
+}
+```
+
+This is what it looks like in action:
+
+> **TODO** Add GIF
+ 
+
+*Using UI to change the used key-value DB implementation*
+
+The themes and buttons looks all different when the key-value DB implementation is switched. That is because different theme settings defined with **FlexColorScheme** had been configured using the different key-value DB implementations. When we switch implementation, the settings persisted in that implementation is loaded and the theme changes to it.
+
+
 That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is a better way, but this worked and that was the aim of the demo. How useful this is depends
 
 
-
-### Key-Value DB Design Requirements
+## Key-Value DB Design Requirements
 
 One of the goals with the design of the key-value persistence model was that each settings value should be saved with its own string `key`. When you change any setting, only the value for this key is persisted. This is done for storage efficiency. 
 
