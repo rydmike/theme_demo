@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/views/theme_demo_app.dart';
 import 'core/utils/app_provider_observer.dart';
+import 'persistence/key_value/models/key_value_db_listener.dart';
 import 'persistence/key_value/models/key_value_db_provider.dart';
 
 Future<void> main() async {
