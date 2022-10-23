@@ -9,10 +9,10 @@ import 'persistence/key_value/models/key_value_db_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  /// This container can be used to read providers before Flutter app is
-  /// initialised with UncontrolledProviderScope, for more info see:
-  /// https://github.com/rrousselGit/riverpod/issues/295
-  /// https://codewithandrea.com/articles/riverpod-initialize-listener-app-startup/
+  // This container can be used to read providers before Flutter app is
+  // initialised with UncontrolledProviderScope, for more info see here
+  // https://github.com/rrousselGit/riverpod/issues/295 and here
+  // https://codewithandrea.com/articles/riverpod-initialize-listener-app-startup
   final ProviderContainer container = ProviderContainer(
     // This observer is used for logging changes in all Riverpod providers.
     observers: <ProviderObserver>[AppProviderObserver()],
@@ -24,12 +24,10 @@ Future<void> main() async {
   // This allows us to swap the keyValueDb implementation used in the app
   // dynamically between: Hive, SharedPreferences and volatile memory.
   container.read(keyValueDbListenerProvider);
-
   runApp(
     UncontrolledProviderScope(
       container: container,
       child: const ThemeDemoApp(),
     ),
-    // ),
   );
 }

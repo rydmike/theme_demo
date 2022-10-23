@@ -46,7 +46,6 @@ class KeyValueDbMem implements KeyValueDb {
   /// Get a settings value from the mem db, using [key] to access it.
   ///
   /// If key does not exist, return the [defaultValue].
-  /// persist values.
   @override
   T get<T>(String key, T defaultValue) {
     try {

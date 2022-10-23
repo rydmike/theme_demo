@@ -11,8 +11,11 @@ import '../../../theme/views/widgets/show_sub_theme_colors.dart';
 import '../../../theme/views/widgets/show_theme_data_colors.dart';
 import '../../../theme/views/widgets/theme_showcase.dart';
 
-/// This page is used as a demo to show a page using the FlexColorScheme
-/// based theme. The widgets and content on it don't really do anything.
+/// This page is used show a page using the FlexColorScheme based theme's
+/// impact on commonly used Flutter Material UI Widgets.
+///
+/// The widgets and content on the page do not really do anything useful, other
+/// than show what they look like.
 class ThemeShowcasePage extends StatefulWidget {
   const ThemeShowcasePage({super.key});
 
