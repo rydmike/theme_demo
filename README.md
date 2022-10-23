@@ -642,9 +642,105 @@ Let's examine the `SettingsEntry` class to better understand what is happening.
 
 ### Settings Entry
 
-### Application UI
+The `SettingsEntry` class is a quite small extension of the `StateNotifier` class. It is also a generic, so we can use it with arbitrary data types. The generic classes w can use, does however have the limitation that it also has to be supported by our used `KeyValueDb` implementation. 
 
-We won't be going through the entire application user interface code here. It is not so exiting, but let's look at a few examples of using these settings widget 
+It gets a Riverpod `Ref` object, that we use to find the currently used `KeyValueDb` implementation via the `keyValueDbProvider`.
+
+It also requires a default value of type same generic type `<T>` that we will tell the DB to return if there is now value stored for the String `key` that is also required.
+
+When we read `StateNotifierProvider` of type `SettingsEntry` it will be instantiated and get the appropriate default value, either from the key-value DB if it had a value stored for the `key` or via the provided `defaultValue`.
+
+We also define a `set()` function that will update both the state of the provider and the key-value DB entry to the new value.
+
+```dart
+/// A persisted app settings entry class.
+///
+/// Can be of any value type that the used key-value DB implementation supports.
+class SettingsEntry<T> extends StateNotifier<T> {
+  final Ref ref;
+  final T defaultValue;
+  final String key;
+
+  SettingsEntry(
+    this.ref, {
+    required this.key,
+    required this.defaultValue,
+  }) : super(defaultValue) {
+    // Initialize the notifier's state value.
+    init();
+  }
+
+  /// Init the settings entry from the used key-value DB implementation.
+  void init() {
+    // Get the used-key value DB implementation.
+    final KeyValueDb db = ref.read(keyValueDbProvider);
+    // Read the value for the provided key from the used key-value DB.
+    // The db value get returns the default value if key does not exist in it.
+    final T newValue = db.get(key, defaultValue);
+    // Only set state to db value, if it is different from current value.
+    // StateNotifier does not emit a new state either if value is identical,
+    // but we check too so we can exit earlier and to be very explicit about it.
+    if (state != newValue) state = newValue;
+  }
+
+  /// Update the settings state with a new value.
+  ///
+  /// If the new value is different from current state value:
+  /// - Assign new value to current state.
+  /// - Persist the value to the used-key value DB implementation.
+  void set(T newValue) {
+    if (state == newValue) return;
+    state = newValue;
+    final KeyValueDb db = ref.read(keyValueDbProvider);
+    unawaited(db.put(key, newValue));
+  }
+
+  /// Rest a settings entry state to its default value.
+  ///
+  /// If it already is at its default value, do no work, return.
+  /// - Set state to default value.
+  /// - Update the key-value DB value entry for this key to its default value.
+  void reset() {
+    if (state == defaultValue) return;
+    state = defaultValue;
+    final KeyValueDb db = ref.read(keyValueDbProvider);
+    unawaited(db.put(key, defaultValue));
+  }
+}
+```
+
+## Application UI
+
+We won't be going through the entire application user interface code here. It is not so exiting, but let's look at a few examples of using these settings widgets.
+
+### Example switches and toggles
+
+Let's start with a simple example. There is a theme settings switch that allows us to toggle if we use Material 3 or Material 2. The switch UI is based on `SwitchListTile` and settings it value and chnaging it becomes this simple:
+
+```dart
+class UseMaterial3Switch extends ConsumerWidget {
+  const UseMaterial3Switch({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SwitchListTileAdaptive(
+      title: const Text('Use Material 3'),
+      value: ref.watch(Settings.useMaterial3Provider),
+      onChanged: ref.read(Settings.useMaterial3Provider.notifier).set,
+    );
+  }
+}
+```
+
+This is a simple const widget that needs no properties, we can drop it in as const widget wherever we want to control this setting in the UI, in **any** screen, dialog, drawer, bottom sheet. When it is toggled, the updated settings value will be persisted and the application theme will change to reflect the new theme result. 
+
+Could not be simpler, but admittedly to get to this simplicity takes a bit of abstractions and Riverpod definitions.
+
+>You might have noticed above that it uses a `SwitchListTileAdaptive` UI widget. This is just a very simple wrapper for `SwitchListTile.adaptive`. Why is it needed? To find find check out its code and comments here: **TODO:** Add url to code.
+
+
+## The Theme
+
 
 
 ### Screenshots
