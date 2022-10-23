@@ -14,6 +14,7 @@ class KeyValueDbListTile extends ConsumerWidget {
     return ListTile(
       title: const Text('Storage'),
       subtitle: Text(usedDb),
+      trailing: const KeyValueDbToggleButtons(),
       onTap: () {
         switch (ref.read(usedKeyValueDbProvider.notifier).state) {
           case UsedKeyValueDb.memory:
@@ -30,7 +31,6 @@ class KeyValueDbListTile extends ConsumerWidget {
             break;
         }
       },
-      trailing: const KeyValueDbToggleButtons(),
     );
   }
 }
