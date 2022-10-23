@@ -1,4 +1,4 @@
-# Persisted Flutter Theming using FlexColorScheme and Riverpod
+# Flutter Theming using FlexColorScheme and Riverpod
 
 This Flutter application shows how to use [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses **Riverpod** providers tp watch light `theme` and `darkTheme` in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html).
 
@@ -23,9 +23,11 @@ This app is used to demonstrate FlexColorScheme and Riverpod concepts and usage 
   - [Enhanced enum `usedkeyvaluedb`](#enhanced-enum-usedkeyvaluedb)
   - [UI to Change Used Key-Value DB](#ui-to-change-used-key-value-db)
 - [Persistence Design](#persistence-design)
-- [](#)
-- [](#)
-- [](#)
+- [Key-Value Database](#key-value-database)
+  - [Abstract Key-Value DB Interface](#abstract-key-value-db-interface)
+  - [Memory Key-Value DB Implementation](#memory-key-value-db-implementation)
+  - [SharedPreferences and Hive Key-Value DB Implementations](#sharedpreferences-and-hive-key-value-db-implementations)
+- [Settings](#settings)
 
 ## FlexColorScheme 6 and Riverpod 2
 
@@ -365,9 +367,9 @@ One of the goals with the design of the used key-value persistence model and Riv
 
 We could also serialize a big settings class with all the properties to a JSON and save the entire JSON with just one key. We would then be writing the entire "large" JSON file to the key-value DB every time a single settings value is changed. This was not desired.
 
-We also did not want to use a freezed or handwritten immutable class with all the settings properties in it. Because then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure only it is rebuilt, and also to filter that we only want to store the property value that was changed into the key-value DB.
+We also did not want to use a freezed or handwritten immutable class with all the settings properties in it. Because then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure only it is rebuilt when its value is changed. We would also need to `select` filter that we only want to store the property value that was changed into the used key-value DB.
 
-We could use just simple `StateProviders` for the settings entries, I have tried this approach. While it works, if we use `StateNotifier` and `StateNotifierProvider` we have more control and can make a interfaces for it that provides functions that reads nicely.
+We could use just simple `StateProviders` for the settings entries, I have used this approach. While it works, if we use `StateNotifier` and `StateNotifierProvider`, we have more control and can make an interfaces for it that provides functions that reads very nicely.
 
 When the app starts, it sets the state for each settings entry value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings value in question is used.  
 
@@ -376,18 +378,18 @@ When the app starts, it sets the state for each settings entry value by checking
 
 For the key-value database to persist the settings we use an abstraction layer, and as an example offer a few implementation examples using two popular Flutter packages.
 
-0. KeyValueDb - Abstract interface
-1. KeyValueDbMem - Volatile memory implementation, just a map
-2. KeyValueDbPrefs - [Shared preferences](https://pub.dev/packages/shared_preferences) implementation
-3. KeyValueDbHive - [Hive](https://pub.dev/packages/hive) implementation
+0. KeyValueDb - Abstract interface.
+1. KeyValueDbMem - Volatile memory implementation, just a map.
+2. KeyValueDbPrefs - [Shared preferences](https://pub.dev/packages/shared_preferences) implementation.
+3. KeyValueDbHive - [Hive](https://pub.dev/packages/hive) implementation.
 
-It would be very straight forward to add additional key-value based settings implementations. Maybe even add one that uses the local implementation as off-line cache and also persist settings in cloud based implementation so users can bring their preferences with them when thy switch to another device or platform. 
+It would be very straight forward to add additional key-value based settings implementations. Maybe even add one that uses the local implementation as off-line cache and also persist settings in cloud based implementation, so users can bring their preferences with them when they switch to another device or platform. 
 
 Typically, you would of course only have one implementation and use this repository abstraction to limit the places where you interface with the actual storage solution. It of course also enables swapping it out easily, should it ever be needed. In practice, it is seldom needed in the life-span of most applications, but hey we like over-engineered solutions.
 
 ### Abstract Key-Value DB Interface
 
-The needed interface for the key-value database in this demo is very simple. It is the same as the one used by all the FlexColorScheme [example applications](https://docs.flexcolorscheme.com/tutorial3#themeserviceprefs), in its entirety it looks like this:
+The needed interface for the key-value database in this demo is very simple. It is the same as the one used in the FlexColorScheme [example applications](https://docs.flexcolorscheme.com/tutorial3#themeserviceprefs). In its entirety it looks like this:
 
 ```dart
 /// Abstract interface for the [KeyValueDb] used to get and put (save) simple
@@ -414,7 +416,7 @@ abstract class KeyValueDb {
 
 ### Memory Key-Value DB Implementation
 
-To make a simple naive memory and session based key-value DB we can use a simple map. In this case we also wanted the key-value pairs to be kept when we switch between implementations, even if the `KeyValueDbMem` provider makes a new instance. We could have made `KeyValueDbMem` a singleton, but all we actually needed was for it to have a private static map.
+To make a simple naive memory and session based key-value DB we can use a `Map`. In this case we also wanted the key-value pairs to be kept when we switch between implementations, even if the `keyValueDbProvider` makes a new instance. We could have made `KeyValueDbMem` itself a singleton, but all we actually needed was for it to have a private static map.
 
 ```dart
 // Set the bool flag to true to show debug prints. Even if you forgot
@@ -431,12 +433,6 @@ const bool _debug = !kReleaseMode && true;
 /// app execution, so we can get the same Map data also when we get a
 /// new instance of the mem key-value db, this happens when we dynamically in
 /// the app switch to another implementation and back to mem again.
-///
-/// To actually persist the settings locally, use the [KeyValueDbMemPrefs]
-/// implementation that uses the shared_preferences package to persists the
-/// values, or the [KeyValueDbMemHive] that uses the Hive package to accomplish
-/// the same thing. You could also make an implementation that stores settings
-/// on a web server, e.g. with the http package.
 class KeyValueDbMem implements KeyValueDb {
   // A private static Map that stores the key-value pairs.
   //
@@ -460,7 +456,6 @@ class KeyValueDbMem implements KeyValueDb {
   /// Get a settings value from the mem db, using [key] to access it.
   ///
   /// If key does not exist, return the [defaultValue].
-  /// persist values.
   @override
   T get<T>(String key, T defaultValue) {
     try {
@@ -498,23 +493,82 @@ class KeyValueDbMem implements KeyValueDb {
 }
 ```
 
-To make it easy to track what is happening in the app, this class and many of the providers include `debugPrints` that shows what is happening on the console. The debug prints are behind a `_debug` flag that can be toggled on/off individually for each file. The flag is always automatically toggled off in a release build.
+To make it easy to track what is happening in the app, this class and many others, as well as the providers include `debugPrints` that shows what is happening on the console. The debug prints are behind a `_debug` flag that can be toggled on/off individually for each file. The flag is always automatically toggled off in a release build.
 
-### SharedPReferences and Hive Key-Value DB Implementations
+### SharedPreferences and Hive Key-Value DB Implementations
 
 The used SharedPreferences and Hive key-value database implementations are the same as the ones used in the FlexColorScheme [example applications](https://docs.flexcolorscheme.com/tutorial3#themeserviceprefs). They also have the same requirement that we need to be able to store a `null` settings entry value. Using `null` values in Flutter SDK themes have the meaning that we want the widget's default un-themed behavior. 
 
-We cannot use the absence of a key in the key-value database to represent `null`. No key found, gives us our coded const default value for a theme setting, it is usually not be `null`, it might be, and even if it is not we might in some cases be able to select a default `null` choice to get the SDK default `null` default un-themed behavior. In this demo the `AppBar` style is an example of that.
+We cannot use the absence of a key in the key-value database to represent `null`. No key found, gives us our coded const default value for a theme setting, it is usually not `null`, but it might be, and even if it is not, we might in some cases want to be able to select a default `null` choice, to get the SDK default `null` un-themed behavior. In this demo, the `AppBar` style is one example of that.
 
-To be able to do this, we need to be able to persist nullable values in the key-value DB. The used map for memory storage allows us to do that, as does Hive. However, SharedPreferences does not like to store `null` at all. So its implementation includes a rather tedious work-around to use some other suitable value to represent the persisted `null` choice, and return null back when that value is used. 
+To be able to do this, we need to be able to persist nullable values in the key-value DB. The used map for our volatile memory storage allows us to do that, as does Hive. However, SharedPreferences does support storing `null` at all. So its implementation includes a work-around to use some other suitable value to represent the persisted `null` choice, and return null back when that value is found. 
 
-Both the Hive and the Shared Preferences also includes converters to persist `enum` values and `Color` as `ìnt` values. Hive provides its own `TypeAdapter` class that allows us to do so. For the SharedPreferences implementation we baked in the type conversions.
+Both the Hive and the Shared Preferences also include converters to persist different `enum`'s in a type safe way, and `Color` as `ìnt` values. Hive provides its own `TypeAdapter` class that allows us to do the same. For the SharedPreferences implementation we baked in the type conversions.
 
-Obviously to add handling of additional data type we need to add handling them to our Hive and SharedPreferences implementations.
+Obviously to add handling of additional data types we need to add handling of them to our Hive and SharedPreferences implementations.
 
-We won't go through the implementations, you can find the [Hive one here]() the SharedPreferences one here[here](). The one for SharedPreferences is quite a bit longer to handle both the occasionally needed nullable types, and the type conversions. 
+We won't go through the implementations here, but you can find the [Hive one here]() the SharedPreferences one here[here](), if you want to study them. The one for SharedPreferences is quite a bit longer, in order to handle both the occasionally needed nullable types, and the type conversions. 
  
+## Settings
 
+The settings approach setup used in this demo might be considered a bit controversial. I like it for the simplicity it results in when persisting the individual key-value pairs. Since it also gives each settings entry value its own provider, it is very simple to use in UI widgets. 
+
+I might demonstrate another implementation later, but this works well, is convenient to use and does not seem to be heavy to use, despite using a quite a few `StateNotifierProviders`.
+
+The used `Settings` class is actually only static container class. We could just as wel have it all as top level const and final values. However, wrapping them in `Settings` class, name spaces them and encapsulates them nicely. Basically this is like using classes to wrap app config constant values. Purist Dart guide says don't this. I say do, also in my [lint rules](https://rydmike.com/blog_flutter_linting). Do it for the name spacing and nice code completion it gives you. This demo app also uses this for a number application constants in several different `AppNnnn` const classes.
+
+
+In the `Settings` statics only class we basically have the following
+- Private static constants for the settings entry default values.
+- Private static constant string keys for all the settings entry keys.
+- A static function to `reset` all settings to their default values.
+- A static function to `init` all settings entry values to the values they have in the DB.
+- A static final `StateNotifierProvider` of type `SettingsEntry` for every settings value. 
+
+
+```Dart
+/// A static container class for all our settings providers, default values and
+/// used key-value DB keys.
+class Settings {
+  // This constructor prevents external instantiation and extension.
+  Settings._();
+
+  // Use material 3, theme mode and active color scheme.
+  static const bool _useMaterial3 = false;
+  static const ThemeMode _themeMode = ThemeMode.system;
+  static const int _schemeIndex = 0;
+  // 8< - - - snip repetitive const code removed.
+
+  /// Reset all settings entries and their controllers to their default values.
+  ///
+  /// This action is triggered by the user when they want to reset all settings
+  /// values to their app default values.
+  static void reset(WidgetRef ref) {
+    if (_debug) debugPrint('Settings: resetAll DB values');
+    // Use material 3, theme mode and active color scheme.
+    ref.read(useMaterial3Provider.notifier).reset();
+    ref.read(themeModeProvider.notifier).reset();
+    ref.read(schemeIndexProvider.notifier).reset();
+    // 8< - - - snip repetitive reset code removed.
+  }
+
+  /// Init all settings entries and their controllers to values from used
+  /// key-value DB.
+  ///
+  /// This is typically only used after switching DB implementation dynamically.
+  static void init(Ref ref) {
+    if (_debug) debugPrint('Settings: init DB values');
+    // Use material 3, theme mode and active color scheme.
+    ref.read(useMaterial3Provider.notifier).init();
+    ref.read(themeModeProvider.notifier).init();
+    ref.read(schemeIndexProvider.notifier).init();
+    // 8< - - - snip repetitive init code removed.
+  }
+}
+```
+
+
+### Settings entry
 
 ### Screenshots
 

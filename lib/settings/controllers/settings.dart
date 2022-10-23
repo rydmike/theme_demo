@@ -12,13 +12,15 @@ import '../models/settings_entry.dart';
 // below to see this feature's logs in debug mode.
 const bool _debug = !kReleaseMode && true;
 
+/// A static container class for all our settings providers, default values and
+/// used key-value DB keys.
 class Settings {
   // This constructor prevents external instantiation and extension.
   Settings._();
 
   // Default const values for all the settings entries.
   // They are collected here at the top to be easy to modify.
-  //
+
   // Use material 3, theme mode and active color scheme.
   static const bool _useMaterial3 = false;
   static const ThemeMode _themeMode = ThemeMode.system;
@@ -63,7 +65,7 @@ class Settings {
   /// This action is triggered by the user when they want to reset all settings
   /// values to their app default values.
   static void reset(WidgetRef ref) {
-    if (_debug) debugPrint('Settings: resetAll DB values');
+    if (_debug) debugPrint('Settings: reset all DB values');
     // Use material 3, theme mode and active color scheme.
     ref.read(useMaterial3Provider.notifier).reset();
     ref.read(themeModeProvider.notifier).reset();
@@ -104,7 +106,7 @@ class Settings {
   ///
   /// This is typically only used after switching DB implementation dynamically.
   static void init(Ref ref) {
-    if (_debug) debugPrint('Settings: getAll DB values');
+    if (_debug) debugPrint('Settings: init DB values');
     // Use material 3, theme mode and active color scheme.
     ref.read(useMaterial3Provider.notifier).init();
     ref.read(themeModeProvider.notifier).init();

@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 /// [FlexTones] made with same named constructor.
 ///
 /// Also contains used icon for each tone and shade value to adjust used
-/// color value on the icon, used by UI building.
+/// color value on the icon, this used by UI widgets in this demo app.
 ///
-/// This is also a small demonstration of how we can use Dart 2.17
+/// This is also a another small demonstration of how we can use Dart 2.17
 /// enhanced enums.
 enum FlexTone {
   disabled(
