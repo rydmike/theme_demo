@@ -1,14 +1,14 @@
 # Flutter Theming using FlexColorScheme and Riverpod
 
-This Flutter application shows how to use [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses **Riverpod** providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are also persisted locally as they are modified, and the used local settings persistence implementation can be changed dynamically in the application user interface.
+This Flutter application shows how to use [**FlexColorScheme**](https://pub.dev/packages/flex_color_scheme) together with [**Riverpod**](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses Riverpod providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are also persisted locally as they are modified, and the used local settings persistence implementation can be changed dynamically in the application user interface.
 
-This app is used to demonstrate FlexColorScheme and Riverpod concepts and provides usage suggestions. It is not intended look pretty or be very useful as an app. 
+This app is used to demonstrate FlexColorScheme and Riverpod concepts and to give usage suggestions. It is not intended look pretty or be very useful as an app. 
 
-> This is a "0.9" version release of this demo. The principles will remain the same in version 1.0. I might tune it and this article like readme, as I review it and also based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted FlexColorScheme theming example that uses Riverpod and abstracted key-value local DB of choice. 
+> This is a **0.9 version** release of this demo. The principles will remain the same in version 1.0. I might tune it and this article like readme as I review it, and also based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted **FlexColorScheme** theming example, in addition to the ones included with the package, that uses **Riverpod** and an abstracted key-value local DB, with some example implementations. 
 
 **TODO:** Consider adding a screen recording GIF.
 
-**TODO:** Consider making a WeB demo build of the app.
+**TODO:** Consider making a WEB demo build of the app.
 
 **Contents**
 
@@ -642,7 +642,9 @@ Let's examine the `SettingsEntry` class to better understand what is happening.
 
 ### Settings Entry
 
+### Application UI
 
+We won't be going through the entire application user interface code here. It is not so exiting, but let's look at a few examples of using these settings widget 
 
 
 ### Screenshots
