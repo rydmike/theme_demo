@@ -111,10 +111,8 @@ The setup of above feature are done in the `main` function and looks as follows.
 ```dart
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  /// This container can be used to read providers before Flutter app is
-  /// initialised with UncontrolledProviderScope, for more info see:
-  /// https://github.com/rrousselGit/riverpod/issues/295
-  /// https://codewithandrea.com/articles/riverpod-initialize-listener-app-startup/
+  // This container can be used to read providers before Flutter app is
+  // initialised with UncontrolledProviderScope
   final ProviderContainer container = ProviderContainer(
     // This observer is used for logging changes in all Riverpod providers.
     observers: <ProviderObserver>[AppProviderObserver()],
@@ -130,7 +128,6 @@ Future<void> main() async {
       container: container,
       child: const ThemeDemoApp(),
     ),
-    // ),
   );
 }
 ```
@@ -354,7 +351,6 @@ class KeyValueDbListTile extends ConsumerWidget {
 This is what it looks like in action:
 
 > **TODO** Add GIF
- 
 
 *Using UI to change the used key-value DB implementation*
 
@@ -425,7 +421,7 @@ To make a simple naive memory and session based key-value DB we can use a simple
 // to set it to false, debug prints will not show in release builds.
 // The handy part is that if it gets in the way in debugging, it is an easy
 // toggle to turn it off here for just this feature. You can leave it true
-// below to see this features logs in debug mode.
+// below to see this feature's logs in debug mode.
 const bool _debug = !kReleaseMode && true;
 
 /// A repository that stores and retrieves key-value settings pairs from
@@ -503,6 +499,22 @@ class KeyValueDbMem implements KeyValueDb {
 ```
 
 To make it easy to track what is happening in the app, this class and many of the providers include `debugPrints` that shows what is happening on the console. The debug prints are behind a `_debug` flag that can be toggled on/off individually for each file. The flag is always automatically toggled off in a release build.
+
+### SharedPReferences and Hive Key-Value DB Implementations
+
+The used SharedPreferences and Hive key-value database implementations are the same as the ones used in the FlexColorScheme [example applications](https://docs.flexcolorscheme.com/tutorial3#themeserviceprefs). They also have the same requirement that we need to be able to store a `null` settings entry value. Using `null` values in Flutter SDK themes have the meaning that we want the widget's default un-themed behavior. 
+
+We cannot use the absence of a key in the key-value database to represent `null`. No key found, gives us our coded const default value for a theme setting, it is usually not be `null`, it might be, and even if it is not we might in some cases be able to select a default `null` choice to get the SDK default `null` default un-themed behavior. In this demo the `AppBar` style is an example of that.
+
+To be able to do this, we need to be able to persist nullable values in the key-value DB. The used map for memory storage allows us to do that, as does Hive. However, SharedPreferences does not like to store `null` at all. So its implementation includes a rather tedious work-around to use some other suitable value to represent the persisted `null` choice, and return null back when that value is used. 
+
+Both the Hive and the Shared Preferences also includes converters to persist `enum` values and `Color` as `ìnt` values. Hive provides its own `TypeAdapter` class that allows us to do so. For the SharedPreferences implementation we baked in the type conversions.
+
+Obviously to add handling of additional data type we need to add handling them to our Hive and SharedPreferences implementations.
+
+We won't go through the implementations, you can find the [Hive one here]() the SharedPreferences one here[here](). The one for SharedPreferences is quite a bit longer to handle both the occasionally needed nullable types, and the type conversions. 
+ 
+
 
 ### Screenshots
 

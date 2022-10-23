@@ -5,6 +5,8 @@ import '../controllers/used_key_value_db_provider.dart';
 import '../models/used_key_value_db.dart';
 import 'key_value_db_toggle_buttons.dart';
 
+/// UI used to toggle the used key-value DB implementation by just tapping
+/// on a ListTile to cycle through options.
 class KeyValueDbListTile extends ConsumerWidget {
   const KeyValueDbListTile({super.key});
 

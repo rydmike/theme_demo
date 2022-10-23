@@ -107,7 +107,7 @@ class AppDrawer extends ConsumerWidget {
                   },
                 );
                 if (reset ?? false) {
-                  Settings.resetAll(ref);
+                  Settings.reset(ref);
                 }
               },
             ),

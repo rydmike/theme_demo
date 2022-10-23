@@ -136,7 +136,7 @@ class _MyHomePageState extends ConsumerState<HomePage> {
                     },
                   );
                   if (reset ?? false) {
-                    Settings.resetAll(ref);
+                    Settings.reset(ref);
                   }
                 },
               ),
