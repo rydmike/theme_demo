@@ -232,7 +232,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, ThemeMode?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : ThemeMode? $key as $value');
+          debugPrint('Prefs type  : ThemeMode? $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         // If value is null, we had no key for it, we should return the
@@ -250,7 +250,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, ThemeMode>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : ThemeMode    : $key as $value');
+          debugPrint('Prefs type  : ThemeMode    : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         // If value is null, we had no key for it, we should return the
@@ -271,7 +271,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexScheme?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexScheme?  : $key as $value');
+          debugPrint('Prefs type  : FlexScheme?  : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -283,7 +283,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexScheme>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexScheme   : $key as $value');
+          debugPrint('Prefs type  : FlexScheme   : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -295,7 +295,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSurfaceMode?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexSurfaceMode? : $key as $value');
+          debugPrint('Prefs type  : FlexSurfaceMode? : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -307,7 +307,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSurfaceMode>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexSurfaceMode  : $key as $value');
+          debugPrint('Prefs type  : FlexSurfaceMode  : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -319,7 +319,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexInputBorderType?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexInputBorderType? : $key as $value');
+          debugPrint('Prefs type  : FlexInputBorderType? : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -331,7 +331,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexInputBorderType>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexInputBorderType  : $key as $value');
+          debugPrint('Prefs type  : FlexInputBorderType  : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -343,7 +343,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexAppBarStyle?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexAppBarStyle? : $key as $value');
+          debugPrint('Prefs type  : FlexAppBarStyle? : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -355,7 +355,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexAppBarStyle>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexAppBarStyle  : $key as $value');
+          debugPrint('Prefs type  : FlexAppBarStyle  : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -367,7 +367,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexTabBarStyle?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexTabBarStyle? : $key as $value');
+          debugPrint('Prefs type  : FlexTabBarStyle? : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -379,7 +379,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexTabBarStyle>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexTabBarStyle  : $key as $value');
+          debugPrint('Prefs type  : FlexTabBarStyle  : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -391,7 +391,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSystemNavBarStyle?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexSystemNavBarStyle? : $key as $value');
+          debugPrint('Prefs type  : FlexSystemNavBarStyle? : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -403,7 +403,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, FlexSystemNavBarStyle>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : FlexSystemNavBarStyle  : $key as $value');
+          debugPrint('Prefs type  : FlexSystemNavBarStyle  : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -415,7 +415,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, SchemeColor?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : SchemeColor? : $key as $value');
+          debugPrint('Prefs type  : SchemeColor? : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -427,7 +427,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, SchemeColor>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : SchemeColor  : $key as $value');
+          debugPrint('Prefs type  : SchemeColor  : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -439,7 +439,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationDestinationLabelBehavior?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : NavigationDestinationLabelBehavior? '
+          debugPrint('Prefs type  : NavigationDestinationLabelBehavior? '
               ': $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
@@ -454,7 +454,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationDestinationLabelBehavior>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : NavigationDestinationLabelBehavior '
+          debugPrint('Prefs type  : NavigationDestinationLabelBehavior '
               ': $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
@@ -469,7 +469,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationRailLabelType?>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : NavigationRailLabelType?: $key as $value');
+          debugPrint('Prefs type  : NavigationRailLabelType?: $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
@@ -481,7 +481,7 @@ class KeyValueDbPrefs implements KeyValueDb {
       if (sameTypes<T, NavigationRailLabelType>()) {
         final int? value = _prefs.getInt(key);
         if (_debug) {
-          debugPrint('Prefs load  : NavigationRailLabelType : $key as $value');
+          debugPrint('Prefs type  : NavigationRailLabelType : $key as $value');
           debugPrint('Prefs get   : ["$key"] = $value (${value.runtimeType})');
         }
         if (value == null) return defaultValue;
