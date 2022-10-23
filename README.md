@@ -4,19 +4,42 @@ This Flutter application shows how to use [FlexColorScheme](https://pub.dev/pack
 
 This app is used to demonstrate the concepts and ideas, not as much to look pretty or be very useful. 
 
+**TODO:** Consider adding a screen recording GIF.
+
+**TODO:** Consider making a WeB demo build of the app.
+
+**Contents**
+
+- [FlexColorScheme 6 and Riverpod 2](#flexColorScheme-6-and-Riverpod-2)
+- [Features](#features)
+  - [The `MaterialApp`](#the-materialapp)
+  - [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching)
+  - [Our `main` Function](#our-main-function)
+  - [Providers in `main`](#providers-in-main)
+  - [Listener `KeyValueDbListener` Callback When DB is Changed](#listener-keyvaluedblistener-callback-when-db-is-changed)
+  - [State Controller `usedKeyValueDbProvider` Used by UI to Change DB](#state-controller-usedkeyvaluedbprovider-used-by-ui-to-change-db)
+  - [Enhanced enum `usedkeyvaluedb`](#enhanced-enum-usedkeyvaluedb)
+- [UI to Change Used Key-Value DB](#ui-to-change-used-key-value-db)
+- [](#)
+- [](#)
+- [](#)
+- [](#)
+
 ## FlexColorScheme 6 and Riverpod 2
 
 This example is designed to work with and use the stable releases of **FlexColorScheme 6** and **Riverpod 2**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does however use more advanced state management techniques than the Themes Playground app, and it has a simple feature-first folder structure, making it easy to find related code by feature. 
 
 This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. It is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples). 
 
-| Home screen, part 1 | Homes screen part 2 |
-|---------------------|---------------------|
-| Add screen shoot 1  | Add screen shoot 2  |
+**TODO:** Add screenshots
+
+| Screen X         | Screen Y        |
+|------------------|-----------------|
+| Screen shoot X   | Screen shoot Y  |
 
 ## Features
 
-The demo uses several custom [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as Switches, Sliders and PopupMenuButtons, to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme features. 
+The demo uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as Switches, Sliders and PopupMenuButtons, to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme features. 
 
 The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `StateNotifierProviders`. That are used to define the current `ThemeData` for light, dark theme and theme mode states. 
 
@@ -54,9 +77,12 @@ class ThemeDemoApp extends ConsumerWidget {
 
 This approach works regardless of were in the widget tree the actual theme UI controlling widgets are. In this example this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page. Some theme settings Widgets are also used in the application drawer, and even more can be found in a bottom sheet.
 
-| Screen X           | Screen Y            |
-|--------------------|---------------------|
-| Add screen shoot   | Add screen shoot    |
+**TODO:** Add screenshots
+
+| Screen X         | Screen Y        |
+|------------------|-----------------|
+| Screen shoot X   | Screen shoot Y  |
+
 
 ## Dynamic Key-Value Database Switching
 
@@ -139,7 +165,7 @@ Provider<KeyValueDbListener>((ProviderRef<KeyValueDbListener> ref) {
 });
 ```
 
-### Listener `KeyValueDbListener` Callback When Key-Value DB is Changed
+### Listener `KeyValueDbListener` Callback When DB is Changed
 
 The act of reading the `container.read(keyValueDbListenerProvider)`, will instantiate the `KeyValueDbListener`. In it, we will define a listener that allows us to listen for changes to the `keyValueDbProvider` and run a call-back that does the async work of initializing the new `KeyValueDb` we switched to.
 
@@ -180,7 +206,7 @@ class KeyValueDbListener {
 
 This approach is very similar to the one described by [Andrea Bizzotto](https://github.com/bizz84/) in his article ["Flutter Riverpod: How to Register a Listener during App Startup"](https://codewithandrea.com/articles/riverpod-initialize-listener-app-startup/). In this solution we do not need streams, since we are only listening to a change in a UI control used to select the used key-value DB implementation.
 
-### State Controller `usedKeyValueDbProvider` Used by UI to Change Key-Value DB
+### State Controller `usedKeyValueDbProvider` Used by UI to Change DB
 
 The last part is that above in the `keyValueDbProvider` we watch `usedKeyValueDbProvider` and used the getter `get` in `ref.watch(usedKeyValueDbProvider).get` to get the user selected key-value DB implementation. 
 
@@ -198,7 +224,7 @@ StateProvider<UsedKeyValueDb>(
 );
 ```
 
-### Enhanced enum `UsedKeyValueDb`
+### Enhanced `enum` `UsedKeyValueDb`
 
 The `UsedKeyValueDb` is also an [enhanced enum](https://dart.dev/guides/language/language-tour#declaring-enhanced-enums) and its getter, `get` can be used to return the corresponding key-value DB implementation.
 
@@ -239,8 +265,9 @@ enum UsedKeyValueDb {
 }
 ```
 
+You could write the above with just functions or extensions based on a regular old Dart enum as well, but the above nicely encapsulates it all and the enum can provide needed functions directly. 
 
-### UI to change used Key-Value Db
+### UI to Change Used Key-Value DB
 
 Lastly we need a bit of UI to actually change the used key-value DB implementation on the fly. We have three different options, so for this use case I like to use a simple `ToggleButtons` implementation that changes state provider `usedKeyValueDbProvider`.  
 
@@ -300,6 +327,7 @@ class KeyValueDbListTile extends ConsumerWidget {
     return ListTile(
       title: const Text('Storage'),
       subtitle: Text(usedDb),
+      trailing: const KeyValueDbToggleButtons(),
       onTap: () {
         switch (ref.read(usedKeyValueDbProvider.notifier).state) {
           case UsedKeyValueDb.memory:
@@ -316,7 +344,6 @@ class KeyValueDbListTile extends ConsumerWidget {
             break;
         }
       },
-      trailing: const KeyValueDbToggleButtons(),
     );
   }
 }
@@ -332,18 +359,18 @@ This is what it looks like in action:
 The themes and buttons looks all different when the key-value DB implementation is switched. That is because different theme settings defined with **FlexColorScheme** had been configured using the different key-value DB implementations. When we switch implementation, the settings persisted in that implementation is loaded and the theme changes to it.
 
 
-That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is a better way, but this worked and that was the aim of the demo. How useful this is depends
+That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is a better way, but this worked and that was the aim of this part of the demo. How useful it is depends on what you use it for.
 
 
-## Key-Value DB Design Requirements
+## Key-Value Persistence
 
-One of the goals with the design of the key-value persistence model was that each settings value should be saved with its own string `key`. When you change any setting, only the value for this key is persisted. This is done for storage efficiency. 
+One of the goals with the design of the used key-value persistence model was that each settings value should be saved with its own string `key`. When you change a setting, only the value for this key is persisted. This is done for storage efficiency and for speed when modifying theme settings interactively. 
 
-We could also serialize a big settings class with all the properties to a JSON and save the entire JSON with just one key. Then we would be writing the entire large JSON file to the key-value DB every time a value is changed. This was not desired.
+We could also serialize a big settings class with all the properties to a JSON and save the entire JSON with just one key. We would then be writing the entire "large" JSON file to the key-value DB every time a single settings value is changed. This was not desired.
 
-We also did not want to use 
+We also did not want to use `select` filter  
 
-When the app starts, it set the state for each setting by checking if the key exist in the DB, reads it and uses hard coded defaults for each setting if  
+When the app starts, it sets the state for each settings value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings value in question is used.  
 
 ### Screenshots
 

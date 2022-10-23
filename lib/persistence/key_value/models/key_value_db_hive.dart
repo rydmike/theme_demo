@@ -111,10 +111,10 @@ class KeyValueDbHive implements KeyValueDb {
 
   /// Hive keeps registered type adapters in a singleton that is not
   /// released even if we close the box. For it not to throw if we init it
-  /// again, we check if the adapter id we plan to use is already registered.
+  /// again, we check if the adapter ID we plan to use is already registered.
   /// If it is, we skip registration. We could also use
-  /// Hive.registerAdapter(adapter, override: true), but that also screams
-  /// an ugly warning in the console. This gets around both cases.
+  /// Hive.registerAdapter(adapter, override: true), but it also screams
+  /// an ugly long warning in the console. This gets around both cases.
   void _safeRegisterAdapter<T>(
     int typeId,
     TypeAdapter<T> adapter,
