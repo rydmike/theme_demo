@@ -1,8 +1,8 @@
 # Flutter Theming using FlexColorScheme and Riverpod
 
-This Flutter application shows how to use [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses **Riverpod** providers tp watch light `theme` and `darkTheme` in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html).
+This Flutter application shows how to use [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses **Riverpod** providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are also persisted locally as they are modified, and the used local settings persistence implementation can be changed dynamically in the application user interface.
 
-This app is used to demonstrate FlexColorScheme and Riverpod concepts and usage suggestions, not as much to look pretty or be very useful. 
+This app is used to demonstrate FlexColorScheme and Riverpod concepts and provides usage suggestions. It is not intended look pretty or be very useful as an app. 
 
 > This is a "0.9" version release of this demo. The principles will remain the same in version 1.0. I might tune it and this article like readme, as I review it and also based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted FlexColorScheme theming example that uses Riverpod and abstracted key-value local DB of choice. 
 
@@ -93,7 +93,7 @@ This approach works regardless of were in the widget tree the actual theme UI co
 
 Another feature is that this demo persists all theme settings. The implementation used to persist the settings **can be switched dynamically** in the running app between:
 
-1. Memory - volatile, just session based, not persisted
+1. Memory, volatile, session based, settings not persisted
 2. [Shared preferences](https://pub.dev/packages/shared_preferences)
 3. [Hive](https://pub.dev/packages/hive)
 
