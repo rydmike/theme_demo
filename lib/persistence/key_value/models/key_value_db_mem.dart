@@ -6,7 +6,7 @@ import 'key_value_db.dart';
 // Set the bool flag to true to show debug prints. Even if you forgot
 // to set it to false, debug prints will not show in release builds.
 // The handy part is that if it gets in the way in debugging, it is an easy
-// toggle to turn it off here too for just this feature. You can leave it true
+// toggle to turn it off here for just this feature. You can leave it true
 // below to see this features logs in debug mode.
 const bool _debug = !kReleaseMode && true;
 
@@ -25,7 +25,10 @@ const bool _debug = !kReleaseMode && true;
 /// on a web server, e.g. with the http package.
 class KeyValueDbMem implements KeyValueDb {
   // A private static Map that stores the key-value pairs.
-  // This is kept in ram memory as long as app runs.
+  //
+  // This is kept in memory as long as app runs, not so pretty, but simple.
+  // We could make the entire class a singleton too, but we don't need to, this
+  // works well enough for this demo.
   static final Map<String, dynamic> _memKeyValueDb = <String, dynamic>{};
 
   /// [KeyValueDbMem] implementation needs no init functionality.
