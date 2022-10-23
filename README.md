@@ -2,7 +2,9 @@
 
 This Flutter application shows how to use [FlexColorScheme](https://pub.dev/packages/flex_color_scheme) together with [Riverpod](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses **Riverpod** providers tp watch light `theme` and `darkTheme` in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html).
 
-This app is used to demonstrate the concepts and ideas, not as much to look pretty or be very useful. 
+This app is used to demonstrate FlexColorScheme and Riverpod concepts and usage suggestions, not as much to look pretty or be very useful. 
+
+> This is a "0.9" version release of this demo. The principles will remain the same in version 1.0. I might tune it and this article like readme, as I review it and also based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted FlexColorScheme theming example that uses Riverpod and abstracted key-value local DB of choice. 
 
 **TODO:** Consider adding a screen recording GIF.
 
@@ -12,15 +14,15 @@ This app is used to demonstrate the concepts and ideas, not as much to look pret
 
 - [FlexColorScheme 6 and Riverpod 2](#flexColorScheme-6-and-Riverpod-2)
 - [Features](#features)
-  - [The `MaterialApp`](#the-materialapp)
-  - [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching)
+- [Used `MaterialApp`](#used-materialapp)
+- [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching)
   - [Our `main` Function](#our-main-function)
   - [Providers in `main`](#providers-in-main)
   - [Listener `KeyValueDbListener` Callback When DB is Changed](#listener-keyvaluedblistener-callback-when-db-is-changed)
   - [State Controller `usedKeyValueDbProvider` Used by UI to Change DB](#state-controller-usedkeyvaluedbprovider-used-by-ui-to-change-db)
   - [Enhanced enum `usedkeyvaluedb`](#enhanced-enum-usedkeyvaluedb)
-- [UI to Change Used Key-Value DB](#ui-to-change-used-key-value-db)
-- [](#)
+  - [UI to Change Used Key-Value DB](#ui-to-change-used-key-value-db)
+- [Persistence Design](#persistence-design)
 - [](#)
 - [](#)
 - [](#)
@@ -39,13 +41,13 @@ This demo is provided as an additional example to the six examples already inclu
 
 ## Features
 
-The demo uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as Switches, Sliders and PopupMenuButtons, to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme features. 
+The demo UI uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as [SwitchListTile.adaptive](https://api.flutter.dev/flutter/material/SwitchListTile/SwitchListTile.adaptive.html), [Slider.adaptive](https://api.flutter.dev/flutter/material/Slider/Slider.adaptive.html) and [PopupMenuButton](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html), to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme theming features. 
 
-The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `StateNotifierProviders`. That are used to define the current `ThemeData` for light, dark theme and theme mode states. 
+The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `StateNotifierProviders`. Used to define the current `ThemeData` for light, dark theme and theme mode states. 
 
-It also shows how simple it is to make small UI theme control widgets that can be dropped in anywhere were needed in an app, and then used to manipulate and modify the `ThemeData` for the application. The UI view widgets modify Riverpod `StateNotifierProviders` that act as theme property controllers in `ThemeData` providers. The `MaterialApp` widget watches these providers and rebuilds whenever a single theming UI widget is changed anywhere in the application.
+It also shows how simple it is to make small UI theme control widgets that can be dropped in anywhere, were needed in an app, and then used to manipulate and modify the `ThemeData` of the application. The UI view widgets modify Riverpod `StateNotifierProviders`, that act as theme property controllers in `ThemeData` providers. The `MaterialApp` widget watches these providers and rebuilds whenever a single theming UI widget is changed anywhere in the application.
 
-### The `MaterialApp` 
+## Used `MaterialApp` 
 
 The `MaterialApp` setup is very simple and compact. We give the light and dark `ThemeData` objects to their respective theme properties in the `MaterialApp`. Here they are given by providers that we watch for changes. When you use this setup, which one of the currently supplied light and dark theme is controlled by the `ThemeMode` enum given to the `themeMode` property. We use and watch a third provider for this, so theme mode can easily be toggled via UI. 
 
@@ -84,7 +86,7 @@ This approach works regardless of were in the widget tree the actual theme UI co
 | Screen shoot X   | Screen shoot Y  |
 
 
-## Dynamic Key-Value Database Switching
+### Dynamic Key-Value Database Switching
 
 Another feature is that this demo persists all theme settings. The implementation used to persist the settings **can be switched dynamically** in the running app between:
 
@@ -265,7 +267,7 @@ enum UsedKeyValueDb {
 }
 ```
 
-You could write the above with just functions or extensions based on a regular old Dart enum as well, but the above nicely encapsulates it all and the enum can provide needed functions directly. 
+You could write the above with just functions or extensions based on a regular old Dart enum as well, but the above nicely encapsulates it all, and the enum provides needed functions directly. 
 
 ### UI to Change Used Key-Value DB
 
@@ -361,16 +363,146 @@ The themes and buttons looks all different when the key-value DB implementation 
 
 That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is a better way, but this worked and that was the aim of this part of the demo. How useful it is depends on what you use it for.
 
+## Persistence Design
 
-## Key-Value Persistence
-
-One of the goals with the design of the used key-value persistence model was that each settings value should be saved with its own string `key`. When you change a setting, only the value for this key is persisted. This is done for storage efficiency and for speed when modifying theme settings interactively. 
+One of the goals with the design of the used key-value persistence model and Riverpod providers using it, was that each settings value should be saved with its own `key` string. When you change a setting, only the value for this key is persisted, and only the widget that toggles this value is rebuilt. This was desired mostly for storage efficiency and for speed when modifying theme settings interactively. When settings widget toggle theme properties, it typically results in a new `ThemeData` object, which requires rebuilding the app UI anyway with the new effective `ThemeData`. 
 
 We could also serialize a big settings class with all the properties to a JSON and save the entire JSON with just one key. We would then be writing the entire "large" JSON file to the key-value DB every time a single settings value is changed. This was not desired.
 
-We also did not want to use `select` filter  
+We also did not want to use a freezed or handwritten immutable class with all the settings properties in it. Because then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure only it is rebuilt, and also to filter that we only want to store the property value that was changed into the key-value DB.
 
-When the app starts, it sets the state for each settings value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings value in question is used.  
+We could use just simple `StateProviders` for the settings entries, I have tried this approach. While it works, if we use `StateNotifier` and `StateNotifierProvider` we have more control and can make a interfaces for it that provides functions that reads nicely.
+
+When the app starts, it sets the state for each settings entry value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings value in question is used.  
+
+
+## Key-Value Database
+
+For the key-value database to persist the settings we use an abstraction layer, and as an example offer a few implementation examples using two popular Flutter packages.
+
+0. KeyValueDb - Abstract interface
+1. KeyValueDbMem - Volatile memory implementation, just a map
+2. KeyValueDbPrefs - [Shared preferences](https://pub.dev/packages/shared_preferences) implementation
+3. KeyValueDbHive - [Hive](https://pub.dev/packages/hive) implementation
+
+It would be very straight forward to add additional key-value based settings implementations. Maybe even add one that uses the local implementation as off-line cache and also persist settings in cloud based implementation so users can bring their preferences with them when thy switch to another device or platform. 
+
+Typically, you would of course only have one implementation and use this repository abstraction to limit the places where you interface with the actual storage solution. It of course also enables swapping it out easily, should it ever be needed. In practice, it is seldom needed in the life-span of most applications, but hey we like over-engineered solutions.
+
+### Abstract Key-Value DB Interface
+
+The needed interface for the key-value database in this demo is very simple. It is the same as the one used by all the FlexColorScheme [example applications](https://docs.flexcolorscheme.com/tutorial3#themeserviceprefs), in its entirety it looks like this:
+
+```dart
+/// Abstract interface for the [KeyValueDb] used to get and put (save) simple
+/// key-value pairs.
+abstract class KeyValueDb {
+  /// A [KeyValueDb] implementation may override this method to perform
+  /// all its needed initialization and setup work.
+  Future<void> init();
+
+  /// A [KeyValueDb] implementation may override this method to perform
+  /// needed cleanup on close and dispose.
+  Future<void> dispose();
+
+  /// Get a `value` from the [KeyValueDb], using string `key` as its key.
+  ///
+  /// If `key` does not exist in the repository, return `defaultValue`.
+  T get<T>(String key, T defaultValue);
+
+  /// Put "save" a `value` in the [KeyValueDb] service, using `key` as its
+  /// storage key.
+  Future<void> put<T>(String key, T value);
+}
+``` 
+
+### Memory Key-Value DB Implementation
+
+To make a simple naive memory and session based key-value DB we can use a simple map. In this case we also wanted the key-value pairs to be kept when we switch between implementations, even if the `KeyValueDbMem` provider makes a new instance. We could have made `KeyValueDbMem` a singleton, but all we actually needed was for it to have a private static map.
+
+```dart
+// Set the bool flag to true to show debug prints. Even if you forgot
+// to set it to false, debug prints will not show in release builds.
+// The handy part is that if it gets in the way in debugging, it is an easy
+// toggle to turn it off here for just this feature. You can leave it true
+// below to see this features logs in debug mode.
+const bool _debug = !kReleaseMode && true;
+
+/// A repository that stores and retrieves key-value settings pairs from
+/// volatile ram memory.
+///
+/// This class keeps the key-value pairs in a private static final Map during
+/// app execution, so we can get the same Map data also when we get a
+/// new instance of the mem key-value db, this happens when we dynamically in
+/// the app switch to another implementation and back to mem again.
+///
+/// To actually persist the settings locally, use the [KeyValueDbMemPrefs]
+/// implementation that uses the shared_preferences package to persists the
+/// values, or the [KeyValueDbMemHive] that uses the Hive package to accomplish
+/// the same thing. You could also make an implementation that stores settings
+/// on a web server, e.g. with the http package.
+class KeyValueDbMem implements KeyValueDb {
+  // A private static Map that stores the key-value pairs.
+  //
+  // This is kept in memory as long as app runs, not so pretty, but simple.
+  // We could make the entire class a singleton too, but we don't need to, this
+  // works well enough for this demo.
+  static final Map<String, dynamic> _memKeyValueDb = <String, dynamic>{};
+
+  /// [KeyValueDbMem] implementation needs no init functionality.
+  @override
+  Future<void> init() async {
+    if (_debug) debugPrint('KeyValueDbMem: init called');
+  }
+
+  /// [KeyValueDbMem] implementation needs no dispose functionality.
+  @override
+  Future<void> dispose() async {
+    if (_debug) debugPrint('KeyValueDbMem: dispose called');
+  }
+
+  /// Get a settings value from the mem db, using [key] to access it.
+  ///
+  /// If key does not exist, return the [defaultValue].
+  /// persist values.
+  @override
+  T get<T>(String key, T defaultValue) {
+    try {
+      if (_memKeyValueDb.containsKey(key)) {
+        final T value = _memKeyValueDb[key] as T;
+        if (_debug) {
+          debugPrint('MemDB get   : ["$key"] = $value (${value.runtimeType})');
+        }
+        if (value == null) {
+          return null as T;
+        } else {
+          return value;
+        }
+      } else {
+        return defaultValue;
+      }
+    } catch (e) {
+      debugPrint('MemDB get (load) ERROR');
+      debugPrint(' Error message ...... : $e');
+      debugPrint(' Store key .......... : $key');
+      debugPrint(' defaultValue ....... : $defaultValue');
+    }
+    // If something went wrong we return the default value.
+    return defaultValue;
+  }
+
+  /// Put a settings [value] to the mem db, using [key], as key for the value.
+  @override
+  Future<void> put<T>(String key, T value) async {
+    if (_debug) {
+      debugPrint('MemDB put   : ["$key"] = $value (${value.runtimeType})');
+    }
+    _memKeyValueDb[key] = value;
+  }
+}
+```
+
+To make it easy to track what is happening in the app, this class and many of the providers include `debugPrints` that shows what is happening on the console. The debug prints are behind a `_debug` flag that can be toggled on/off individually for each file. The flag is always automatically toggled off in a release build.
 
 ### Screenshots
 
