@@ -7,7 +7,7 @@ import 'key_value_db.dart';
 // to set it to false, debug prints will not show in release builds.
 // The handy part is that if it gets in the way in debugging, it is an easy
 // toggle to turn it off here for just this feature. You can leave it true
-// below to see this features logs in debug mode.
+// below to see this feature's logs in debug mode.
 const bool _debug = !kReleaseMode && true;
 
 /// A repository that stores and retrieves key-value settings pairs from

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_fonts.dart';
 import 'flex_tone.dart';
 
-/// The theme for this app are defined here.
+/// The theme for this app is defined here.
 class AppTheme {
   // This constructor prevents external instantiation and extension.
   AppTheme._();
 
-  /// Returns the light theme based on properties passed to it.
+  /// Returns light theme based on customizable required properties passed to it.
   static ThemeData light({
     required bool useMaterial3,
     required int usedTheme,
@@ -131,10 +131,15 @@ class AppTheme {
   }
 
   // We could also use the FlexSchemeColor.from() constructor and define less
-  // color properties and get some of them computed by the from factory.
-  // If we do that then custom colors cannot be const, but otherwise it
+  // color properties and get many of the values below computed by the
+  // `from` factory. If we do that, then custom `FlexSchemeColor`s below cannot
+  // be const, nor the `schemes` list below, but otherwise it
   // works the same. In this demo we specify all required colors and do not
   // use the convenience features offered by the FlexSchemeColor.from() factory.
+  // Well yes I did at first, but then I copy-pasted the values it computed for
+  // the values I did not want to specify. Copied from the theme_demo app UI,
+  // by just clicking on each color box in the UI to get the Flutter color code
+  // for it and then added the colors as const values below instead :)
 
   // San Juan blue and sea pink.
   static const FlexSchemeColor _customScheme2Light = FlexSchemeColor(
@@ -229,7 +234,7 @@ class AppTheme {
     // As an example, say you want to add one of the pre-defined FlexColor
     // schemes to the list of schemes we offer as user choices, then just pick
     // the ones you want and insert in the order you want it, here we
-    // add Mandy Red.
+    // add Mandy Red, you don't have to add all of them like we do below.
     FlexColor.mandyRed,
     // And continue with your own custom schemes, with own custom names.
     FlexSchemeData(
@@ -252,12 +257,11 @@ class AppTheme {
     ),
     //
     // As an example:
-    // After all our custom color schemes, and hand picked built-in colors
-    // we add all built in FlexColor schemes.
-    // The MandyRed scheme will of course show up as a duplicate when we do
-    // this, since we already added it manually already. This is just to
-    // demonstrating how to easily add all existing scheme to end of our custom
-    // scheme choices.
+    // After all our custom color schemes, and hand picked built-in schemes
+    // we add all built-in FlexColor schemes. The MandyRed scheme will of
+    // course show up as a duplicate when we do this, since we added it manually
+    // already. This is just to demonstrate how to easily add all existing
+    // scheme to end of our custom scheme choices.
     ...FlexColor.schemesList,
   ];
 }

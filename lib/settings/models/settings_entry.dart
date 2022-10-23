@@ -19,20 +19,20 @@ class SettingsEntry<T> extends StateNotifier<T> {
     required this.defaultValue,
   }) : super(defaultValue) {
     // Initialize the notifier's state value.
-    get();
+    init();
   }
 
-  /// Get the settings entry from the used key-value DB implementation.
+  /// Init the settings entry from the used key-value DB implementation.
   ///
-  /// Don't use this to get the state value of a [SettingsEntry] that is already
-  /// initialized, just use the current state value of the notifier.
+  /// Don't use this to get the value of a [SettingsEntry] that is already
+  /// initialized, use the current state value of the notifier for that.
   ///
-  /// Do use this getter when another key-value DB [KeyValueDb] has been
+  /// Do use this init call when another key-value DB [KeyValueDb] has been
   /// switched to dynamically, in order update the [SettingsEntry] state to
-  /// the value it has in the [KeyValueDb] swapped in. Using this get function
+  /// the value it has in the [KeyValueDb] swapped in. Using this init function
   /// ensures that a different value in the swapped in DB will also update all
   /// UI that uses this [SettingsEntry].
-  void get() {
+  void init() {
     // Get the used-key value DB implementation.
     final KeyValueDb db = ref.read(keyValueDbProvider);
     // Read the value for the provided key from the used key-value DB.

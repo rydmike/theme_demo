@@ -8,10 +8,10 @@ import '../models/flex_tone.dart';
 
 /// The light [ThemeData] provider.
 ///
-/// It is also just a simple StateProvider using our AppTheme.light method
-/// and passing other StateProviders as property values to the method.
-/// We can use this StateProvider in our MaterialApp as theme. Whenever any
-/// of the StateProvider based property value are updated, the MaterialApp
+/// It is a simple [Provider], using our AppTheme.light function using
+/// [Settings], [StateNotifierProvider] properties that we watch for changes.
+/// We can use this [Provider] in our [MaterialApp] as theme. Whenever any
+/// of the [Settings] based property value are updated, the MaterialApp
 /// will change theme and be rebuilt with new theme applied.
 final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
   (ProviderRef<ThemeData> ref) {

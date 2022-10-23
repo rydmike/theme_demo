@@ -8,15 +8,15 @@ import '../models/settings_entry.dart';
 // Set the bool flag to true to show debug prints. Even if you forgot
 // to set it to false, debug prints will not show in release builds.
 // The handy part is that if it gets in the way in debugging, it is an easy
-// toggle to turn it off here too for just this feature. You can leave it true
-// below to see this features logs in debug mode.
+// toggle to turn it off here for just this feature. You can leave it true
+// below to see this feature's logs in debug mode.
 const bool _debug = !kReleaseMode && true;
 
 class Settings {
   // This constructor prevents external instantiation and extension.
   Settings._();
 
-  // Default values for all the settings entries.
+  // Default const values for all the settings entries.
   // They are collected here at the top to be easy to modify.
   //
   // Use material 3, theme mode and active color scheme.
@@ -58,10 +58,11 @@ class Settings {
   // if global radius is not selected with its slider.
   static const double? _defaultRadius = null;
 
-  /// Rest all settings entries and their controllers to default values.
+  /// Reset all settings entries and their controllers to their default values.
   ///
-  /// This action is triggered by the user.
-  static void resetAll(WidgetRef ref) {
+  /// This action is triggered by the user when they want to reset all settings
+  /// values to their app default values.
+  static void reset(WidgetRef ref) {
     if (_debug) debugPrint('Settings: resetAll DB values');
     // Use material 3, theme mode and active color scheme.
     ref.read(useMaterial3Provider.notifier).reset();
@@ -98,44 +99,45 @@ class Settings {
     ref.read(defaultRadiusProvider.notifier).reset();
   }
 
-  /// Set all settings entries and their controllers to values from DB.
+  /// Init all settings entries and their controllers to values from used
+  /// key-value DB.
   ///
-  /// This is typically only used when switching DB implementation dynamically.
-  static void getAll(Ref ref) {
+  /// This is typically only used after switching DB implementation dynamically.
+  static void init(Ref ref) {
     if (_debug) debugPrint('Settings: getAll DB values');
     // Use material 3, theme mode and active color scheme.
-    ref.read(useMaterial3Provider.notifier).get();
-    ref.read(themeModeProvider.notifier).get();
-    ref.read(schemeIndexProvider.notifier).get();
+    ref.read(useMaterial3Provider.notifier).init();
+    ref.read(themeModeProvider.notifier).init();
+    ref.read(schemeIndexProvider.notifier).init();
     // Surface mode.
-    ref.read(lightSurfaceModeProvider.notifier).get();
-    ref.read(darkSurfaceModeProvider.notifier).get();
+    ref.read(lightSurfaceModeProvider.notifier).init();
+    ref.read(darkSurfaceModeProvider.notifier).init();
     // Surface blend levels.
-    ref.read(lightBlendLevelProvider.notifier).get();
-    ref.read(darkBlendLevelProvider.notifier).get();
+    ref.read(lightBlendLevelProvider.notifier).init();
+    ref.read(darkBlendLevelProvider.notifier).init();
     // Swap primary and secondary colors.
-    ref.read(lightSwapColorsProvider.notifier).get();
-    ref.read(darkSwapColorsProvider.notifier).get();
+    ref.read(lightSwapColorsProvider.notifier).init();
+    ref.read(darkSwapColorsProvider.notifier).init();
     // AppBar elevation and color.
-    ref.read(appBarElevationProvider.notifier).get();
-    ref.read(lightAppBarStyleProvider.notifier).get();
-    ref.read(darkAppBarStyleProvider.notifier).get();
+    ref.read(appBarElevationProvider.notifier).init();
+    ref.read(lightAppBarStyleProvider.notifier).init();
+    ref.read(darkAppBarStyleProvider.notifier).init();
     // AppBar transparent status bar scrim in Android and opacity.
-    ref.read(transparentStatusBarProvider.notifier).get();
-    ref.read(lightAppBarOpacityProvider.notifier).get();
-    ref.read(darkAppBarOpacityProvider.notifier).get();
+    ref.read(transparentStatusBarProvider.notifier).init();
+    ref.read(lightAppBarOpacityProvider.notifier).init();
+    ref.read(darkAppBarOpacityProvider.notifier).init();
     // Dark theme only extra settings, like computed dark theme and true black.
-    ref.read(darkIsTrueBlackProvider.notifier).get();
-    ref.read(darkComputeThemeProvider.notifier).get();
-    ref.read(darkComputeLevelProvider.notifier).get();
+    ref.read(darkIsTrueBlackProvider.notifier).init();
+    ref.read(darkComputeThemeProvider.notifier).init();
+    ref.read(darkComputeLevelProvider.notifier).init();
     // Seeded color key usage.
-    ref.read(usePrimaryKeyColorProvider.notifier).get();
-    ref.read(useSecondaryKeyColorProvider.notifier).get();
-    ref.read(useTertiaryKeyColorProvider.notifier).get();
+    ref.read(usePrimaryKeyColorProvider.notifier).init();
+    ref.read(useSecondaryKeyColorProvider.notifier).init();
+    ref.read(useTertiaryKeyColorProvider.notifier).init();
     // Use FlexColorScheme opinionated component themes.
-    ref.read(useSubThemesProvider.notifier).get();
+    ref.read(useSubThemesProvider.notifier).init();
     // Component theme global border radius.
-    ref.read(defaultRadiusProvider.notifier).get();
+    ref.read(defaultRadiusProvider.notifier).init();
   }
 
   /// String key used for defining if we use Material 3 or Material 2.

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../../core/views/widgets/universal/colored_text.dart';
 
-/// SplashPageOne splash example page.
+/// A splash example page.
 class SplashPage extends StatelessWidget {
   /// Default const constructor.
   const SplashPage({super.key});
