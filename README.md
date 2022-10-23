@@ -28,6 +28,7 @@ This app is used to demonstrate FlexColorScheme and Riverpod concepts and usage 
   - [Memory Key-Value DB Implementation](#memory-key-value-db-implementation)
   - [SharedPreferences and Hive Key-Value DB Implementations](#sharedpreferences-and-hive-key-value-db-implementations)
 - [Settings](#settings)
+  - [Settings Entry](#settings-entry)
 
 ## FlexColorScheme 6 and Riverpod 2
 
@@ -380,7 +381,7 @@ For the key-value database to persist the settings we use an abstraction layer, 
 
 0. KeyValueDb - Abstract interface.
 1. KeyValueDbMem - Volatile memory implementation, just a map.
-2. KeyValueDbPrefs - [Shared preferences](https://pub.dev/packages/shared_preferences) implementation.
+2. KeyValueDbPrefs - [SharedPreferences](https://pub.dev/packages/shared_preferences) implementation.
 3. KeyValueDbHive - [Hive](https://pub.dev/packages/hive) implementation.
 
 It would be very straight forward to add additional key-value based settings implementations. Maybe even add one that uses the local implementation as off-line cache and also persist settings in cloud based implementation, so users can bring their preferences with them when they switch to another device or platform. 
@@ -515,10 +516,10 @@ The settings approach setup used in this demo might be considered a bit controve
 
 I might demonstrate another implementation later, but this works well, is convenient to use and does not seem to be heavy to use, despite using a quite a few `StateNotifierProviders`.
 
-The used `Settings` class is actually only static container class. We could just as wel have it all as top level const and final values. However, wrapping them in `Settings` class, name spaces them and encapsulates them nicely. Basically this is like using classes to wrap app config constant values. Purist Dart guide says don't this. I say do, also in my [lint rules](https://rydmike.com/blog_flutter_linting). Do it for the name spacing and nice code completion it gives you. This demo app also uses this for a number application constants in several different `AppNnnn` const classes.
+The used `Settings` class is actually only static container class. We could just as wel have it all as top level const and final values. However, wrapping them in `Settings` class, name spaces them and encapsulates them nicely. Basically this is like using classes to wrap app config constant values. Purist Dart guide says don't this. I say do, also in my [lint rules](https://rydmike.com/blog_flutter_linting). Do it for the name spacing and nice code completion it gives you. This demo app also uses this for a number application constants in several `AppNnnn` const classes.
 
+In the `Settings` statics only class we basically have the following:
 
-In the `Settings` statics only class we basically have the following
 - Private static constants for the settings entry default values.
 - Private static constant string keys for all the settings entry keys.
 - A static function to `reset` all settings to their default values.
@@ -564,11 +565,85 @@ class Settings {
     ref.read(schemeIndexProvider.notifier).init();
     // 8< - - - snip repetitive init code removed.
   }
+
+  /// String key used for defining if we use Material 3 or Material 2.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyUseMaterial3 = 'useMaterial3';
+
+  /// Provider for swapping primary and secondary colors in light theme mode.
+  ///
+  /// Defaults to [_useMaterial3].
+  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+  useMaterial3Provider = StateNotifierProvider<SettingsEntry<bool>, bool>(
+            (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      return SettingsEntry<bool>(
+        ref,
+        defaultValue: _useMaterial3,
+        key: _keyUseMaterial3,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyUseMaterial3}Provider',
+  );
+
+  /// String key for storing theme settings index.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keySchemeIndex = 'schemeIndex';
+
+  /// The index provider of the currently used color scheme and theme.
+  ///
+  /// Defaults to first color scheme index: [_schemeIndex].
+  static final StateNotifierProvider<SettingsEntry<int>, int>
+  schemeIndexProvider = StateNotifierProvider<SettingsEntry<int>, int>(
+            (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+      return SettingsEntry<int>(
+        ref,
+        defaultValue: _schemeIndex,
+        key: _keySchemeIndex,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keySchemeIndex}Provider',
+  );
+
+  /// String key for storing used light theme surface mode.
+  ///
+  /// The associated provider uses same name with "Provider" added to it.
+  static const String _keyLightSurfaceMode = 'lightSurfaceMode';
+
+  /// The primary colored light surface branding mode provider.
+  ///
+  /// Defaults to [_lightSurfaceMode].
+  static final StateNotifierProvider<SettingsEntry<FlexSurfaceMode>,
+          FlexSurfaceMode> lightSurfaceModeProvider =
+  StateNotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>(
+            (StateNotifierProviderRef<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>
+    ref) {
+      return SettingsEntry<FlexSurfaceMode>(
+        ref,
+        defaultValue: _lightSurfaceMode,
+        key: _keyLightSurfaceMode,
+      );
+    },
+    // Use the unique key-value DB key as provider name, useful for debugging.
+    name: '${_keyLightSurfaceMode}Provider',
+  );
+
+  // 8< - - - snip repetitive code for similar settings entry providers removed.  
 }
 ```
 
+All the above is basically just static definitions, sure there is quite a bit of it, but it is 
+pretty straight forward. The `SettingsEntry` based `StateNotifierProvider` providers might look a bit complex, maybe it is because this code base uses lint rules that requires you to explicitly always specify all types. 
 
-### Settings entry
+Let's examine the `SettingsEntry` class to better understand what is happening.
+
+### Settings Entry
+
+
+
 
 ### Screenshots
 

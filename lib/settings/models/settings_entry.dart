@@ -24,14 +24,14 @@ class SettingsEntry<T> extends StateNotifier<T> {
 
   /// Init the settings entry from the used key-value DB implementation.
   ///
-  /// Don't use this to get the value of a [SettingsEntry] that is already
-  /// initialized, use the current state value of the notifier for that.
-  ///
   /// Do use this init call when another key-value DB [KeyValueDb] has been
   /// switched to dynamically, in order update the [SettingsEntry] state to
   /// the value it has in the [KeyValueDb] swapped in. Using this init function
   /// ensures that a different value in the swapped in DB will also update all
   /// UI that uses this [SettingsEntry].
+  ///
+  /// Don't use this method to get the value of a [SettingsEntry] that is
+  /// already initialized, use the current state value of the notifier for that.
   void init() {
     // Get the used-key value DB implementation.
     final KeyValueDb db = ref.read(keyValueDbProvider);
