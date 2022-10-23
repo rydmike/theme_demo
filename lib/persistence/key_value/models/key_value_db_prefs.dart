@@ -46,7 +46,7 @@ class KeyValueDbPrefs implements KeyValueDb {
     if (_debug) debugPrint('KeyValueDbPrefs: dispose called');
   }
 
-  // Load/get a setting from the data source, using a key to access it from
+  // Get/load a setting from the data source, using a key to access it from
   // the SharedPreferences storage.
   //
   // SharedPreference does not have type adaptors, but we can handle the
@@ -82,7 +82,7 @@ class KeyValueDbPrefs implements KeyValueDb {
   // To be able to also use SharedPreferences as a persistence service for
   // this app, we use a few simple rules.
   //
-  // bool   : Null is not supported, null can be sent to 'save', but is stored
+  // bool   : Null is not supported, null can be sent to 'put', but is stored
   //          as false and returned as false when loaded.
   // int    : Any loaded negative number is returned as null.
   // double : Any loaded negative number is returned as null.
@@ -93,10 +93,10 @@ class KeyValueDbPrefs implements KeyValueDb {
   //          of enum range, for the enum type, is returned as default value.
   //
   // We can do this because current use case we do not need to persist negative
-  // values, nor any null bool. Sure Flutter SDK has many bool inputs that can
+  // values, nor any null bool. Sure Flutter SDK has theme bool inputs that can
   // be "null", but it defaults to true/false when that is the case. So
   // selecting the value that gives you the default SDK behavior for bool
-  // inputs is not a problem, you just have to know what the default fallback
+  // inputs is not a problem, we just have to know what the default fallback
   // is.
   //
   // For now this works OK for the use cases for this application.
@@ -501,7 +501,7 @@ class KeyValueDbPrefs implements KeyValueDb {
     return defaultValue;
   }
 
-  // Save/put a setting to the key-value data source with the SharedPreferences
+  // Put/save a setting to the key-value data source with the SharedPreferences
   // storage using key, as key for the value.
   //
   // SharedPreferences cannot handle saving "NULL" values like Hive can.
