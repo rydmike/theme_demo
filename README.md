@@ -1,19 +1,11 @@
-> ## **NOTE:** This a 0.9.0 pre-release version
->
-> The readme still has a few TODOs in it. Will update soon for actual 0.9.0 version.
-
-
 # Flutter Theming using FlexColorScheme and Riverpod
 
 This Flutter application shows how to use [**FlexColorScheme**](https://pub.dev/packages/flex_color_scheme) together with [**Riverpod**](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses Riverpod providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change the used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are persisted locally as they are modified. The used local settings persistence implementation can be changed dynamically with the application's user interface.
 
 This app is used to demonstrate FlexColorScheme and Riverpod concepts, and to provide usage suggestions. It is not intended to look pretty or be very useful as an app.
 
-> This is a **0.9 version** release of this demo app. The principles will remain the same in version 1.0. I might tune it, and this article like readme as I review it, and based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted **FlexColorScheme** theming example, in addition to the ones included with the package, that uses **Riverpod** and an abstracted key-value local DB, with some example implementations. This example serves that purpose and is also linked to from the **FlexColorScheme** documentation.
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme demo" width="550"/>
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme demo" width="450"/>
-
-**TODO:** Consider making a WEB demo build of the app.
 
 ### Contents
 
@@ -40,6 +32,9 @@ This app is used to demonstrate FlexColorScheme and Riverpod concepts, and to pr
    7.3 [Reactive UI Widgets](#reactive-ui-widgets)
 8. [Theme Providers](#theme-providers)  
    8.1.[Application Theme](#application-theme)
+
+>**NOTE:**
+>This is a **0.9 version** release of this demo app. Principles will remain the same in version 1.0. I might tune it, and this article like readme as I review it, and based on feedback before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date.
 
 ## FlexColorScheme 6 and Riverpod 2
 
@@ -364,7 +359,7 @@ class KeyValueDbListTile extends ConsumerWidget {
 
 This is what it looks like in action:
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="350"/>
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="500"/>
 
 *Using UI to change the used key-value DB implementation*
 
@@ -806,7 +801,7 @@ class ThemeModeListTile extends ConsumerWidget {
 
 From the above example we can already see that we can easily make reactive UI widget. Using these Riverpod provider driven UI widgets, makes our UI widgets react to change in their values, regardless of where and when we change their data. Additionally, using the UI control widgets anywhere in the app's widget tree, is as simple as dropping in the UI widget. To see this in action, take a look at this screen recording of this theme demo.
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/reactive_ui.gif?raw=true" alt="Theme demo" width="450"/>
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/reactive_ui.gif?raw=true" alt="Theme demo" width="550"/>
 
 In this example we see two UI widgets used, one for setting using Material 3 theming, and another one for opting in and out of using FlexColorScheme opinionated widget component themes.
 
