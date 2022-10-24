@@ -48,6 +48,9 @@ This demo is provided as an additional example to the six examples already inclu
 |------------------|-----------------|
 | Screen shoot X   | Screen shoot Y  |
 
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen01-Home.png?raw=true"/> |  <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen02-Home.png?raw=true"/> |
+
+
 ## Features
 
 The demo UI uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as [SwitchListTile.adaptive](https://api.flutter.dev/flutter/material/SwitchListTile/SwitchListTile.adaptive.html), [Slider.adaptive](https://api.flutter.dev/flutter/material/Slider/Slider.adaptive.html) and [PopupMenuButton](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html), to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme theming features. 
@@ -151,8 +154,7 @@ To provide `keyValueDbProvider` we use a `StateProvider`. Typically, a plain `Pr
 /// The value returned depends on the controller [usedKeyValueDbProvider].
 final StateProvider<KeyValueDb> keyValueDbProvider =
 StateProvider<KeyValueDb>((StateProviderRef<KeyValueDb> ref) {
-  ref.onDispose(
-        () {
+  ref.onDispose( () {
       if (_debug) debugPrint('keyValueDbProvider: onDispose called');
     },
   );
@@ -273,7 +275,7 @@ enum UsedKeyValueDb {
 }
 ```
 
-You could write the above with just functions or extensions based on a regular old Dart enum as well, but the above nicely encapsulates it all, and the enum provides needed functions directly. 
+We could write the above with just functions or extensions based on a regular old Dart enum as well, but the above nicely encapsulates it all, and the enum provides needed functions directly. 
 
 ### UI to Change Used Key-Value DB
 
@@ -914,6 +916,8 @@ class AppTheme {
 To learn more about what `FlexColorScheme` does when the properties above, and understanding what is invloved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and to check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html).
 
 That's pretty much all there is to it. If there is anything in this educational demo app you would like further explanations about. Drop a note in its repo discussions section and ask a question. I might extend this readme to clarify it, or answer directly in the discussions.   
+
+**TODO:** Add more example screen shots.
 
 ----
 
