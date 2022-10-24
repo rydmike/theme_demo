@@ -523,9 +523,7 @@ Both the Hive and the Shared Preferences also include converters to persist diff
 
 Obviously to add handling of additional data types we need to add handling of them to our Hive and SharedPreferences implementations.
 
-**TODO:** Add the links below!
-
-We won't go through the implementations here, but you can find the [Hive one here]() the SharedPreferences one here[here](), if you want to study them. The one for SharedPreferences is quite a bit longer, in order to handle both the occasionally needed nullable types, and the type conversions. 
+We won't go through the implementations here, but you can find the [Hive one here](https://github.com/rydmike/theme_demo/blob/master/lib/persistence/key_value/models/key_value_db_hive.dart) the SharedPreferences one here[here](https://github.com/rydmike/theme_demo/blob/master/lib/persistence/key_value/models/key_value_db_prefs.dart), if you want to study them. The one for SharedPreferences is quite a bit longer, in order to handle both the occasionally needed nullable types, and the type conversions. 
  
 ## Settings
 
@@ -730,7 +728,7 @@ For the UI we end with a simple `const` constructor widget, that needs no proper
 
 Could not be simpler to use, but admittedly to get to this simplicity takes a bit of abstractions, setup and Riverpod definitions.
 
->You might have noticed that the UI widget above uses a `SwitchListTileAdaptive` widget. This is a very simple wrapper for `SwitchListTile.adaptive`. Why is it needed? To find out why, check out its code and comments [here]() **TODO:** Add url to code.
+>You might have noticed that the UI widget above uses a `SwitchListTileAdaptive` widget. This is a very simple wrapper for `SwitchListTile.adaptive`. Why is it needed? To find out why, check out its code and comments [here](https://github.com/rydmike/theme_demo/blob/master/lib/core/views/widgets/universal/switch_list_tile_adaptive.dart).
 
 ### Active Theme Mode `ToggleButtons`
 
