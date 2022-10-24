@@ -1,4 +1,4 @@
-> ## **NOTE** This a 0.9.0 pre-release version 
+> ## **NOTE:** This a 0.9.0 pre-release version 
 > 
 > The readme still has a few TODOs in it. Will update soon for actual 0.9.0 version.
 
@@ -364,7 +364,7 @@ class KeyValueDbListTile extends ConsumerWidget {
 
 This is what it looks like in action:
 
-> **TODO** Add GIF
+> **TODO:** Add GIF of DB switching
 
 *Using UI to change the used key-value DB implementation*
 
@@ -523,7 +523,7 @@ Both the Hive and the Shared Preferences also include converters to persist diff
 
 Obviously to add handling of additional data types we need to add handling of them to our Hive and SharedPreferences implementations.
 
-**TODO:** Add the links below-
+**TODO:** Add the links below!
 
 We won't go through the implementations here, but you can find the [Hive one here]() the SharedPreferences one here[here](), if you want to study them. The one for SharedPreferences is quite a bit longer, in order to handle both the occasionally needed nullable types, and the type conversions. 
  
@@ -730,7 +730,7 @@ For the UI we end with a simple `const` constructor widget, that needs no proper
 
 Could not be simpler to use, but admittedly to get to this simplicity takes a bit of abstractions, setup and Riverpod definitions.
 
->You might have noticed that the UI widget above uses a `SwitchListTileAdaptive` widget. This is a very simple wrapper for `SwitchListTile.adaptive`. Why is it needed? To find out why, check out its code and comments here: **TODO:** Add url to code.
+>You might have noticed that the UI widget above uses a `SwitchListTileAdaptive` widget. This is a very simple wrapper for `SwitchListTile.adaptive`. Why is it needed? To find out why, check out its code and comments [here]() **TODO:** Add url to code.
 
 ### Active Theme Mode `ToggleButtons`
 
@@ -808,7 +808,7 @@ class ThemeModeListTile extends ConsumerWidget {
 
 From the above example we can already see that we can easily make reactive UI widget. Using these Riverpod provider driven UI widgets, makes our UI widgets react to changes in their values regardless of where and when we change their data. Additionally using the UI control widgets anywhere in the app's widget tree, is as simple as dropping in the UI widget. To see this in action, take a look at this screen recording of this theme demo. 
 
-**TODO:** Add GIF recording
+**TODO:** Add GIF recording of UI reacting to changes
 
 In this example we see two UI widgets used, one for setting using Material 3 theming, and another one for opting in and out of using FlexColorScheme opinionated widget component themes. 
 
