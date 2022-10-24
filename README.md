@@ -11,7 +11,7 @@ This app is used to demonstrate FlexColorScheme and Riverpod concepts, and to pr
 
 > This is a **0.9 version** release of this demo app. The principles will remain the same in version 1.0. I might tune it, and this article like readme as I review it, and based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted **FlexColorScheme** theming example, in addition to the ones included with the package, that uses **Riverpod** and an abstracted key-value local DB, with some example implementations. This example serves that purpose and is also linked to from the **FlexColorScheme** documentation.
 
-**TODO:** Consider adding a screen recording GIF.
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme demo" width="450"/>
 
 **TODO:** Consider making a WEB demo build of the app.
 
@@ -364,7 +364,7 @@ class KeyValueDbListTile extends ConsumerWidget {
 
 This is what it looks like in action:
 
-> **TODO:** Add GIF of DB switching
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="350"/>
 
 *Using UI to change the used key-value DB implementation*
 
@@ -804,9 +804,9 @@ class ThemeModeListTile extends ConsumerWidget {
 
 ### Reactive UI Widgets
 
-From the above example we can already see that we can easily make reactive UI widget. Using these Riverpod provider driven UI widgets, makes our UI widgets react to changes in their values regardless of where and when we change their data. Additionally using the UI control widgets anywhere in the app's widget tree, is as simple as dropping in the UI widget. To see this in action, take a look at this screen recording of this theme demo. 
+From the above example we can already see that we can easily make reactive UI widget. Using these Riverpod provider driven UI widgets, makes our UI widgets react to change in their values, regardless of where and when we change their data. Additionally, using the UI control widgets anywhere in the app's widget tree, is as simple as dropping in the UI widget. To see this in action, take a look at this screen recording of this theme demo. 
 
-**TODO:** Add GIF recording of UI reacting to changes
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/reactive_ui.gif?raw=true" alt="Theme demo" width="450"/>
 
 In this example we see two UI widgets used, one for setting using Material 3 theming, and another one for opting in and out of using FlexColorScheme opinionated widget component themes. 
 
@@ -865,7 +865,6 @@ The `AppTheme.light` and `AppTheme.dark` functions are pretty equivalent, the da
 class AppTheme {
   AppTheme._();
 
-  /// Returns light theme based on customizable required properties passed to it.
   static ThemeData light({
     required bool useMaterial3,
     required int usedTheme,
@@ -913,7 +912,7 @@ class AppTheme {
     );
   }
   
-  // 8< snip - - - dark them and a bunch of const values removed.
+  // 8< snip - - - dark theme and a bunch of const values removed.
   //
   // Plus above we used `FlexThemeData.light`, but for educational purposes
   // FlexColorScheme.light() and its `toTheme` method is used in the actual code.
