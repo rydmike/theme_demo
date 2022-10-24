@@ -508,11 +508,17 @@ The used SharedPreferences and Hive key-value database implementations are the s
 
 We cannot use the absence of a key in the key-value database to represent `null`. No key found, gives us our coded const default value for a theme setting, it is usually not `null`, but it might be, and even if it is not, we might in some cases want to be able to select a default `null` choice, to get the SDK default `null` un-themed behavior. In this demo, the `AppBar` style is one example of that.
 
+| AppBar Style Nullable 1/2                                                                                                      | AppBar Style Nullable 2/2                                                                                                      |
+|--------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen07-AppBar1.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen08-AppBar2.png?raw=true"/> |
+
 To be able to do this, we need to be able to persist nullable values in the key-value DB. The used map for our volatile memory storage allows us to do that, as does Hive. However, SharedPreferences does support storing `null` at all. So its implementation includes a work-around to use some other suitable value to represent the persisted `null` choice, and return null back when that value is found. 
 
 Both the Hive and the Shared Preferences also include converters to persist different `enum`'s in a type safe way, and `Color` as `ìnt` values. Hive provides its own `TypeAdapter` class that allows us to do the same. For the SharedPreferences implementation we baked in the type conversions.
 
 Obviously to add handling of additional data types we need to add handling of them to our Hive and SharedPreferences implementations.
+
+**TODO:** Add the links below-
 
 We won't go through the implementations here, but you can find the [Hive one here]() the SharedPreferences one here[here](), if you want to study them. The one for SharedPreferences is quite a bit longer, in order to handle both the occasionally needed nullable types, and the type conversions. 
  
@@ -915,9 +921,9 @@ To learn more about what `FlexColorScheme` does when the properties above, and u
 
 That's pretty much all there is to it. If there is anything in this educational demo app you would like further explanations about. Drop a note in its repo discussions section and ask a question. I might extend this readme to clarify it, or answer directly in the discussions.   
 
-| Control widgets in the Drawer                                                                                                | Control widgets in BottomSheet                                                                                               |
-|------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
-| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen05-Drawer.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen06-Bottom.png?raw=true"/> |
+| Theme Showcase 1/2                                                                                                            | Theme Showcase 2/2                                                                                                            |
+|-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen09-Show1.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen10-Show2.png?raw=true"/> |
 
 ----
 
