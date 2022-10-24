@@ -47,7 +47,7 @@ class Settings {
   // Dark theme only extra settings, like computed dark theme and true black.
   static const bool _darkIsTrueBlack = false;
   static const bool _darkComputeTheme = false;
-  static const int _darkComputeLevel = 25;
+  static const int _darkComputeLevel = 20;
   // Use seeded color scheme and custom tones.
   static const bool _usePrimaryKeyColor = false;
   static const bool _useSecondaryKeyColor = false;
@@ -171,7 +171,7 @@ class Settings {
   /// The themeModeProvider represents a [StateProvider] to provide the state of
   /// the [ThemeMode], so to be able to toggle the application wide theme mode.
   ///
-  /// Default to [_themeMode].
+  /// Defaults to [_themeMode].
   static final StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
       themeModeProvider =
       StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>(
