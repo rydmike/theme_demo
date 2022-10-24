@@ -924,10 +924,3 @@ That's pretty much all there is to it. If there is anything in this educational 
 | Theme Showcase 1/2                                                                                                            | Theme Showcase 2/2                                                                                                            |
 |-------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen09-Show1.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen10-Show2.png?raw=true"/> |
-
-----
-
-**TODO:** Remove this old screen GIF 
-
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme toggle demo" width="350"/>
-
