@@ -1,4 +1,4 @@
-# This GitHub actions runs on push to master, it:
+# This GitHub actions runs on pull to master, it:
 #  - Installs Dart and flutter
 #  - Uses Flutter beta channel for now, might make a matrix later with other channels included too.
 #  - Gets package dependencies
@@ -6,18 +6,16 @@
 #  - Show outdated packages, just added for info.
 #  - Verify that dart format is used by all committed code, fails if not. Controversial but pub.dev penalizes you if
 #    dart format is not used.
-name: Test
+name: Analyze ThemeDemo
 on:
   push:
-    branches: [master]
+    branches: [none]
     paths-ignore:
       - "**.md"
-
   pull_request:
     branches: [master]
     paths-ignore:
       - "**.md"
-
 jobs:
   run_tests:
     name: Analyze and check format
