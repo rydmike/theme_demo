@@ -4,7 +4,7 @@ This Flutter application shows how to use [**FlexColorScheme**](https://pub.dev/
 
 This app is used to demonstrate **FlexColorScheme** and **Riverpod** concepts, and to provide usage suggestions. It is not intended to look extremely beautiful or be very useful as an app.
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme demo" width="600"/>
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme demo" width="650"/>
 
 ***IMAGE:** Screen recording of ThemeDemo app with Riverpod and persisted theme changes.*
 
@@ -361,7 +361,7 @@ class KeyValueDbListTile extends ConsumerWidget {
 
 This is what it looks like in action:
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="600"/>
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="650"/>
 
 ***IMAGE:** Using UI to dynamically change the used key-value DB implementation.*
 
@@ -803,7 +803,7 @@ class ThemeModeListTile extends ConsumerWidget {
 
 From the above example we can already see that we can easily make reactive UI widget. Using these Riverpod provider driven UI widgets, makes our UI widgets react to change in their values, regardless of where and when we change their data. Additionally, using the UI control widgets anywhere in the app's widget tree, is as simple as dropping in the UI widget. To see this in action, take a look at this screen recording of this theme demo.
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/reactive_ui.gif?raw=true" alt="Theme demo" width="600"/>
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/reactive_ui.gif?raw=true" alt="Theme demo" width="650"/>
 
 ***IMAGE:** Demo of UI widgets in the background, updating when their data is manipulated elsewhere.*
 
