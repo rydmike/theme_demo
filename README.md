@@ -849,10 +849,73 @@ The `AppTheme` is again a very simple class with only static functions and const
 The `AppTheme.light` and `AppTheme.dark` functions are pretty equivalent, the dark theme as a few more parameters. Some used parameters share the `Settings` provider, but in many cases we have separate `Settings` providers for the dark theme, so light and dark theme parameters can be controlled and configured separately.
 
 
+```dart
+/// The themes for this app are defined here.
+class AppTheme {
+  AppTheme._();
 
+  /// Returns light theme based on customizable required properties passed to it.
+  static ThemeData light({
+    required bool useMaterial3,
+    required int usedTheme,
+    required bool swapColors,
+    required FlexSurfaceMode surfaceMode,
+    required int blendLevel,
+    required bool usePrimaryKeyColor,
+    required bool useSecondaryKeyColor,
+    required bool useTertiaryKeyColor,
+    required int usedFlexTone,
+    required double appBarElevation,
+    required FlexAppBarStyle? appBarStyle,
+    required double appBarOpacity,
+    required bool transparentStatusBar,
+    required bool useSubTheme,
+    required double? defaultRadius,
+    required TargetPlatform platform,
+  }) {
+    return FlexThemeData.light(
+      useMaterial3: useMaterial3,
+      colors: schemes[usedTheme].light,
+      swapColors: swapColors,
+      surfaceMode: surfaceMode,
+      blendLevel: blendLevel,
+      keyColors: FlexKeyColors(
+        useKeyColors: usePrimaryKeyColor,
+        useSecondary: useSecondaryKeyColor,
+        useTertiary: useTertiaryKeyColor,
+      ),
+      tones: FlexTone.values[usedFlexTone].tones(Brightness.light),
+      appBarElevation: appBarElevation,
+      appBarStyle: appBarStyle,
+      appBarOpacity: appBarOpacity,
+      transparentStatusBar: transparentStatusBar,
+      subThemesData: useSubTheme
+        ? FlexSubThemesData(
+            defaultRadius: defaultRadius,
+            thinBorderWidth: 1,
+            thickBorderWidth: 2)
+        : null,
+      visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      fontFamily: AppFonts.mainFont,
+      typography: Typography.material2021(platform: platform),
+      platform: platform,
+    );
+  }
+  
+  // 8< snip - - - dark them and a bunch of const values removed.
+  //
+  // Plus above we used `FlexThemeData.light`, but for educational purposes
+  // FlexColorScheme.light() and its `toTheme` methods is used in the actual code.
+}
+```
 
+To learn more about what `FlexColorScheme` does when the properties above, and understanding what is invloved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and to check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html).
 
-### Screenshots
+That's pretty much all there is to it. If there is anything in this educational demo app you would like further explanations about. Drop a note in its repo discussions section and ask a question. I might extend this readme to clarify it, or answer directly in the discussions.   
+
+----
+
+**TODO:** Remove this old screen GIF 
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme toggle demo" width="350"/>
 
