@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_fonts.dart';
 import 'flex_tone.dart';
 
-/// The theme for this app is defined here.
+/// The themes for this app is defined here.
 class AppTheme {
   // This constructor prevents external instantiation and extension.
   AppTheme._();
@@ -14,32 +14,33 @@ class AppTheme {
     required bool useMaterial3,
     required int usedTheme,
     required bool swapColors,
+    required FlexSurfaceMode surfaceMode,
+    required int blendLevel,
+    //
     required bool usePrimaryKeyColor,
     required bool useSecondaryKeyColor,
     required bool useTertiaryKeyColor,
     required int usedFlexTone,
-    required FlexSurfaceMode surfaceMode,
-    required int blendLevel,
+    //
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
     required double appBarOpacity,
     required bool transparentStatusBar,
+    //
     required bool useSubTheme,
     required double? defaultRadius,
+    //
     required TargetPlatform platform,
   }) {
-    // We need to use the ColorScheme defined by used FlexColorScheme as input
-    // to other theme's, so we create it first.
+    // In case we need to use the ColorScheme defined by defined FlexColorScheme
+    // as input to a custom sub-theme, we can make the FCS object and get the
+    // ColorS
     final FlexColorScheme flexScheme = FlexColorScheme.light(
+      useMaterial3: useMaterial3,
       colors: schemes[usedTheme].light,
       swapColors: swapColors,
       surfaceMode: surfaceMode,
       blendLevel: blendLevel,
-      //
-      appBarElevation: appBarElevation,
-      appBarStyle: appBarStyle,
-      appBarOpacity: appBarOpacity,
-      transparentStatusBar: transparentStatusBar,
       //
       keyColors: FlexKeyColors(
         useKeyColors: usePrimaryKeyColor,
@@ -47,6 +48,11 @@ class AppTheme {
         useTertiary: useTertiaryKeyColor,
       ),
       tones: FlexTone.values[usedFlexTone].tones(Brightness.light),
+      //
+      appBarElevation: appBarElevation,
+      appBarStyle: appBarStyle,
+      appBarOpacity: appBarOpacity,
+      transparentStatusBar: transparentStatusBar,
       //
       subThemesData: useSubTheme
           ? FlexSubThemesData(
@@ -56,13 +62,23 @@ class AppTheme {
             )
           : null,
       //
-      useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
       typography: Typography.material2021(platform: platform),
       platform: platform,
     );
-    // Convert FlexColorScheme to ThemeData.
+
+    // If we need any colors from the ColorScheme resulting from above
+    // FlexColorScheme, we can now extract it with:
+    //
+    // ColorScheme scheme = flexScheme.toScheme;
+    //
+    // And then use its colors in any custom component themes on the `toTheme`
+    // below using `copyWith` on the resulting `ThemeData`. We can do this to
+    // make a copy of it and add features not covered by FlexColorScheme. We are
+    // not doing that in  this demo, this is just a mention of how to do it.
+
+    // Convert above FlexColorScheme to ThemeData and return it.
     return flexScheme.toTheme;
   }
 
@@ -71,12 +87,12 @@ class AppTheme {
     required bool useMaterial3,
     required int usedTheme,
     required bool swapColors,
+    required FlexSurfaceMode surfaceMode,
+    required int blendLevel,
     required bool usePrimaryKeyColor,
     required bool useSecondaryKeyColor,
     required bool useTertiaryKeyColor,
     required int usedFlexTone,
-    required FlexSurfaceMode surfaceMode,
-    required int blendLevel,
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
     required double appBarOpacity,
@@ -88,22 +104,31 @@ class AppTheme {
     required double? defaultRadius,
     required TargetPlatform platform,
   }) {
-    // We need to use the ColorScheme defined by used FlexColorScheme as input
-    // to sub-theme's, so we create it first.
-    final FlexColorScheme flexScheme = FlexColorScheme.dark(
+    // As in the `light` theme function mentioned, we do not need the produced
+    // ColorScheme for further custom sub-theming here. We can thus use the more
+    // commonly used and more familiar looking extension syntax
+    // FlexThemeData.dark and return it directly. Above we could of could have
+    // used the equivalent FlexThemeData.light version, but for educational
+    // purposes the step using the `FlexColorScheme.light` API with the
+    // `toTheme` method was demonstrated.
+    return FlexThemeData.dark(
+      useMaterial3: useMaterial3,
       colors: computeDark
-          ? schemes[usedTheme].light.defaultError.toDark(darkLevel)
+          // Option to compute the dark theme from the light theme colors.
+          // This is handy if we have only defined light theme colors and
+          // want to compute a dark scheme from them. It is a bit like `seed`
+          // generated M3 scheme, but it is only based on white color alpha
+          // blend to de-saturate the light theme colors an adjustable amount.
+          // In this demo we have dark theme color definitions for all themes,
+          // this is only included to demonstrate the feature.
+          ? schemes[usedTheme]
+              .light
+              .defaultError
+              .toDark(darkLevel, useMaterial3)
           : schemes[usedTheme].dark,
       swapColors: swapColors,
       surfaceMode: surfaceMode,
       blendLevel: blendLevel,
-      //
-      appBarElevation: appBarElevation,
-      appBarStyle: appBarStyle,
-      appBarOpacity: appBarOpacity,
-      transparentStatusBar: transparentStatusBar,
-      //
-      darkIsTrueBlack: darkIsTrueBlack,
       //
       keyColors: FlexKeyColors(
         useKeyColors: usePrimaryKeyColor,
@@ -111,6 +136,13 @@ class AppTheme {
         useTertiary: useTertiaryKeyColor,
       ),
       tones: FlexTone.values[usedFlexTone].tones(Brightness.dark),
+      //
+      appBarElevation: appBarElevation,
+      appBarStyle: appBarStyle,
+      appBarOpacity: appBarOpacity,
+      transparentStatusBar: transparentStatusBar,
+      //
+      darkIsTrueBlack: darkIsTrueBlack,
       //
       subThemesData: useSubTheme
           ? FlexSubThemesData(
@@ -120,14 +152,11 @@ class AppTheme {
             )
           : null,
       //
-      useMaterial3: useMaterial3,
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       fontFamily: AppFonts.mainFont,
       typography: Typography.material2021(platform: platform),
       platform: platform,
     );
-    // Convert FlexColorScheme to ThemeData.
-    return flexScheme.toTheme;
   }
 
   // We could also use the FlexSchemeColor.from() constructor and define less

@@ -1,34 +1,38 @@
 # Flutter Theming using FlexColorScheme and Riverpod
 
-This Flutter application shows how to use [**FlexColorScheme**](https://pub.dev/packages/flex_color_scheme) together with [**Riverpod**](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses Riverpod providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are also persisted locally as they are modified, and the used local settings persistence implementation can be changed dynamically in the application user interface.
+This Flutter application shows how to use [**FlexColorScheme**](https://pub.dev/packages/flex_color_scheme) together with [**Riverpod**](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses Riverpod providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change the used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are persisted locally as they are modified. The used local settings persistence implementation can be changed dynamically with the application's user interface.
 
-This app is used to demonstrate FlexColorScheme and Riverpod concepts and to give usage suggestions. It is not intended look pretty or be very useful as an app. 
+This app is used to demonstrate FlexColorScheme and Riverpod concepts, and to provide usage suggestions. It is not intended to look pretty or be very useful as an app. 
 
-> This is a **0.9 version** release of this demo. The principles will remain the same in version 1.0. I might tune it and this article like readme as I review it, and also based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted **FlexColorScheme** theming example, in addition to the ones included with the package, that uses **Riverpod** and an abstracted key-value local DB, with some example implementations. 
+> This is a **0.9 version** release of this demo app. The principles will remain the same in version 1.0. I might tune it, and this article like readme as I review it, and based on feedback, before I call it version 1.0. I did however want to release it already in its 0.9.x state, as the previous version was out of date. I also always had the intent to include a persisted **FlexColorScheme** theming example, in addition to the ones included with the package, that uses **Riverpod** and an abstracted key-value local DB, with some example implementations. This example serves that purpose and is also linked to from the **FlexColorScheme** documentation.
 
 **TODO:** Consider adding a screen recording GIF.
 
 **TODO:** Consider making a WEB demo build of the app.
 
-**Contents**
+### Contents
 
-- [FlexColorScheme 6 and Riverpod 2](#flexColorScheme-6-and-Riverpod-2)
-- [Features](#features)
-- [Used `MaterialApp`](#used-materialapp)
-- [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching)
-  - [Our `main` Function](#our-main-function)
-  - [Providers in `main`](#providers-in-main)
-  - [Listener `KeyValueDbListener` Callback When DB is Changed](#listener-keyvaluedblistener-callback-when-db-is-changed)
-  - [State Controller `usedKeyValueDbProvider` Used by UI to Change DB](#state-controller-usedkeyvaluedbprovider-used-by-ui-to-change-db)
-  - [Enhanced enum `usedkeyvaluedb`](#enhanced-enum-usedkeyvaluedb)
-  - [UI to Change Used Key-Value DB](#ui-to-change-used-key-value-db)
-- [Persistence Design](#persistence-design)
-- [Key-Value Database](#key-value-database)
-  - [Abstract Key-Value DB Interface](#abstract-key-value-db-interface)
-  - [Memory Key-Value DB Implementation](#memory-key-value-db-implementation)
-  - [SharedPreferences and Hive Key-Value DB Implementations](#sharedpreferences-and-hive-key-value-db-implementations)
-- [Settings](#settings)
-  - [Settings Entry](#settings-entry)
+  1. [FlexColorScheme 6 and Riverpod 2](#flexcolorscheme-6-and-riverpod-2)
+  2. [Features](#2-features)
+  3. [Used `MaterialApp`](#used-materialapp)
+    3.1 [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching)
+    3.2 [Our `main` Function](#our-main-function)
+    3.3 [Providers in `main`](#providers-in-main)
+    3.4 [Listener `KeyValueDbListener` Callback When DB is Changed](#listener-keyvaluedblistener-callback-when-db-is-changed)
+    3.5 [State Controller `usedKeyValueDbProvider` Used by UI to Change DB](#state-controller-usedkeyvaluedbprovider-used-by-ui-to-change-db)
+    3.6 [Enhanced `enum` `UsedKeyValueDb`](#enhanced-enum-usedkeyvaluedb)
+    3.7 [UI to Change Used Key-Value DB](#ui-to-change-used-key-value-db)
+  4. [Persistence Design](#persistence-design)
+  5. [Key-Value Database](#key-value-database)
+    5.1 [Abstract Key-Value DB Interface](#abstract-key-value-db-interface)
+    5.2 [Memory Key-Value DB Implementation](#memory-key-value-db-implementation)
+    5.3 [SharedPreferences and Hive Key-Value DB Implementations](#sharedpreferences-and-hive-key-value-db-implementations)
+  6. [Settings](#settings)
+    6.1 [Settings Entry](#settings-entry)
+  - [Application UI](#application-ui)
+    - [Example switches and toggles](#example-switches-and-toggles)
+  - [The Theme](#the-theme)
+    - [Screenshots](#screenshots)
 
 ## FlexColorScheme 6 and Riverpod 2
 
@@ -42,7 +46,7 @@ This demo is provided as an additional example to the six examples already inclu
 |------------------|-----------------|
 | Screen shoot X   | Screen shoot Y  |
 
-## Features
+## 2. Features
 
 The demo UI uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as [SwitchListTile.adaptive](https://api.flutter.dev/flutter/material/SwitchListTile/SwitchListTile.adaptive.html), [Slider.adaptive](https://api.flutter.dev/flutter/material/Slider/Slider.adaptive.html) and [PopupMenuButton](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html), to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme theming features. 
 
@@ -52,9 +56,9 @@ It also shows how simple it is to make small UI theme control widgets that can b
 
 ## Used `MaterialApp` 
 
-The `MaterialApp` setup is very simple and compact. We give the light and dark `ThemeData` objects to their respective theme properties in the `MaterialApp`. Here they are given by providers that we watch for changes. When you use this setup, which one of the currently supplied light and dark theme is controlled by the `ThemeMode` enum given to the `themeMode` property. We use and watch a third provider for this, so theme mode can easily be toggled via UI. 
+The `MaterialApp` setup is simple and compact. We give the light and dark `ThemeData` objects to their respective theme properties in the `MaterialApp`. Here they are given by providers that we watch for changes. When you use this setup, which one of the currently supplied light and dark `ThemeData` objects gets used as active application theme, is controlled by the `ThemeMode` enum given to the `themeMode` property. We use and watch a third provider for this, so theme mode can easily be toggled via UI. 
 
-If you specify `ThemeMode.system` the application will follow the theme mode used by the host system. Many users like this option, so don't just offer light and dark, also offer system as a user choice. A very handy widget to use to allow the user to toggle `ThemeMode` between, light, dark and system is `ToggleButtons`. We will look at that later.  
+If you specify `ThemeMode.system` the application will follow the theme mode used by the host system. Many users like this option, so don't just offer light and dark as option, also offer system as a user choice. A very handy widget to use to allow the user to toggle `ThemeMode` between, light, dark and system is `ToggleButtons`. We will look at that later.  
 
 ```dart
 class ThemeDemoApp extends ConsumerWidget {
@@ -553,27 +557,9 @@ class Settings {
     // 8< - - - snip repetitive reset code removed.
   }
 
-  /// Init all settings entries and their controllers to values from used
-  /// key-value DB.
-  ///
-  /// This is typically only used after switching DB implementation dynamically.
-  static void init(Ref ref) {
-    if (_debug) debugPrint('Settings: init DB values');
-    // Use material 3, theme mode and active color scheme.
-    ref.read(useMaterial3Provider.notifier).init();
-    ref.read(themeModeProvider.notifier).init();
-    ref.read(schemeIndexProvider.notifier).init();
-    // 8< - - - snip repetitive init code removed.
-  }
-
   /// String key used for defining if we use Material 3 or Material 2.
-  ///
-  /// The associated provider uses same name with "Provider" added to it.
   static const String _keyUseMaterial3 = 'useMaterial3';
-
   /// Provider for swapping primary and secondary colors in light theme mode.
-  ///
-  /// Defaults to [_useMaterial3].
   static final StateNotifierProvider<SettingsEntry<bool>, bool>
   useMaterial3Provider = StateNotifierProvider<SettingsEntry<bool>, bool>(
             (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
@@ -587,14 +573,26 @@ class Settings {
     name: '${_keyUseMaterial3}Provider',
   );
 
-  /// String key for storing theme settings index.
-  ///
-  /// The associated provider uses same name with "Provider" added to it.
-  static const String _keySchemeIndex = 'schemeIndex';
+  /// String key used for storing the last used app theme mode.
+  static const String _keyThemeMode = 'themeMode';
+  /// The themeModeProvider represents a [StateProvider] to provide the state of
+  /// the [ThemeMode], so to be able to toggle the application wide theme mode.
+  static final StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
+  themeModeProvider =
+  StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>(
+            (StateNotifierProviderRef<SettingsEntry<ThemeMode>, ThemeMode> ref) {
+      return SettingsEntry<ThemeMode>(
+        ref,
+        defaultValue: _themeMode,
+        key: _keyThemeMode,
+      );
+    },
+    name: '${_keyThemeMode}Provider',
+  );
 
+  /// String key for storing theme settings index.
+  static const String _keySchemeIndex = 'schemeIndex';
   /// The index provider of the currently used color scheme and theme.
-  ///
-  /// Defaults to first color scheme index: [_schemeIndex].
   static final StateNotifierProvider<SettingsEntry<int>, int>
   schemeIndexProvider = StateNotifierProvider<SettingsEntry<int>, int>(
             (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
@@ -606,29 +604,6 @@ class Settings {
     },
     // Use the unique key-value DB key as provider name, useful for debugging.
     name: '${_keySchemeIndex}Provider',
-  );
-
-  /// String key for storing used light theme surface mode.
-  ///
-  /// The associated provider uses same name with "Provider" added to it.
-  static const String _keyLightSurfaceMode = 'lightSurfaceMode';
-
-  /// The primary colored light surface branding mode provider.
-  ///
-  /// Defaults to [_lightSurfaceMode].
-  static final StateNotifierProvider<SettingsEntry<FlexSurfaceMode>,
-          FlexSurfaceMode> lightSurfaceModeProvider =
-  StateNotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>(
-            (StateNotifierProviderRef<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>
-    ref) {
-      return SettingsEntry<FlexSurfaceMode>(
-        ref,
-        defaultValue: _lightSurfaceMode,
-        key: _keyLightSurfaceMode,
-      );
-    },
-    // Use the unique key-value DB key as provider name, useful for debugging.
-    name: '${_keyLightSurfaceMode}Provider',
   );
 
   // 8< - - - snip repetitive code for similar settings entry providers removed.  
@@ -711,11 +686,11 @@ class SettingsEntry<T> extends StateNotifier<T> {
 
 ## Application UI
 
-We won't be going through the entire application user interface code here. It is not so exiting, but let's look at a few examples of using these settings widgets.
+We won't be going through the entire application's user interface code. It is not so exiting, but let's look at a few examples of making and using UI widgets that use the providers in `Settings` class.
 
-### Example switches and toggles
+### Use Material 3 Switch
 
-Let's start with a simple example. There is a theme settings switch that allows us to toggle if we use Material 3 or Material 2. The switch UI is based on `SwitchListTile` and settings it value and chnaging it becomes this simple:
+Let's start with a simple example. There is a theme settings switch in the UI that allows us to toggle if we use Material 3, or Material 2 based Flutter theming. The switch UI is based on `SwitchListTile` and setting its value and changing it, becomes this simple:
 
 ```dart
 class UseMaterial3Switch extends ConsumerWidget {
@@ -732,14 +707,148 @@ class UseMaterial3Switch extends ConsumerWidget {
 }
 ```
 
-This is a simple const widget that needs no properties, we can drop it in as const widget wherever we want to control this setting in the UI, in **any** screen, dialog, drawer, bottom sheet. When it is toggled, the updated settings value will be persisted and the application theme will change to reflect the new theme result. 
+It is easy to see with a little of Riverpod insights that the switch `value` will change as soon as the `ref.watch(Settings.useMaterial3Provider)` changes its state value. 
 
-Could not be simpler, but admittedly to get to this simplicity takes a bit of abstractions and Riverpod definitions.
+You may first think that the `onChnaged` callback function `ref.read(Settings.useMaterial3Provider.notifier).set` looks unfamiliar. It is however only a tear-off using the `set` method of the provider, which in this case will also be a function that takes a `bool` value, matching the signature of the switch `onChnaged` callback. 
 
->You might have noticed above that it uses a `SwitchListTileAdaptive` UI widget. This is just a very simple wrapper for `SwitchListTile.adaptive`. Why is it needed? To find find check out its code and comments here: **TODO:** Add url to code.
+The `notifer` on the `ref.Read` on the `Settings.useMaterial3Provider` returns the underlying notifier, in this case `StateNotifier<Bool>`, we can then use its methods, in this case `set(bool newValue)`.     
+
+For the UI we end with a simple `const` constructor widget, that needs no properties, we can drop it in as a widget wherever we want to control this setting in the application's UI. We can use it in **any** screen, dialog, drawer, bottom sheet, etc. When the switch is toggled, the updated settings value will be persisted and the application theme will change to reflect the new theme result. 
+
+Could not be simpler to use, but admittedly to get to this simplicity takes a bit of abstractions, setup and Riverpod definitions.
+
+>You might have noticed that the UI widget above uses a `SwitchListTileAdaptive` widget. This is a very simple wrapper for `SwitchListTile.adaptive`. Why is it needed? To find out why, check out its code and comments here: **TODO:** Add url to code.
+
+### Active Theme Mode `ToggleButtons`
+
+Let's look at another example. Toggling the theme mode from light, to dark and also optionally choosing the system mode. The property defining this in the `MaterialApp` is a `ThemeMode` `**enum**` value. Since we made our key-value DB support this type, and we made a `Settings.themeModeProvider` using a `SettingsEntry` of type `<ThemeMode>` for it, we can make a simple `ToggleButtons` 3-state switch for it.
+
+```dart
+class ThemeModeToggleButtons extends ConsumerWidget {
+  const ThemeModeToggleButtons({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode themeMode = ref.watch(Settings.themeModeProvider);
+    final List<bool> isSelected = <bool>[
+      themeMode == ThemeMode.light,
+      themeMode == ThemeMode.system,
+      themeMode == ThemeMode.dark,
+    ];
+    return ToggleButtons(
+      isSelected: isSelected,
+      onPressed: (int newIndex) {
+        if (newIndex == 0) {
+          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.light);
+        } else if (newIndex == 1) {
+          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.system);
+        } else {
+          ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.dark);
+        }
+      },
+      children: const <Widget>[
+        Icon(AppIcons.lightTheme),
+        Icon(AppIcons.systemTheme),
+        Icon(AppIcons.darkTheme),
+      ],
+    );
+  }
+}
+```
+
+The `ToggleButtons` has a quite simple but flexible model for toggling its buttons state. We just need a bit of logic for it. In this case we also wanted the buttons to have the order, `light`, `system`, `dark`. If we had been happy with the `ThemeMode` mode `*enum*` values order `system`, `light`, `dark` we could have made it bit simpler.
+
+This `ToggleButtons` already work as is, it is also small enough to use it as a `trailing` widget in a `ListTile`. When I use `ListTile` I like it its `onTap` callback to do something useful, in this case we can make it to lazy users options for hitting a big UI target and cycling through the `ThemeMode`s. Here is a handy `ListTile` widget for this. We can set its title if we need a shorter version in tight places. The subtitle is the active theme mode `*enum*` name using sentence case. For the `onTap` callback we cycle through the modes in desired order. As trailing widget we just give the above `ThemeModeToggleButtons`, we don't have to do anything else, its button state will also automatically update when we change mode of same `Settings.themeModeProvider`.
 
 
-## The Theme
+```dart
+class ThemeModeListTile extends ConsumerWidget {
+  const ThemeModeListTile({this.title, super.key});
+  final Widget? title;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ThemeMode mode = ref.watch(Settings.themeModeProvider);
+    return ListTile(
+      title: title,
+      subtitle: Text(mode.name.sentenceCase()),
+      onTap: () {
+        switch (ref.read(Settings.themeModeProvider)) {
+          case ThemeMode.light:
+            ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.system);
+            break;
+          case ThemeMode.system:
+            ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.dark);
+            break;
+          case ThemeMode.dark:
+            ref.read(Settings.themeModeProvider.notifier).set(ThemeMode.light);
+            break;
+        }
+      },
+      trailing: const ThemeModeToggleButtons(),
+    );
+  }
+}
+```
+
+### Reactive UI Widgets
+
+From the above example we can already see that we can easily make reactive UI widget. Using these Riverpod provider driven UI widgets, makes our UI widgets react to changes in their values regardless of where and when we change their data. Additionally using the UI control widgets anywhere in the app's widget tree, is as simple as dropping in the UI widget. To see this in action, take a look at this screen recording of this theme demo. 
+
+**TODO:** Add GIF recording
+
+In this example we see two UI widgets used, one for setting using Material 3 theming, and another one for opting in and out of using FlexColorScheme opinionated widget component themes. 
+
+These widgets are first toggled on the home screen, then from the app `Drawer` and a from a `BottomSheet`. As we toggle them from these other UI locations, the application theme of course changes accordingly, but we also see the same widgets visible in the background home screen update the controls as well to the new value set in the `Drawer` and the `BottomSheet`. This happened without having to think about adding any extra update handling into our UI widgets, we already handle it, with the Riverpod providers we used.
+
+## Theme Providers
+
+Lastly lets look at how the application theme and `ThemeData` is made. This demo does not have all the dynamic theming features the the FlexColorScheme [Themes Playground](https://docs.flexcolorscheme.com/playground) does, but it packs a pretty good set too, and we can easily add more.
+
+We already so in the `MaterialApp` that we used two providers `lightThemeProvider` and `darkThemeProvider` to provide the `ThemeData` to the `MaterialApp`'s light `theme` and dark `darkTheme` properties. These providers are vanilla providers, that use a static function, where the passed parameters are watchers of our `Settings` providers. The one for the light theme looks like this:
+
+```dart
+final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
+      (ProviderRef<ThemeData> ref) {
+    // Make an always valid FlexTones config getter from our unsafe int.
+    final bool useSeed = ref.watch(Settings.usePrimaryKeyColorProvider);
+    final int flexTone = ref.watch(Settings.usedFlexToneProvider);
+    final int usedFlexTone =
+    flexTone < 0 || flexTone >= FlexTone.values.length || !useSeed
+        ? 0
+        : flexTone;
+    return AppTheme.light(
+      useMaterial3: ref.watch(Settings.useMaterial3Provider),
+      usedTheme: ref.watch(Settings.schemeIndexProvider),
+      swapColors: ref.watch(Settings.lightSwapColorsProvider),
+      surfaceMode: ref.watch(Settings.lightSurfaceModeProvider),
+      blendLevel: ref.watch(Settings.lightBlendLevelProvider),
+      usePrimaryKeyColor: useSeed,
+      useSecondaryKeyColor: ref.watch(Settings.useSecondaryKeyColorProvider),
+      useTertiaryKeyColor: ref.watch(Settings.useTertiaryKeyColorProvider),
+      usedFlexTone: usedFlexTone,
+      appBarElevation: ref.watch(Settings.appBarElevationProvider),
+      appBarStyle: ref.watch(Settings.lightAppBarStyleProvider),
+      appBarOpacity: ref.watch(Settings.lightAppBarOpacityProvider),
+      transparentStatusBar: ref.watch(Settings.transparentStatusBarProvider),
+      useSubTheme: ref.watch(Settings.useSubThemesProvider),
+      defaultRadius: ref.watch(Settings.defaultRadiusProvider),
+      platform: ref.watch(platformProvider),
+    );
+  },
+  name: 'lightThemeProvider',
+);
+```
+
+The one for the dark theme is equivalent.
+
+### Application Theme
+
+The `AppTheme` is again a very simple class with only static functions and constants. The main functions are the `AppTheme.light` and `AppTheme.dark` ones. The rest is just constants to define some example custom theme colors and to build a const list that contains all available color themes we can switch between.
+
+The `AppTheme.light` and `AppTheme.dark` functions are pretty equivalent, the dark theme as a few more parameters. Some used parameters share the `Settings` provider, but in many cases we have separate `Settings` providers for the dark theme, so light and dark theme parameters can be controlled and configured separately.
+
+
 
 
 
