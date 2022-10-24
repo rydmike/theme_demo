@@ -6,7 +6,7 @@ This app is used to demonstrate **FlexColorScheme** and **Riverpod** concepts, a
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme demo" width="600"/>
 
-*Screen recording of the THemeDemo app and persisted theme changes*
+***IMAGE:** Screen recording of ThemeDemo app with Riverpod and persisted theme changes.*
 
 
 ### Contents
@@ -363,7 +363,7 @@ This is what it looks like in action:
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="600"/>
 
-*Using UI to dynamically change the used key-value DB implementation*
+***IMAGE:** Using UI to dynamically change the used key-value DB implementation.*
 
 The themes and buttons looks all different when the key-value DB implementation is switched. That is because different theme settings defined with **FlexColorScheme** had been configured using the different key-value DB implementations. When we switch implementation, the settings persisted in that implementation is loaded and the theme changes to it.
 
@@ -805,7 +805,7 @@ From the above example we can already see that we can easily make reactive UI wi
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/reactive_ui.gif?raw=true" alt="Theme demo" width="600"/>
 
-*Demonstration of UI widgets in the background updating, when their data is manipulated elsewhere*
+***IMAGE:** Demo of UI widgets in the background, updating when their data is manipulated elsewhere.*
 
 In this example we see two UI widgets used, one for setting using Material 3 theming, and another one for opting in and out of using FlexColorScheme opinionated widget component themes.
 
