@@ -44,11 +44,9 @@ This demo is provided as an additional example to the six examples already inclu
 
 **TODO:** Add screenshots
 
-| Screen X         | Screen Y        |
-|------------------|-----------------|
-| Screen shoot X   | Screen shoot Y  |
-
-|<img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen01-Home.png?raw=true"/>|<img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen02-Home.png?raw=true"/>|
+| Home screen - part 1/4                                                                                                 | Home screen - part 2/4                                                                                                 |
+|------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen01-Home.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen02-Home.png?raw=true"/> |
 
 
 ## Features
