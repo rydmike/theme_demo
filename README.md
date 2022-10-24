@@ -42,8 +42,6 @@ This example is designed to work with and use the stable releases of **FlexColor
 
 This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. It is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#other-examples). 
 
-**TODO:** Add screenshots
-
 | Home screen - part 1/4                                                                                                 | Home screen - part 2/4                                                                                                 |
 |------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
 | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen01-Home.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen02-Home.png?raw=true"/> |
@@ -89,11 +87,9 @@ class ThemeDemoApp extends ConsumerWidget {
 
 This approach works regardless of were in the widget tree the actual theme UI controlling widgets are. In this example this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page. Some theme settings Widgets are also used in the application drawer, and even more can be found in a bottom sheet.
 
-**TODO:** Add screenshots
-
-| Screen X         | Screen Y        |
-|------------------|-----------------|
-| Screen shoot X   | Screen shoot Y  |
+| Home screen - part 3/4                                                                                                  | Home screen - part 4/4                                                                                                  |
+|-------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen03-Home.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen04-Home.png?raw=true"/> |
 
 
 ### Dynamic Key-Value Database Switching
