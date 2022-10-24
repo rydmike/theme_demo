@@ -13,7 +13,7 @@ This app is used to demonstrate FlexColorScheme and Riverpod concepts, and to pr
 ### Contents
 
   1. [FlexColorScheme 6 and Riverpod 2](#flexcolorscheme-6-and-riverpod-2)  
-  2. [Features](#2-features)  
+  2. [Features](#features)  
   3. [Used `MaterialApp`](#used-materialapp)  
     3.1 [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching)  
     3.2 [Our `main` Function](#our-main-function)  
@@ -48,7 +48,7 @@ This demo is provided as an additional example to the six examples already inclu
 |------------------|-----------------|
 | Screen shoot X   | Screen shoot Y  |
 
-## 2. Features
+## Features
 
 The demo UI uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based Widgets as well as [SwitchListTile.adaptive](https://api.flutter.dev/flutter/material/SwitchListTile/SwitchListTile.adaptive.html), [Slider.adaptive](https://api.flutter.dev/flutter/material/Slider/Slider.adaptive.html) and [PopupMenuButton](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html), to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme theming features. 
 
