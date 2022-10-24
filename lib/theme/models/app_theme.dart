@@ -9,7 +9,7 @@ class AppTheme {
   // This constructor prevents external instantiation and extension.
   AppTheme._();
 
-  /// Returns light theme based on customizable required properties passed to it.
+  /// Returns light theme based on customizable required parameters passed in.
   static ThemeData light({
     required bool useMaterial3,
     required int usedTheme,
@@ -81,7 +81,7 @@ class AppTheme {
     return flexScheme.toTheme;
   }
 
-  /// Returns the dark theme based on properties passed to it.
+  /// Returns dark theme based on customizable required parameters passed in.
   static ThemeData dark({
     required bool useMaterial3,
     required int usedTheme,
