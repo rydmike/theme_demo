@@ -1,3 +1,8 @@
+> ## **NOTE** This a 0.9.0 pre-release version 
+> 
+> The readme still has a few TODOs in it. Will update soon for actual 0.9.0 version.
+
+
 # Flutter Theming using FlexColorScheme and Riverpod
 
 This Flutter application shows how to use [**FlexColorScheme**](https://pub.dev/packages/flex_color_scheme) together with [**Riverpod**](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses Riverpod providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change the used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are persisted locally as they are modified. The used local settings persistence implementation can be changed dynamically with the application's user interface.
@@ -913,7 +918,7 @@ class AppTheme {
   // 8< snip - - - dark them and a bunch of const values removed.
   //
   // Plus above we used `FlexThemeData.light`, but for educational purposes
-  // FlexColorScheme.light() and its `toTheme` methods is used in the actual code.
+  // FlexColorScheme.light() and its `toTheme` method is used in the actual code.
 }
 ```
 
