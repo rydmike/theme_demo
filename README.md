@@ -55,6 +55,10 @@ The app demonstrates how the `ThemeData`, and `ThemeMode` state of the applicati
 
 It also shows how simple it is to make small UI theme control widgets that can be dropped in anywhere, were needed in an app, and then used to manipulate and modify the `ThemeData` of the application. The UI view widgets modify Riverpod `StateNotifierProviders`, that act as theme property controllers in `ThemeData` providers. The `MaterialApp` widget watches these providers and rebuilds whenever a single theming UI widget is changed anywhere in the application.
 
+| Home screen - part 3/4                                                                                                  | Home screen - part 4/4                                                                                                  |
+|-------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen03-Home.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen04-Home.png?raw=true"/> |
+
 ## Used `MaterialApp` 
 
 The `MaterialApp` setup is simple and compact. We give the light and dark `ThemeData` objects to their respective theme properties in the `MaterialApp`. Here they are given by providers that we watch for changes. When you use this setup, which one of the currently supplied light and dark `ThemeData` objects gets used as active application theme, is controlled by the `ThemeMode` enum given to the `themeMode` property. We use and watch a third provider for this, so theme mode can easily be toggled via UI. 
@@ -87,9 +91,9 @@ class ThemeDemoApp extends ConsumerWidget {
 
 This approach works regardless of were in the widget tree the actual theme UI controlling widgets are. In this example this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page, yes there is still a counter on the Home page. Some theme settings Widgets are also used in the application drawer, and even more can be found in a bottom sheet.
 
-| Home screen - part 3/4                                                                                                  | Home screen - part 4/4                                                                                                  |
-|-------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen03-Home.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen04-Home.png?raw=true"/> |
+| Control widgets in the Drawer                                                                                                | Control widgets in BottomSheet                                                                                               |
+|------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen05-Drawer.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen06-Bottom.png?raw=true"/> |
 
 
 ### Dynamic Key-Value Database Switching
@@ -911,7 +915,9 @@ To learn more about what `FlexColorScheme` does when the properties above, and u
 
 That's pretty much all there is to it. If there is anything in this educational demo app you would like further explanations about. Drop a note in its repo discussions section and ask a question. I might extend this readme to clarify it, or answer directly in the discussions.   
 
-**TODO:** Add more example screen shots.
+| Control widgets in the Drawer                                                                                                | Control widgets in BottomSheet                                                                                               |
+|------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen05-Drawer.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen06-Bottom.png?raw=true"/> |
 
 ----
 
