@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_fonts.dart';
 import 'flex_tone.dart';
 
-/// The themes for this app is defined here.
+/// The themes for this app are defined here.
 class AppTheme {
   // This constructor prevents external instantiation and extension.
   AppTheme._();
@@ -58,8 +58,7 @@ class AppTheme {
           ? FlexSubThemesData(
               defaultRadius: defaultRadius,
               thinBorderWidth: 1,
-              thickBorderWidth: 2,
-            )
+              thickBorderWidth: 2)
           : null,
       //
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
