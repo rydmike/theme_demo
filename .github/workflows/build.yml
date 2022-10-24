@@ -63,7 +63,7 @@ jobs:
       - name: WEB release build using CanvasKit
         run: flutter build web --web-renderer=canvaskit --base-href "/themedemo/" --release --target=lib/main.dart
 
-      - name: WEB EXAMPLE DEPLOY to GitHub Pages repository, published on commit.
+      - name: WEB Deploy to GitHub Pages repository, published on commit.
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
