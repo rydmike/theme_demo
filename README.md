@@ -29,10 +29,12 @@ This app is used to demonstrate FlexColorScheme and Riverpod concepts, and to pr
     5.3 [SharedPreferences and Hive Key-Value DB Implementations](#sharedpreferences-and-hive-key-value-db-implementations)
   6. [Settings](#settings)
     6.1 [Settings Entry](#settings-entry)
-  - [Application UI](#application-ui)
-    - [Example switches and toggles](#example-switches-and-toggles)
-  - [The Theme](#the-theme)
-    - [Screenshots](#screenshots)
+  7. [Application UI](#application-ui)
+    7.1 [Use Material 3 Switch](#use-material-3-switch)
+    7.2 [Active Theme Mode `ToggleButtons`](#active-theme-mode-togglebuttons) 
+    7.3 [Reactive UI Widgets](#reactive-ui-widgets)
+  8. [Theme Providers](#theme-providers)
+    8.1.[Application Theme](#application-theme) 
 
 ## FlexColorScheme 6 and Riverpod 2
 
