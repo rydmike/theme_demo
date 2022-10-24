@@ -26,7 +26,7 @@ import '../widgets/theme_settings.dart';
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
-  static const String route = '/themecounter';
+  static const String route = '/home';
 
   @override
   ConsumerState<HomePage> createState() => _MyHomePageState();
