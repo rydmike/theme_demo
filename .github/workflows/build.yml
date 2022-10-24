@@ -60,12 +60,8 @@ jobs:
         run: dart format --output=none --set-exit-if-changed .
 
       # Build ThemeDemo Web app
-
-      - name: DEFAULT EXAMPLE START BUILD - Flutter clean before build
-        run: flutter clean && cd example && flutter clean
-
-      - name: WEB EXAMPLE release build using CanvasKit
-        run: cd example && flutter build web --web-renderer=canvaskit --base-href "/themedemo/" --release --target=lib/main.dart
+      - name: WEB release build using CanvasKit
+        run: flutter build web --web-renderer=canvaskit --base-href "/themedemo/" --release --target=lib/main.dart
 
       - name: WEB EXAMPLE DEPLOY to GitHub Pages repository, published on commit.
         uses: dmnemec/copy_file_to_another_repo_action@v1.0.4
