@@ -48,7 +48,7 @@ This demo is provided as an additional example to the six examples already inclu
 |------------------|-----------------|
 | Screen shoot X   | Screen shoot Y  |
 
-| <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen01-Home.png?raw=true"/> |  <img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen02-Home.png?raw=true"/> |
+|<img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen01-Home.png?raw=true"/>|<img src="https://github.com/rydmike/theme_demo/blob/refactor-to-full-fcs-demo/resources/Screen02-Home.png?raw=true"/>|
 
 
 ## Features
