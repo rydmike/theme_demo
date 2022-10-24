@@ -94,7 +94,7 @@ class ColoredText extends StatelessWidget {
     this.semanticsLabel,
     this.textWidthBasis,
     this.textHeightBehavior,
-  })  : textSpan = null;
+  }) : textSpan = null;
 
   /// Creates a colored text widget with a [InlineSpan].
   ///
@@ -124,7 +124,7 @@ class ColoredText extends StatelessWidget {
     this.semanticsLabel,
     this.textWidthBasis,
     this.textHeightBehavior,
-  })  : data = null;
+  }) : data = null;
 
   /// The text to display.
   ///
