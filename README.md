@@ -2,7 +2,7 @@
 
 This Flutter application shows how to use [**FlexColorScheme**](https://pub.dev/packages/flex_color_scheme) together with [**Riverpod**](https://pub.dev/packages/flutter_riverpod) to dynamically change your application theme. It uses Riverpod providers to watch light `theme` and `darkTheme` changes in a [`MaterialApp`](https://api.flutter.dev/flutter/material/MaterialApp-class.html), and to change the used [`themeMode`](https://api.flutter.dev/flutter/material/MaterialApp/themeMode.html). The theme settings are persisted locally as they are modified. The used local settings persistence implementation can be changed dynamically with the application's user interface.
 
-This app is used to demonstrate FlexColorScheme and Riverpod concepts, and to provide usage suggestions. It is not intended to look pretty or be very useful as an app.
+This app is used to demonstrate **FlexColorScheme** and **Riverpod** concepts, and to provide usage suggestions. It is not intended to look extremely beautiful or be very useful as an app.
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/theme_demo.gif?raw=true" alt="Theme demo" width="550"/>
 
@@ -359,7 +359,7 @@ class KeyValueDbListTile extends ConsumerWidget {
 
 This is what it looks like in action:
 
-<img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="500"/>
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="550"/>
 
 *Using UI to change the used key-value DB implementation*
 
