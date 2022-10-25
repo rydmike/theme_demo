@@ -388,24 +388,26 @@ One of the goals with the design of the used key-value persistence model and Riv
 
 We could also serialize a big settings class with all the properties to a JSON and save the entire JSON with just one key. We would then be writing the entire "large" JSON file to the key-value DB, every time a single settings value is changed. This was not desired.
 
-We also did not want to use a freezed or handwritten immutable class with all the settings properties in it. Because then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure only it is rebuilt only when its value is changed. We would also need to `select` filter that we only want to store the property value that was changed into the used key-value DB. In this case we wanted to try avoid this too, maybe later I will add this approach too and compare them.
+We also did not want to use a [**Freezed**](https://pub.dev/packages/freezed) or handwritten immutable class with all the settings properties in it. Then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure it is rebuilt only when its value is changed. We would also need to filter or to store only the property value that was changed into the used key-value DB. In this case we wanted to try avoid this approach, it is a bit more involved. This kind of settings feature, where we need and want full reactive behavior for all its members, is a bit different from a normal data class, where we typically may only need it for a few of its members, and for the rest, the change of entire state it is OK to update everything. I however fits poorly with how we wanted the settings to behave in this application.
 
-For the settings entry properties, we could use just simple `StateProviders`, I have used done so before. It works well, but if we use `StateNotifier` and `StateNotifierProvider`, we have more control and can make an API for our settings entries that provides functions that reads very nicely when we use them.
+> Maybe later I will add a **ThemeDemo** branch that uses **Freezed** and `myProvider.select()` approach. It is of course possible to do so. It could be an interesting article to compare them and discuss pros and cons with both.
 
-When the app starts, it sets the state for each settings entry value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings value in question is used.
+For the settings entry properties, we could alternatively use just simple `StateProviders`. I have used done so before. It works well, but if we use `StateNotifier` and `StateNotifierProvider`, we have more control and can make an API for our settings entries that provides functions that reads very nicely when we use them.
+
+When the app starts, it should set the state for each settings entry value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings entry value in question is used.
 
 ## Key-Value Database
 
-For the key-value database that persists the settings we use an abstraction interface, and as an example we offer a three implementations. One using a `Map`, and two using popular Flutter packages for storing simple key-value based data.
+For the key-value database that persists the settings we use an abstract interface, and as an example we offer a three implementations. One using a `Map`, and two using popular Flutter packages for storing simple key-value based data.
 
 0. KeyValueDb - Abstract interface.
 1. KeyValueDbMem - Volatile memory implementation, just a `Map`.
 2. KeyValueDbPrefs - [SharedPreferences](https://pub.dev/packages/shared_preferences) implementation.
 3. KeyValueDbHive - [Hive](https://pub.dev/packages/hive) implementation.
 
-It would be very straight forward to add additional key-value based settings implementations. Maybe even add one that uses the local implementation as off-line cache, and also persist same settings in a cloud based implementation. Cloud authenticated users could then bring their preferences with them when they switch to another device or platform, and it would also work off-line.
+It would be very straight forward to add additional key-value based settings storage implementations. Maybe even add one that uses the local implementation as off-line cache, and also persist same settings in a cloud based implementation. Cloud authenticated users could then bring their preferences with them when they switch to another device or platform, and it would also work off-line.
 
-Typically, you would of course only have one implementation and use this repository abstraction to limit the places where you interface with the actual storage solution. It of course also enables swapping it out easily, should it ever be needed. In practice, it is seldom needed in the life-span of most applications, but hey we like over-engineered solutions.
+Typically, you would of course only have one key-value db implementation for storing settings, and use this repository abstraction to limit the places where you interface with the actual storage solution. It of course also enables swapping it out easily, should it ever be needed. In practice, it is seldom needed in the life-span of most applications, but hey we like over-engineered solutions.
 
 ### Abstract Key-Value DB Interface
 
@@ -436,7 +438,7 @@ abstract class KeyValueDb {
 
 ### Memory Key-Value DB Implementation
 
-To make a simple naive memory and session based key-value DB, we can use a `Map`. In this case we also wanted the key-value pairs to be kept when we switch between implementations, even if the `keyValueDbProvider` makes a new instance it. We could have made `KeyValueDbMem` itself a singleton, but all we actually needed was for it to have a private static map.
+To make a simple naive memory and session based key-value DB, we can use a `Map`. In this case we also wanted the key-value pairs to be kept when we switch between implementations, even if the `keyValueDbProvider` makes a new instance it. We could have made `KeyValueDbMem` itself a singleton, DB's often are, but all we actually needed was for it to have a private static map.
 
 ```dart
 // Set the bool flag to true to show debug prints. Even if you forgot
@@ -512,7 +514,7 @@ class KeyValueDbMem implements KeyValueDb {
 }
 ```
 
-To make it easy to track what is happening in the app, this class and many others show earlier above and later too, as well as many providers, include `debugPrints` that shows what is happening on the console. The debug prints are behind a `_debug` flag that can be toggled on/off individually for each file/feature. The flag is always automatically toggled off in a release build, so we can never forget it on.
+To make it easy to track what is happening in the app, this class and many others shown earlier above and later too, as well as many providers, include `debugPrints` that shows what is happening on the console. The debug prints are behind a `_debug` flag that can be toggled on/off individually for each file/feature. The flag is always automatically toggled off in a release build, so we can never forget it on.
 
 ### SharedPreferences and Hive Key-Value DB Implementations
 
@@ -528,15 +530,15 @@ To be able to do this, we need to be able to persist nullable values in the key-
 
 Both the Hive and the Shared Preferences implementations also include converters to persist different `enum`'s in a type safe way, and `Color` as `ìnt` values. Hive provides its own `TypeAdapter` class that allows us to do so. For the Shared Preferences implementation we baked in the type conversions.
 
-Obviously to add support for any additional type safe data types, we must add handling of them to our Hive and SharedPreferences implementations.
+Obviously to add support for any additional type safe data types, we must add handling of them to our Hive and Shared Preferences implementations.
 
-We won't go through the implementations here, but you can find the [Hive one here](https://github.com/rydmike/theme_demo/blob/master/lib/persistence/key_value/models/key_value_db_hive.dart) the [SharedPreferences one here](https://github.com/rydmike/theme_demo/blob/master/lib/persistence/key_value/models/key_value_db_prefs.dart), if you want to study them. The one for SharedPreferences is a bit longer (almost double), in order to handle both the occasionally needed nullable types, and the type conversions.
+We won't go through these implementations here, but you can find the [Hive one here](https://github.com/rydmike/theme_demo/blob/master/lib/persistence/key_value/models/key_value_db_hive.dart) and the [SharedPreferences one here](https://github.com/rydmike/theme_demo/blob/master/lib/persistence/key_value/models/key_value_db_prefs.dart), if you want to study them. The one for Shared Preferences is a bit longer (almost double), in order to handle both the occasionally needed nullable types, and the type conversions.
 
 ## Settings
 
 The settings approach used in this demo might be considered a bit controversial. I like it for the simplicity it results in when persisting and using the individual key-value pair controllers. Because it also gives each `Settings` entry value its own provider, it is very simple to use in UI widgets.
 
-The used `Settings` class is actually only static container class. We could just as well have it all as top level `const` and `final` values. However, wrapping them in `Settings` class, name spaces them and encapsulates them nicely. Basically this is like using classes to wrap app config constant values. Purist Dart guide says don't do this. I say do, also in my [lint rules](https://rydmike.com/blog_flutter_linting). Do it for the global name spacing and nice code completion it gives you. This demo app also uses this for a number application constants in several `AppNnnn` const classes, in the `core` folder.
+The used `Settings` class is actually only a static container class. We could just as well have it all as top level `const` and `final` values. However, wrapping them in `Settings` class, name spaces them and encapsulates them nicely. Basically this is like using classes to wrap app config constant values. Purist Dart guide says don't do this. I say do, even Flutter repo uses them, so in my [lint rules](https://rydmike.com/blog_flutter_linting) I also allow them, in fact I like and prefer them. Do it for the global name spacing and nice code completion it gives you when using them. This demo app also uses this for a number application constants in several `AppNnnn` const classes, you can find them in the `core\constants` folder.
 
 In the `Settings` statics only class, we basically have the following:
 
@@ -545,6 +547,8 @@ In the `Settings` statics only class, we basically have the following:
 - A static function to `reset` all settings to their default values.
 - A static function to `init` all settings entry values to the values they have in the DB.
 - A static final `StateNotifierProvider` of type `SettingsEntry` for every settings value.
+
+We can see this below where three settings values implementations are presented as an example.
 
 ```dart
 /// A static container class for all our settings providers, default values and
@@ -555,7 +559,7 @@ class Settings {
   static const bool _useMaterial3 = false;
   static const ThemeMode _themeMode = ThemeMode.system;
   static const int _schemeIndex = 0;
-  // 8< - - - snip repetitive const code removed.
+  // 8< - - - snip, repetitive const code cut. - - - 
 
   /// Reset all settings entries and their controllers to their default values.
   ///
@@ -567,7 +571,20 @@ class Settings {
     ref.read(useMaterial3Provider.notifier).reset();
     ref.read(themeModeProvider.notifier).reset();
     ref.read(schemeIndexProvider.notifier).reset();
-    // 8< - - - snip repetitive reset code removed.
+    // 8< - - - snip, repetitive reset code cut. - - - 
+  }
+
+  /// Init all settings entries and their controllers to values from used
+  /// key-value DB.
+  ///
+  /// This is typically only used after switching DB implementation dynamically.
+  static void init(Ref ref) {
+    if (_debug) debugPrint('Settings: init DB values');
+    // Use material 3, theme mode and active color scheme.
+    ref.read(useMaterial3Provider.notifier).init();
+    ref.read(themeModeProvider.notifier).init();
+    ref.read(schemeIndexProvider.notifier).init();
+    // 8< - - - snip, repetitive init code cut. - - - 
   }
 
   /// String DB key used for defining if we use Material 3 or Material 2.
@@ -619,24 +636,24 @@ class Settings {
     name: '${_keySchemeIndex}Provider',
   );
 
-  // 8< - - - snip repetitive code for similar settings entry providers removed.  
+  // 8< - - - snip, repetitive code for similar SettingsEntry cut. - - - 
 }
 ```
 
 All the above are just static definitions, sure there is quite a bit of them, but it is
-pretty straight forward. The `SettingsEntry` based `StateNotifierProvider` providers might look a bit complex, maybe it is because this code base uses lint rules that requires you to explicitly always specify all types.
+pretty straight forward. The `SettingsEntry` based `StateNotifierProvider` providers may look a bit complex, perhaps it is because this code base uses lint rules that requires you to explicitly always specify all types.
 
 Let's examine the `SettingsEntry` class to better understand what is happening in it.
 
 ### Settings Entry
 
-The `SettingsEntry` class is a an extension of the `StateNotifier` class. It is also a generic, so we can use it with arbitrary data types. The generic types we can use, does however have the limitation that it also has to be supported by our used `KeyValueDb` implementation.
+The `SettingsEntry` class is a an extension of the `StateNotifier` class. It is also a generic, so we can use it with arbitrary data types. The generic types we can use, does however have the limitation that it also has to be supported by our used `KeyValueDb` implementations.
 
 A `SettingsEntry` gets a Riverpod `Ref` object, that we use to find the currently used `KeyValueDb` implementation via the `keyValueDbProvider`.
 
-It also requires a default value of type same generic type `<T>` that we will use to tell the DB to return if there is no value stored for the String `key` that is required to get the stored settings data.
+It also requires a default value of same generic type `<T>`, that we will use to tell the DB to return if there is no value stored for the String `key`, that is required to get the stored settings value.
 
-When we read a `StateNotifierProvider` of type `SettingsEntry`, it will be instantiated and initialized with appropriate start value via its `init()` method, by getting a value either from the key-value DB if it had a value stored for the used `key`, or via the provided `defaultValue`.
+When we read a `StateNotifierProvider` of type `SettingsEntry`, it will be instantiated and initialized with appropriate start value via its `init()` method, by getting a value either from the key-value DB, if it had a value stored for the used `key`, or via the provided `defaultValue`.
 
 We also define a `set(T newValue)` function that will update both the state of the provider, and the key-value DB entry to the new value.
 
@@ -1079,13 +1096,17 @@ flutter:   New value : ThemeMode.light
 flutter: Hive put    : ["themeMode"] = ThemeMode.light (ThemeMode)
 ```
 
-Again, nothing else happened than theme mode changing value, we got no new `ThemeData`, but we still see a different light theme than the one we started from. We now see one that uses Material 3. We already got the light when we swapped to Material 3 in dark mode, since it used the same controller value and was also updated then already to new `ThemeData` as well. 
+Again, nothing else happened than theme mode changing value, we got no new `ThemeData`, but we anyway  see a different light theme than the one we started from. We now see one that uses Material 3. How? We already got the light `ThemeData` version as well when we swapped to Material 3 in dark mode. This happened since it use the same controller value for **Use Material 3**, and as we saw above, light `theme` was already to new `ThemeData` earlier above.
 
-There was thus no need to compute and get any new light `ThemeData` using Material 3, now when we switched to light theme mode. The theme provider already had that value, and the `MaterialApp` was already given it when we were viewing the dark theme and applied Material 3 usage. At this time, the `MaterialApp` just switched to using it, the app was of course rebuilt with this new light theme when we swapped from dark theme, but the provider was not updated.
+> Using same controller provider for `useMaterial3Provider`, for the light and dark theme providers is only a design choice in this application. You can of course use different controller providers for them and allowing your application to use different Material 2 and 3 theme settings in light and dark mode. Not a thing I recommend design wise, but it is of course possible.
+
+Since we already had a defined still valid light `ThemeData` for out `theme`, there was no need to compute and get any new light `ThemeData` using Material 3, when we switched to light theme mode. The theme provider already had that value, and the `MaterialApp` was already given it when we were viewing the dark theme and applied Material 3 usage. During theme mode change, the `MaterialApp` just switched to using it, the app was of course rebuilt with this new light theme when we swapped from dark theme, but the provider was not updated. Again minimal data changes, just as we want it.
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer05.png?raw=true" alt="Observer step 5" width="350"/>
 
-Ok we got this part down. Next let's check-out swapping out the **Hive** key-value DB implementation, to the **Shared Preferences** one. Wow a lot happened, let's dissect it step by step.
+Ok we got this part down now. Next let's see what happens when we swap out the **Hive** key-value DB implementation, to the **Shared Preferences** one. 
+
+If you look at the console log you can see, wow a lot more happened. Let's dissect it step by step:
 
 ```
 flutter: keyValueDbProvider: onDispose called
@@ -1103,11 +1124,11 @@ flutter:   New value : Instance of 'KeyValueDbPrefs'
 flutter: Settings: init DB values
 ```
 
-Above we see that the old `keyValueDbProvider` is disposed when we used the UI `ToggleButtons` to change to **Shared Preferences** key-value DB, the value of `usedKeyValueDbProvider` changed from `hive` to `sharedPreferences`, and the `keyValueDbProvider` provider is updated to a new instance of `KeyValueDbPrefs`.
+Above we see that the old `keyValueDbProvider` is disposed when we used the UI `KeyValueDbToggleButtons` to change to **Shared Preferences** key-value DB. The value of `usedKeyValueDbProvider` changed from `hive` to `sharedPreferences`, and the `keyValueDbProvider` provider got a new instance of `KeyValueDbPrefs`.
 
 The change in value of the `usedKeyValueDbProvider` triggered the callback on the `listener` we have defined, where the new Shared Preferences key-value DB is initialized with an async `keyValueDb.init()` call, and `Settings.init()` is also called.
 
-Calling `Settings.init` causes all settings values to be retrieved from the Shared Preference key-value DB. If a settings value stored in it has a different value than the UI control currently has, each impacted UI control is also updated. This happens since each associated provider state is changed in `Settings.init` if its value was different in the swapped in settings key-value DB. Below we see the values gotten from the `KeyValueDbPrefs` and `StateNotifierProvider<SettingsEntry>` providers being updated only if the value changed from previous value. In the app we see it as UI theme controls changing positions and values:
+Calling `Settings.init` causes all settings values to be retrieved from the Shared Preference key-value DB. If a settings value stored in it, has a different value than the UI control currently has, each impacted UI control is also updated. This happens since each associated provider state is changed in `Settings.init` if its value was different in the swapped in settings key-value DB. Below we see the values gotten from the `KeyValueDbPrefs` and `StateNotifierProvider<SettingsEntry>` providers being updated only if the value changed from previous value. In the app we see it as UI theme controls changing positions and values:
 
 ```
 flutter: Settings: init DB values
@@ -1165,7 +1186,7 @@ flutter: Prefs get   : ["useSubThemes"] = true (bool)
 flutter: Prefs get   : ["defaultRadius"] = -1.0 (double?)
 ```
 
-Lastly and as before, if the settings controller providers, gets new values, the `ThemeData` will update and the `MaterialApp` will rebuild and we see a theme the matches the settings value that were stored in the settings key-value DB we changed to:
+Lastly and as before, if the settings controller providers, gets new values, the `ThemeData` will update and the `MaterialApp` will rebuild and we see a theme that the matches the settings values that were stored in the settings key-value DB we changed to:
 
 ```
 flutter: PROVIDER    : lightThemeProvider
@@ -1178,21 +1199,23 @@ flutter:   Old value : ThemeData#67f91
 flutter:   New value : ThemeData#667cc
 ```
 
-As a result we a totally new new theme that came from whatever settings had been previously stored in local Shared Preferences storage, could have been app defaults to if it had never been used before on this device.
+As a result we got a totally new new theme that came from whatever settings had been previously stored in the local Shared Preferences storage, could have been app defaults to if it had never been used before on this device.
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer06.png?raw=true" alt="Observer step 6" width="350"/>
 
-This is honestly pretty cool and handy stuff, and kind of hyper reactive in an very nice "everything is connected" way. To really see and understand all the above, try building the app yourself and running it in debug mode.
+This is honestly pretty cool and handy stuff, and kind of hyper reactive in an very nice "everything is connected" way. 
 
-First play around and make sure you have modified enough settings values in both Hive and Shared Preferences implementations. Then do a **hot restart** of the app and follow the steps above, observe the app UI and the debug logs as you do. It gives very good insights into what is going on in the app. Feel free to play around with it more see how other UI control widgets behave. You will realize that FlexColorScheme and Riverpod plays well together, and with common settings persistence options too.
+To really see and understand all the above, try building the app yourself and running it in debug mode.First play around and make sure you have modified enough settings values in both Hive and Shared Preferences implementations. Then do a **hot restart** of the app and follow the steps above, observe the app UI and the debug logs as you do. It gives very good insights into what is going on in the app. Feel free to play around with it more to see how other UI control widgets behave. 
+
+You will notice that FlexColorScheme and Riverpod plays well together here, and with common settings persistence options as well.
 
 ## More About FlexColorScheme
 
-To learn more about what **FlexColorScheme** does with all the properties above, and understanding what is involved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and also to when needed check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html). Doing so, you will not only learn about FlexcolorScheme, but also get a deeper understand of theming Flutter apps in general, and get a handle on seed generated Material 3 ColorSchemes as well.
+To learn more about what **FlexColorScheme** does with all the properties we used above, and understanding what is involved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and also to when needed check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html). Doing so, you will not only learn about FlexcolorScheme, but also get a deeper understand of theming Flutter apps in general, and get a handle on seed generated Material 3 ColorSchemes as well.
 
 ## Questions?
 
-If there is anything in this additional stand-alone **FlexColorScheme** and **Riverpod** tutorial **ThemeDemo** app, that you would like further explanations and insights on, or maybe to discuss the ThemeDemo app in general. Then your are welcome to ask your questions or add comments in the repo [Discussions](https://github.com/rydmike/theme_demo/discussions). I might extend this readme to clarify your questions, or answer them directly in the discussions.
+If there is anything in this additional stand-alone **FlexColorScheme** with **Riverpod** tutorial **ThemeDemo** app, that you would like further explanations and insights on, or maybe just to discuss the ThemeDemo app in general. Then your are welcome to ask your questions and add comments in the repo [Discussions](https://github.com/rydmike/theme_demo/discussions). I might extend this readme to clarify any frequent questions, or answer your questions directly in the discussions.
 
 | Theme Showcase 1/2                                                                                   | Theme Showcase 2/2                                                                                   |
 | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
