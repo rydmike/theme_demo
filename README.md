@@ -1057,15 +1057,19 @@ flutter:   New value : true
 flutter: Hive put    : ["useMaterial3"] = true (bool)
 flutter: PROVIDER    : lightThemeProvider
 flutter:   Type      : Provider<ThemeData>
-flutter:   Old value : ThemeData#04eae
-flutter:   New value : ThemeData#48f8a
+flutter:   Old value : ThemeData#856e5
+flutter:   New value : ThemeData#9aecb
 flutter: PROVIDER    : darkThemeProvider
 flutter:   Type      : Provider<ThemeData>
-flutter:   Old value : ThemeData#b53f9
-flutter:   New value : ThemeData#85836
+flutter:   Old value : ThemeData#6d366
+flutter:   New value : ThemeData#67f91
 ```
 
-Toggling it on results in that we get new `ThemeData` for both the light and dark theme, we see bot `lightThemeProvider` and `darkThemeProvider` above getting new `ThemeData`, but we are however at the moment only viewing the result of the dark theme. Let's toggle back to light theme mode:
+Toggling it on results in that we get new `ThemeData` for both the light and dark theme, we see both `lightThemeProvider` and `darkThemeProvider` above getting new `ThemeData`, but we are however at the moment only viewing the result of the dark theme, and we now see the Material 3 based version of previous dark theme.
+
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer04.png?raw=true" alt="Observer step 4" width="350"/>
+
+Let's toggle back to light theme mode:
 
 ```
 flutter: PROVIDER    : themeModeProvider
