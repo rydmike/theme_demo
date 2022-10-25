@@ -376,7 +376,11 @@ This is what it looks like in action:
 
 The themed `ToggleButtons` look different when the key-value DB implementation is switched. This is because different theme settings defined with **FlexColorScheme** had been configured using the different key-value DB implementations. When we switch implementation, the settings persisted in each implementation is loaded and the theme changes to it.
 
-That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is an easier way, but this worked well and that was the aim of this part of the demo. How useful it is, depends on what you use it for.
+That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is an easier way, but this worked well and that was the aim of this part of the demo. How useful it is, depends on what you use it for. The key-value database swapping used in this application is not really the most relevant use case.
+
+> **Use Cases**
+> 
+> The technique demonstrated above to change the key-value database on the fly, from a toggle inside the running application, has more interesting use cases. It can for example also be used to swap in mock, test and development instances of any data sources that your application needs and uses. This can be handy for both development and demonstration purposes. It can enable you to develop and demo your application off-line, even if it normally requires an on-line data source. You could also also add mock data sources, that contain customer relevant example mock data, that you can change to when you demonstrate the application.
 
 ## Persistence Design Requirements
 
@@ -928,9 +932,9 @@ In the `main` function in the beginning of this article we saw this line:
     observers: <ProviderObserver>[AppProviderObserver()],
 ```
 
-Where we define a `ProviderObserver` called `AppProviderObserver()`. Since we did it in our top provider container, it allows us to observe changes in all our providers. We can for example use it to make a simple logger for our app, the observes all state changes in all the Riverpod providers we use.
+Where we define a `ProviderObserver` called `AppProviderObserver()`. Since we did it in our top provider container, it allows us to observe changes in all our providers. We can use this to make a simple Riverpod provider logger for our app, that observes all state changes in all the providers we use.
 
-We are not doing any fancy logging in this demo, but even a simple debug logger like this can be very useful:
+We are not doing any fancy logging in this demo, but even a simple `ProviderBase` debug logger like this can be very useful.
 
 ```dart
 // Set the bool flag to true to show debug prints. Even if you forgot
@@ -960,13 +964,13 @@ class AppProviderObserver extends ProviderObserver {
 }
 ```
 
-To make it give us a bit more information, we show the provider name and its type in the observer  `debugPrint`, together with its previous and new value.
+To make it give us a bit more information, we show the provider `name` and its `runtimeType` in the observer's `debugPrint`, together with its previous and new value.
 
 ### Logging with the Observer
 
-Let's take a look at what our debug logs look in our `ThemeDemo` app when we start the app.
+Let's take a look at what our debug logs look in our `ThemeDemo` application when we start the app.
 
-On app startup we see setup of the default key-value DB implementation, which is Hive. We see its local storage path and filename. The configuration of the listener. These logs come from other `debugPrints` in thee app:
+On app startup we see setup of the default key-value DB implementation, which is **Hive**. We see see its local storage path and filename setup. We also see the configuration of the `listener`. These logs come from other `debugPrints` in the app.
 
 ```
 flutter: KeyValueDbHive: init called, _isInitialized = false
@@ -978,20 +982,20 @@ flutter: KeyValueDbListener: new instance
 flutter: KeyValueDbListener: _init() setup listen
 ```
 
-Depending on if Hive had persisted values from before, or if this is first run we get more or less of Hive DB value getters telling us what it got. These debug logs comes from the key-value DB implementation:
+Next we see the Hive DB value getters telling us what values it got. These `debugPrint` logs comes from the **Hive** key-value DB implementation.
 
 ```
 flutter: Hive get    : ["usePrimaryKeyColor"] = false (bool)
-flutter: Hive get    : ["usedFlexTone"] = 5 (int)
+flutter: Hive get    : ["usedFlexTone"] = 1 (int)
 flutter: Hive get    : ["useMaterial3"] = false (bool)
-flutter: Hive get    : ["schemeIndex"] = 20 (int)
+flutter: Hive get    : ["schemeIndex"] = 29 (int)
 flutter: Hive get    : ["lightSwapColors"] = false (bool)
 flutter: Hive get    : ["lightSurfaceMode"] = FlexSurfaceMode.highBackgroundLowScaffold (FlexSurfaceMode)
-flutter: Hive get    : ["lightBlendLevel"] = 10 (int)
+flutter: Hive get    : ["lightBlendLevel"] = 5 (int)
 flutter: Hive get    : ["useSecondaryKeyColor"] = false (bool)
 flutter: Hive get    : ["useTertiaryKeyColor"] = false (bool)
 flutter: Hive get    : ["appBarElevation"] = 0.0 (double)
-flutter: Hive get    : ["lightAppBarStyle"] = FlexAppBarStyle.background (FlexAppBarStyle)
+flutter: Hive get    : ["lightAppBarStyle"] = null (Null)
 flutter: Hive get    : ["lightAppBarOpacity"] = 0.95 (double)
 flutter: Hive get    : ["transparentStatusBar"] = true (bool)
 flutter: Hive get    : ["useSubThemes"] = true (bool)
@@ -999,7 +1003,7 @@ flutter: Hive get    : ["defaultRadius"] = null (Null)
 flutter: Hive get    : ["darkSwapColors"] = false (bool)
 flutter: Hive get    : ["darkSurfaceMode"] = FlexSurfaceMode.highBackgroundLowScaffold (FlexSurfaceMode)
 flutter: Hive get    : ["darkBlendLevel"] = 25 (int)
-flutter: Hive get    : ["darkAppBarStyle"] = FlexAppBarStyle.background (FlexAppBarStyle)
+flutter: Hive get    : ["darkAppBarStyle"] = null (Null)
 flutter: Hive get    : ["darkAppBarOpacity"] = 0.91 (double)
 flutter: Hive get    : ["darkIsTrueBlack"] = false (bool)
 flutter: Hive get    : ["darkComputeTheme"] = false (bool)
@@ -1007,7 +1011,7 @@ flutter: Hive get    : ["darkComputeLevel"] = 20 (int)
 flutter: Hive get    : ["themeMode"] = ThemeMode.light (ThemeMode)
 ```
 
-That was it, we now have our app running see the active theme, it is in **light** mode. Next let's only tap  the theme mode control and change from current **light** theme, mode to **dark**. We can then see this log coming from the `AppProviderObserver`:
+That was it, we now have our app running, see the active theme, it is in **light** mode. Next let's only tap the **Theme mode** control and change from current `light` theme mode to `dark`. We can then see this log coming from the `AppProviderObserver`:
 
 ```
 flutter: PROVIDER    : themeModeProvider
@@ -1017,9 +1021,9 @@ flutter:   New value : ThemeMode.dark
 flutter: Hive put    : ["themeMode"] = ThemeMode.dark (ThemeMode)
 ```
 
-The `themeModeProvider` changed from light to dark and Hive persisted the new value. Our theme in the app also changed from a light theme, to a dark theme, but we observed no change in `ThemeData` provided to the `MaterialApp`, it only swapped to using the already defined dark mode `ThemeData`.
+The `themeModeProvider` changed from `light` to `dark` and Hive persisted the new value. Our theme in the app also changed from a light theme, to a dark theme, but we observed no change in `ThemeData` provided to the `MaterialApp`, it only internally swapped to using the already defined dark mode `ThemeData`, and the `MaterialApp` then got rebuilt with the already provided `darkTheme` we had defined when the app was started. The least amount of data changed and leas rebuilds possible for the change happened, that is what we want.
 
-Let's then try to toggle something that will only affect the dark theme. The swap dark primary and secondary colors, is good simple choice:
+Let's then try to toggle something that will only affect the dark theme. The **Swap colors** for the dark primary and secondary colors is good simple choice for this. Let's tap it and see what happens:
 
 ```
 flutter: PROVIDER    : darkSwapColorsProvider
