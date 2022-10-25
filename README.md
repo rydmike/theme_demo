@@ -1155,7 +1155,7 @@ flutter:   New value : ThemeData#fba6c
 
 This is honestly pretty cool and handy stuff, and kind of hyper reactive in an very nice everything is connected way.
 
-To really see and grok all the above, try building the app and running it debug mode. First play around and make sure you have modified enough settings values in both Hive and Shared Preferences mode. Then do a hot restart and follow the steps above, observe the app UI and the debug logs as you do. It gives very good insights into what is going on in the app, with FlexColorScheme and Riverpod. You will also see that FlexColorScheme and Riverpod plays well together, and with easy settings persistence options as well.
+TTo really see and grok all the above, try building the app and running it debug mode. First play around and make sure you have modified enough settings values in both Hive and Shared Preferences implementations. Then do a **hot restart** of the app and follow the steps above, observe the app UI and the debug logs as you do. It gives very good insights into what is going on in the app, with FlexColorScheme and Riverpod. You will also see that FlexColorScheme and Riverpod plays well together, and with easy settings persistence options as well.
 
 ## More About FlexColorScheme
 
