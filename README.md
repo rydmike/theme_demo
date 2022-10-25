@@ -1025,11 +1025,9 @@ flutter:   New value : ThemeMode.dark
 flutter: Hive put    : ["themeMode"] = ThemeMode.dark (ThemeMode)
 ```
 
-The `themeModeProvider` changed from `light` to `dark` and Hive persisted the new value. Our theme in the app also changed from a light theme, to a dark theme.
+The `themeModeProvider` changed from `light` to `dark` and Hive persisted the new value. Our theme in the app also changed from a light theme, to a dark theme, but we observed no change in `ThemeData` provided to the `MaterialApp`, it only internally swapped to using the already defined dark mode `ThemeData`, and the `MaterialApp` then got rebuilt with the already provided `darkTheme` we had defined when the app was started. The least amount of data changed and minimum possible rebuild for the change happened, that is what we want.
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer02.png?raw=true" alt="Observer step 2" width="350"/>
-
-, but we observed no change in `ThemeData` provided to the `MaterialApp`, it only internally swapped to using the already defined dark mode `ThemeData`, and the `MaterialApp` then got rebuilt with the already provided `darkTheme` we had defined when the app was started. The least amount of data changed and leas rebuilds possible for the change happened, that is what we want.
 
 Let's then try to toggle something that will only affect the dark theme. The **Swap colors** for the dark primary and secondary colors is good simple choice for this. Let's tap it and see what happens:
 
@@ -1041,13 +1039,15 @@ flutter:   New value : true
 flutter: Hive put    : ["darkSwapColors"] = true (bool)
 flutter: PROVIDER    : darkThemeProvider
 flutter:   Type      : Provider<ThemeData>
-flutter:   Old value : ThemeData#5c419
-flutter:   New value : ThemeData#b53f9
+flutter:   Old value : ThemeData#f1f1e
+flutter:   New value : ThemeData#6d366
 ```
 
-Again the UI widgets associated `darkSwapColorsProvider` controller property we was modified and its value persisted, but in this case the `darkThemeProvider` also gave us new `ThemeData` and we saw the theme change, since the `MaterialApp` got new data and was rebuilt with it.
+Again the UI widgets associated `darkSwapColorsProvider` controller property we was modified and its value persisted, but in this case the `darkThemeProvider` also gave us new `ThemeData` for the `darkTheme` in the `MaterialApp` and we saw the theme change, since the `MaterialApp` got new `ThemeData`for the dark mode that we are looking at.
 
-Let's try a toggle that will affect both the light and dark theme, one that shares settings value in this demo. The flag to use Material 3 is a good simple choice. We can see from the above start state that it was false, ie OFF, lets turn it ON:
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer03.png?raw=true" alt="Observer step 3" width="350"/>
+
+Let's try a toggle that will affect both the light and dark theme, one that shares settings value in this demo. The switch to **Use Material 3** is a good simple choice. We can see from the above start state that it was false, ie OFF, lets turn it ON:
 
 ```
 flutter: PROVIDER    : useMaterial3Provider
