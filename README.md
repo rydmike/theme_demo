@@ -10,7 +10,9 @@ This app is used to demonstrate **FlexColorScheme** and **Riverpod** concepts, a
 
 ### Source and Web Version
 
-The source code for the **ThemeDemo** application can be found on [**github.com/rydmike/theme_demo**](https://github.com/rydmike/theme_demo). You can try a live WEB version of the application on [**www.rydmike/themedemo**](https://rydmike.com/themedemo).
+The source code for the **ThemeDemo** application can be found in the GitHub repo [**github.com/rydmike/theme_demo**](https://github.com/rydmike/theme_demo). 
+
+You can try a live WEB version of the **ThemeDemo** application here [**www.rydmike/themedemo**](https://rydmike.com/themedemo).
 
 >This is a **0.9 version** release, but principles will remain the same in version 1.0. The app and this article like readme, may be tuned a bit after second review and feedback, before releasing version 1.0. 
 
