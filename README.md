@@ -1069,7 +1069,7 @@ Toggling it on results in that we get new `ThemeData` for both the light and dar
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer04.png?raw=true" alt="Observer step 4" width="350"/>
 
-Let's toggle back to light theme mode:
+Next let's toggle back to light theme mode:
 
 ```
 flutter: PROVIDER    : themeModeProvider
