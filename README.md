@@ -1085,7 +1085,7 @@ There was thus no need to compute and get any new light `ThemeData` using Materi
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer05.png?raw=true" alt="Observer step 5" width="350"/>
 
-Ok we got this part down. Next let's check-out swapping out the Hive implementation to the Shared Preferences one. Wow a lot happened, let's dissect it step by step.
+Ok we got this part down. Next let's check-out swapping out the **Hive** key-value DB implementation, to the **Shared Preferences** one. Wow a lot happened, let's dissect it step by step.
 
 ```
 flutter: keyValueDbProvider: onDispose called
@@ -1103,31 +1103,36 @@ flutter:   New value : Instance of 'KeyValueDbPrefs'
 flutter: Settings: init DB values
 ```
 
-Above we see that the old `keyValueDbProvider` is disposed, when we used the UI `ToggleButtons` to change to Shared Preferences key-value DB, the value of `usedKeyValueDbProvider` changed from `hive` to `sharedPreferences`, and the `keyValueDbProvider` is updated to a new instance of `KeyValueDbPrefs`.
+Above we see that the old `keyValueDbProvider` is disposed when we used the UI `ToggleButtons` to change to **Shared Preferences** key-value DB, the value of `usedKeyValueDbProvider` changed from `hive` to `sharedPreferences`, and the `keyValueDbProvider` provider is updated to a new instance of `KeyValueDbPrefs`.
 
-The change in value of the `usedKeyValueDbProvider` triggered the callback on the `listener` we have defined, where the new shared preferences key-value DB is initialized with a `keyValueDb.init()` and `Settings.init()` is also called.
+The change in value of the `usedKeyValueDbProvider` triggered the callback on the `listener` we have defined, where the new Shared Preferences key-value DB is initialized with an async `keyValueDb.init()` call, and `Settings.init()` is also called.
 
-Calling `Settings.init` causes all settings values to be retrieved from the Shared Preference key-value DB. If a settings value stored in it, has a different value than the UI control currently has, each impacted UI control is also updated. This happens since each associated provider state is changed via `Settings.init` if its value was different in the swapped in settings key-value DB. Below we see the values gotten from the `KeyValueDbPrefs` and `StateNotifierProvider<SettingsEntry>` providers being updated if the value changed from previous value, in the app we see it as UI theme controls changing positions and values:
+Calling `Settings.init` causes all settings values to be retrieved from the Shared Preference key-value DB. If a settings value stored in it has a different value than the UI control currently has, each impacted UI control is also updated. This happens since each associated provider state is changed in `Settings.init` if its value was different in the swapped in settings key-value DB. Below we see the values gotten from the `KeyValueDbPrefs` and `StateNotifierProvider<SettingsEntry>` providers being updated only if the value changed from previous value. In the app we see it as UI theme controls changing positions and values:
 
 ```
-flutter: Prefs get   : ["useMaterial3"] = false (bool)
-flutter: PROVIDER    : useMaterial3Provider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<bool>, bool>
-flutter:   Old value : true
-flutter:   New value : false
+flutter: Settings: init DB values
+flutter: Prefs get   : ["useMaterial3"] = true (bool)
 flutter: Prefs type  : ThemeMode    : themeMode as 1
 flutter: Prefs get   : ["themeMode"] = 1 (int)
 flutter: Prefs get   : ["schemeIndex"] = 13 (int)
 flutter: PROVIDER    : schemeIndexProvider
 flutter:   Type      : StateNotifierProvider<SettingsEntry<int>, int>
-flutter:   Old value : 20
+flutter:   Old value : 29
 flutter:   New value : 13
-flutter: Prefs type  : FlexSurfaceMode  : lightSurfaceMode as 1
-flutter: Prefs get   : ["lightSurfaceMode"] = 1 (int)
-flutter: Prefs type  : FlexSurfaceMode  : darkSurfaceMode as 1
-flutter: Prefs get   : ["darkSurfaceMode"] = 1 (int)
-flutter: Prefs get   : ["lightBlendLevel"] = 10 (int)
-flutter: Prefs get   : ["darkBlendLevel"] = 25 (int)
+flutter: Prefs type  : FlexSurfaceMode  : lightSurfaceMode as null
+flutter: Prefs get   : ["lightSurfaceMode"] = null (Null)
+flutter: Prefs type  : FlexSurfaceMode  : darkSurfaceMode as null
+flutter: Prefs get   : ["darkSurfaceMode"] = null (Null)
+flutter: Prefs get   : ["lightBlendLevel"] = 16 (int)
+flutter: PROVIDER    : lightBlendLevelProvider
+flutter:   Type      : StateNotifierProvider<SettingsEntry<int>, int>
+flutter:   Old value : 5
+flutter:   New value : 16
+flutter: Prefs get   : ["darkBlendLevel"] = 28 (int)
+flutter: PROVIDER    : darkBlendLevelProvider
+flutter:   Type      : StateNotifierProvider<SettingsEntry<int>, int>
+flutter:   Old value : 25
+flutter:   New value : 28
 flutter: Prefs get   : ["lightSwapColors"] = false (bool)
 flutter: Prefs get   : ["darkSwapColors"] = false (bool)
 flutter: PROVIDER    : darkSwapColorsProvider
@@ -1135,29 +1140,29 @@ flutter:   Type      : StateNotifierProvider<SettingsEntry<bool>, bool>
 flutter:   Old value : true
 flutter:   New value : false
 flutter: Prefs get   : ["appBarElevation"] = 0.0 (double)
-flutter: Prefs type  : FlexAppBarStyle? : lightAppBarStyle as 3
-flutter: Prefs get   : ["lightAppBarStyle"] = 3 (int)
-flutter: Prefs type  : FlexAppBarStyle? : darkAppBarStyle as 3
-flutter: Prefs get   : ["darkAppBarStyle"] = 3 (int)
+flutter: Prefs type  : FlexAppBarStyle? : lightAppBarStyle as -1
+flutter: Prefs get   : ["lightAppBarStyle"] = -1 (int)
+flutter: Prefs type  : FlexAppBarStyle? : darkAppBarStyle as 2
+flutter: Prefs get   : ["darkAppBarStyle"] = 2 (int)
+flutter: PROVIDER    : darkAppBarStyleProvider
+flutter:   Type      : StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>
+flutter:   Old value : null
+flutter:   New value : FlexAppBarStyle.surface
 flutter: Prefs get   : ["transparentStatusBar"] = true (bool)
 flutter: Prefs get   : ["lightAppBarOpacity"] = 0.95 (double)
-flutter: Prefs get   : ["darkAppBarOpacity"] = 0.91 (double)
+flutter: Prefs get   : ["darkAppBarOpacity"] = 0.93 (double)
+flutter: PROVIDER    : darkAppBarOpacityProvider
+flutter:   Type      : StateNotifierProvider<SettingsEntry<double>, double>
+flutter:   Old value : 0.91
+flutter:   New value : 0.93
 flutter: Prefs get   : ["darkIsTrueBlack"] = false (bool)
 flutter: Prefs get   : ["darkComputeTheme"] = false (bool)
-flutter: Prefs get   : ["darkComputeLevel"] = 25 (int)
-flutter: PROVIDER    : darkComputeLevelProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<int>, int>
-flutter:   Old value : 20
-flutter:   New value : 25
+flutter: Prefs get   : ["darkComputeLevel"] = 20 (int)
 flutter: Prefs get   : ["usePrimaryKeyColor"] = false (bool)
 flutter: Prefs get   : ["useSecondaryKeyColor"] = false (bool)
 flutter: Prefs get   : ["useTertiaryKeyColor"] = false (bool)
 flutter: Prefs get   : ["useSubThemes"] = true (bool)
-flutter: Prefs get   : ["defaultRadius"] = 7.0 (double?)
-flutter: PROVIDER    : defaultRadiusProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<double?>, double?>
-flutter:   Old value : null
-flutter:   New value : 7.0
+flutter: Prefs get   : ["defaultRadius"] = -1.0 (double?)
 ```
 
 Lastly and as before, if the settings controller providers, gets new values, the `ThemeData` will update and the `MaterialApp` will rebuild and we see a theme the matches the settings value that were stored in the settings key-value DB we changed to:
@@ -1165,13 +1170,17 @@ Lastly and as before, if the settings controller providers, gets new values, the
 ```
 flutter: PROVIDER    : lightThemeProvider
 flutter:   Type      : Provider<ThemeData>
-flutter:   Old value : ThemeData#48f8a
-flutter:   New value : ThemeData#c266f
+flutter:   Old value : ThemeData#9aecb
+flutter:   New value : ThemeData#1c4e6
 flutter: PROVIDER    : darkThemeProvider
 flutter:   Type      : Provider<ThemeData>
-flutter:   Old value : ThemeData#85836
-flutter:   New value : ThemeData#fba6c
+flutter:   Old value : ThemeData#67f91
+flutter:   New value : ThemeData#667cc
 ```
+
+As a result we a totally new new theme that came from whatever settings had been previously stored in local Shared Preferences storage, could have been app defaults to if it had never been used before on this device.
+
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer06.png?raw=true" alt="Observer step 6" width="350"/>
 
 This is honestly pretty cool and handy stuff, and kind of hyper reactive in an very nice everything is connected way.
 
