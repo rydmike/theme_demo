@@ -1081,7 +1081,9 @@ flutter: Hive put    : ["themeMode"] = ThemeMode.light (ThemeMode)
 
 Again, nothing else happened than theme mode changing value, we got no new `ThemeData`, but we still see a different light theme than the one we started from. We now see one that uses Material 3. We already got the light when we swapped to Material 3 in dark mode, since it used the same controller value and was also updated then already to new `ThemeData` as well. 
 
-There was thus no need to compute any new light theme using Material 3, now when we switched to light theme mode. The theme provider already had that value, and the MaterialApp was already given it when we were viewing the dark theme. Now the `MaterialApp` just switched to using it, the app was of course rebuilt with this new light theme when we swapped from dark theme, but the provider was not updated.
+There was thus no need to compute and get any new light `ThemeData` using Material 3, now when we switched to light theme mode. The theme provider already had that value, and the `MaterialApp` was already given it when we were viewing the dark theme and applied Material 3 usage. At this time, the `MaterialApp` just switched to using it, the app was of course rebuilt with this new light theme when we swapped from dark theme, but the provider was not updated.
+
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer05.png?raw=true" alt="Observer step 5" width="350"/>
 
 Ok we got this part down. Next let's check-out swapping out the Hive implementation to the Shared Preferences one. Wow a lot happened, let's dissect it step by step.
 
