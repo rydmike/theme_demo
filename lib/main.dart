@@ -10,7 +10,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // This container can be used to read providers before Flutter app is
-  // initialised with UncontrolledProviderScope, for more info see here
+  // initialized with UncontrolledProviderScope, for more info see here
   // https://github.com/rrousselGit/riverpod/issues/295 and here
   // https://codewithandrea.com/articles/riverpod-initialize-listener-app-startup
   final ProviderContainer container = ProviderContainer(

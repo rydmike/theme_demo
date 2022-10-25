@@ -5,7 +5,7 @@ import '../controllers/used_key_value_db_provider.dart';
 import '../models/used_key_value_db.dart';
 // ignore_for_file: comment_references
 
-/// UI to toggle the used [KeyValueDb] implementation of the application.
+/// UI used to toggle the used [KeyValueDb] implementation of the application.
 ///
 /// This [ToggleButtons] UI control bakes in a Riverpod [StateProvider] and is
 /// tied to this app implementation. This approach is however very easy to use

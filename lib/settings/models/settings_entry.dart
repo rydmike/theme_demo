@@ -38,7 +38,7 @@ class SettingsEntry<T> extends StateNotifier<T> {
     // Read the value for the provided key from the used key-value DB.
     // The db value get returns the default value if key does not exist in it.
     final T newValue = db.get(key, defaultValue);
-    // Only set state to db value, if it is different from current value.
+    // Only set state to db value if it is different from current value.
     // StateNotifier does not emit a new state either if value is identical,
     // but we check too so we can exit earlier and to be very explicit about it.
     if (state != newValue) state = newValue;
@@ -58,7 +58,7 @@ class SettingsEntry<T> extends StateNotifier<T> {
 
   /// Rest a settings entry state to its default value.
   ///
-  /// If it already is at its default value, do no work, return.
+  /// If it already is at its default value, do nothing, return.
   /// - Set state to default value.
   /// - Update the key-value DB value entry for this key, to its default value.
   void reset() {

@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // Set the bool flag to true to show debug prints. Even if you forgot
 // to set it to false, debug prints will not show in release builds.
 // The handy part is that if it gets in the way in debugging, it is an easy
-// toggle to turn it off here too for just this feature. You can leave it true
+// toggle to turn it off here for just this feature. You can leave it true
 // below to see this features logs in debug mode.
 const bool _debug = !kReleaseMode && true;
 

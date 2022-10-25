@@ -75,7 +75,9 @@ class AppTheme {
     // And then use its colors in any custom component themes on the `toTheme`
     // below using `copyWith` on the resulting `ThemeData`. We can do this to
     // make a copy of it and add features not covered by FlexColorScheme. We are
-    // not doing that in  this demo, this is just a mention of how to do it.
+    // not doing that in this demo, this is just a mention of how to do it.
+    // How to do this is a frequently asked question, see here for more info:
+    // https://github.com/rydmike/flex_color_scheme/discussions/92
 
     // Convert above FlexColorScheme to ThemeData and return it.
     return flexScheme.toTheme;

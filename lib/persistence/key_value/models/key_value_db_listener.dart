@@ -32,12 +32,13 @@ class KeyValueDbListener {
     ref.listen<StateController<KeyValueDb>>(keyValueDbProvider.state,
         (StateController<KeyValueDb>? previous,
             StateController<KeyValueDb> current) async {
-      final KeyValueDb keyValueDb = current.state;
       // This callback executes when the keyValueDbProvider value changes.
       if (_debug) {
         debugPrint('KeyValueDbListener: listen called - - - - -');
         debugPrint('  DB switch : ${current.state}');
       }
+      // Get the new un-initialized keyValueDb and initialize it.
+      final KeyValueDb keyValueDb = current.state;
       await keyValueDb.init();
       // We changed key valued DB, we must update all settings controls.
       Settings.init(ref);

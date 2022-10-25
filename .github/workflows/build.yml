@@ -19,7 +19,7 @@
 name: Build and Deploy Web ThemeDemo
 on:
   push:
-    branches: [master]
+    branches: [none]
     paths-ignore:
       - "**.md"
   pull_request:
@@ -27,7 +27,7 @@ on:
     paths-ignore:
       - "**.md"
   release:
-    types: [published]
+    types: [none]
 jobs:
   tests_build:
     name: Analyze, build and deploy ThemeDemo web app

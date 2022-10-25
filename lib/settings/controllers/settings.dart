@@ -21,7 +21,7 @@ class Settings {
   // Default const values for all the settings entries.
   // They are collected here at the top to be easy to modify.
 
-  // Use material 3, theme mode and active color scheme.
+  // Defaults for: use material 3, theme mode and active color scheme.
   static const bool _useMaterial3 = false;
   static const ThemeMode _themeMode = ThemeMode.system;
   static const int _schemeIndex = 0;

@@ -9,10 +9,12 @@ import '../models/flex_tone.dart';
 /// The light [ThemeData] provider.
 ///
 /// It is a simple [Provider], using our AppTheme.light function using
-/// [Settings], [StateNotifierProvider] properties that we watch for changes.
-/// We can use this [Provider] in our [MaterialApp] as theme. Whenever any
-/// of the [Settings] based property value are updated, the MaterialApp
-/// will change theme and be rebuilt with new theme applied.
+/// SettingsEntry based [StateNotifierProvider] properties that we watch for
+/// changes.
+///
+/// We can use this [Provider] in our [MaterialApp] as a theme. Whenever any
+/// of the watched [Settings] providers state is updated, the [MaterialApp]
+/// will get new [ThemeData] and be rebuilt with the new theme applied.
 final Provider<ThemeData> lightThemeProvider = Provider<ThemeData>(
   (ProviderRef<ThemeData> ref) {
     // Make an always valid FlexTones config getter from our unsafe int.
