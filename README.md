@@ -1011,7 +1011,11 @@ flutter: Hive get    : ["darkComputeLevel"] = 20 (int)
 flutter: Hive get    : ["themeMode"] = ThemeMode.light (ThemeMode)
 ```
 
-That was it, we now have our app running, see the active theme, it is in **light** mode. Next let's only tap the **Theme mode** control and change from current `light` theme mode to `dark`. We can then see this log coming from the `AppProviderObserver`:
+That was it, we now have our app running, see the active theme, it is in **light** mode: 
+
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer01.png?raw=true" alt="Observer step 1" width="350"/>
+
+Next let's only tap the **Theme mode** control and change from current `light` theme mode to `dark`. We can then see this log coming from the `AppProviderObserver`:
 
 ```
 flutter: PROVIDER    : themeModeProvider
@@ -1021,7 +1025,11 @@ flutter:   New value : ThemeMode.dark
 flutter: Hive put    : ["themeMode"] = ThemeMode.dark (ThemeMode)
 ```
 
-The `themeModeProvider` changed from `light` to `dark` and Hive persisted the new value. Our theme in the app also changed from a light theme, to a dark theme, but we observed no change in `ThemeData` provided to the `MaterialApp`, it only internally swapped to using the already defined dark mode `ThemeData`, and the `MaterialApp` then got rebuilt with the already provided `darkTheme` we had defined when the app was started. The least amount of data changed and leas rebuilds possible for the change happened, that is what we want.
+The `themeModeProvider` changed from `light` to `dark` and Hive persisted the new value. Our theme in the app also changed from a light theme, to a dark theme.
+
+<img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer02.png?raw=true" alt="Observer step 2" width="350"/>
+
+, but we observed no change in `ThemeData` provided to the `MaterialApp`, it only internally swapped to using the already defined dark mode `ThemeData`, and the `MaterialApp` then got rebuilt with the already provided `darkTheme` we had defined when the app was started. The least amount of data changed and leas rebuilds possible for the change happened, that is what we want.
 
 Let's then try to toggle something that will only affect the dark theme. The **Swap colors** for the dark primary and secondary colors is good simple choice for this. Let's tap it and see what happens:
 
