@@ -1182,17 +1182,17 @@ As a result we a totally new new theme that came from whatever settings had been
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer06.png?raw=true" alt="Observer step 6" width="350"/>
 
-This is honestly pretty cool and handy stuff, and kind of hyper reactive in an very nice everything is connected way.
+This is honestly pretty cool and handy stuff, and kind of hyper reactive in an very nice "everything is connected" way. To really see and understand all the above, try building the app yourself and running it in debug mode.
 
-TTo really see and grok all the above, try building the app and running it debug mode. First play around and make sure you have modified enough settings values in both Hive and Shared Preferences implementations. Then do a **hot restart** of the app and follow the steps above, observe the app UI and the debug logs as you do. It gives very good insights into what is going on in the app, with FlexColorScheme and Riverpod. You will also see that FlexColorScheme and Riverpod plays well together, and with easy settings persistence options as well.
+First play around and make sure you have modified enough settings values in both Hive and Shared Preferences implementations. Then do a **hot restart** of the app and follow the steps above, observe the app UI and the debug logs as you do. It gives very good insights into what is going on in the app. Feel free to play around with it more see how other UI control widgets behave. You will realize that FlexColorScheme and Riverpod plays well together, and with common settings persistence options too.
 
 ## More About FlexColorScheme
 
-To learn more about what **FlexColorScheme** does with all the properties above, and understanding what is involved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and to check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html). Doing so, you will not only learn about FlexcolorScheme, but also get a deeper understand of theming Flutter apps in general, and get a handle on seed generated Material 3 ColorSchemes as well.
+To learn more about what **FlexColorScheme** does with all the properties above, and understanding what is involved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and also to when needed check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html). Doing so, you will not only learn about FlexcolorScheme, but also get a deeper understand of theming Flutter apps in general, and get a handle on seed generated Material 3 ColorSchemes as well.
 
 ## Questions?
 
-If there is anything in this additional stand-alone **FlexColorScheme** and **Riverpod** tutorial **ThemeDemo** app, that you would like further explanations and insights on, or to discuss the demo app in general, feel free to ask your questions or add comments in the repo [Discussions](https://github.com/rydmike/theme_demo/discussions). I might extend this readme to clarify your questions, or answer them directly in the discussions.
+If there is anything in this additional stand-alone **FlexColorScheme** and **Riverpod** tutorial **ThemeDemo** app, that you would like further explanations and insights on, or maybe to discuss the ThemeDemo app in general. Then your are welcome to ask your questions or add comments in the repo [Discussions](https://github.com/rydmike/theme_demo/discussions). I might extend this readme to clarify your questions, or answer them directly in the discussions.
 
 | Theme Showcase 1/2                                                                                   | Theme Showcase 2/2                                                                                   |
 | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
