@@ -10,7 +10,7 @@ class AppConst {
   static const String appName = 'ThemeDemo';
 
   /// Current app version.
-  static const String version = '0.9.0';
+  static const String version = '0.9.1';
 
   /// Used version of FlexColorScheme package.
   static const String packageVersion = '6.0.1';
