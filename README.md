@@ -393,7 +393,7 @@ We also did not want to use a [**Freezed**](https://pub.dev/packages/freezed) or
 
 > Maybe later I will add a **ThemeDemo** branch that uses **Freezed** and `myProvider.select()` approach. It is of course possible to do so. It could be an interesting article to compare them and discuss pros and cons with both.
 
-For the settings entry properties, we could alternatively use just simple `StateProviders`. I have used done so before. It works well, but if we use `StateNotifier` and `StateNotifierProvider`, we have more control and can make an API for our settings entries that provides functions that reads very nicely when we use them.
+For the settings entry properties, we could alternatively use just simple `StateProviders`, I have done so before. It works well, but if we use `StateNotifier` and `StateNotifierProvider`, we have more control and can make an API for our settings entries that provides functions that reads very nicely when we use them.
 
 When the app starts, it should set the state for each settings entry value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings entry value in question is used.
 
