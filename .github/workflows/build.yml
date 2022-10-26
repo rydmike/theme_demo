@@ -1,11 +1,9 @@
-# This GitHub build and  deploy runs on master publish, it:
+# This GitHub build and deploy runs on master publish, it:
 #  - Installs Dart and flutter
 #  - Uses Flutter beta channel for now.
 #  - Enables flutter web
 #  - Gets package dependencies
-#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features on beta channel,
-#    as they might not yet be deprecated on stable and we will keep using some of the features that are deprecated
-#    as long as they are not also deprecated on stable.
+#  - Runs dart analyze.
 #  - Show outdated packages, just added for info.
 #  - Verify that dart format is used by all committed code, fails if not. Controversial but pub.dev penalizes you if
 #    dart format is not used.
