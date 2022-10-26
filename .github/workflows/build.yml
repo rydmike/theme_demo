@@ -1,14 +1,11 @@
-# This GitHub build and deploy runs on master publish, it:
-#  - Installs Dart and flutter
-#  - Uses Flutter beta channel for now.
-#  - Enables flutter web
-#  - Gets package dependencies
-#  - Runs dart analyze.
-#  - Show outdated packages, just added for info.
-#  - Verify that dart format is used by all committed code, fails if not. Controversial but pub.dev penalizes you if
-#    dart format is not used.
-#  - Upload code coverage output to Codecov for analysis.
-#  - Install linux rpl tool. It is used to automate the needed change of a line in index.html.
+# This GitHub build and deploy, runs on master publish.
+#  - Installs Dart and flutter.
+#  - Shows used dart and flutter version.
+#  - Enables flutter web.
+#  - Gets package dependencies.
+#  - Run dart analyze.
+#  - Show outdated packages.
+#  - Verify that dart format is used by all committed code, fail if not.
 #  - Build default and web example apps for FlexColorPicker.
 #    - Flutter clean.
 #    - Flutter build web app, in release mode and with CanvasKit renderer.
@@ -59,7 +56,6 @@ jobs:
       - name: Verify that Dart formatting is used, fail if not
         run: dart format --output=none --set-exit-if-changed .
 
-      # Build ThemeDemo Web app
       - name: WEB release build using CanvasKit
         run: flutter build web --web-renderer=canvaskit --base-href "/themedemo/" --release --target=lib/main.dart
 

@@ -1,11 +1,11 @@
-# This GitHub actions runs on pull to master, it:
-#  - Installs Dart and flutter
-#  - Uses Flutter beta channel for now, might make a matrix later with other channels included too.
-#  - Gets package dependencies
-#  - Runs dart analyze, allows deprecation warnings, we on purpose allow use of deprecated features for now.
-#  - Show outdated packages, just added for info.
-#  - Verify that dart format is used by all committed code, fails if not. Controversial but pub.dev penalizes you if
-#    dart format is not used.
+# This GitHub analyzes action, runs on pull to master.
+#  - Installs Dart and flutter.
+#  - Shows used dart and flutter version.
+#  - Enables flutter web.
+#  - Gets package dependencies.
+#  - Run dart analyze.
+#  - Show outdated packages.
+#  - Verify that dart format is used by all committed code, fail if not.
 name: Analyze ThemeDemo
 on:
   push:
