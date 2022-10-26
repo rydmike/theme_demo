@@ -52,6 +52,10 @@ class ThemeSettings extends ConsumerWidget {
             ? 0
             : flexTone;
 
+    final String explainM3Surface = useSeed
+        ? '. With seeded ColorScheme, for a pure M3 surface design, use level 0'
+        : '';
+
     return Column(
       children: <Widget>[
         const ThemeModeListTile(title: Text('Theme mode')),
@@ -134,19 +138,19 @@ class ThemeSettings extends ConsumerWidget {
         if (isLight) ...<Widget>[
           const LightSurfaceModePopupMenu(),
           const LightSurfaceModeListTile(),
-          const ListTile(
-            title: Text('Light surface blend'),
+          ListTile(
+            title: const Text('Light surface blend'),
             subtitle: Text('Adjust the surface, background and '
-                'scaffold blends'),
+                'scaffold blends$explainM3Surface'),
           ),
           const LightSurfaceBlendLevelSlider(),
         ] else ...<Widget>[
           const DarkSurfaceModePopupMenu(),
           const DarkSurfaceModeListTile(),
-          const ListTile(
-            title: Text('Dark surface blend'),
+          ListTile(
+            title: const Text('Dark surface blend'),
             subtitle: Text('Adjust the surface, background and '
-                'scaffold blends'),
+                'scaffold blends$explainM3Surface'),
           ),
           const DarkSurfaceBlendLevelSlider(),
         ],
