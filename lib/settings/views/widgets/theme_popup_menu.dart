@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../theme/models/app_theme.dart';
-import '../../../core/constants/app_insets.dart';
 import '../../controllers/settings.dart';
 
 // This is a theme selector using a ListTile with a Popup-up menu theme
@@ -28,6 +27,21 @@ class ThemePopupMenu extends ConsumerWidget {
     final bool isLight = Theme.of(context).brightness == Brightness.light;
     final ColorScheme scheme = Theme.of(context).colorScheme;
     final int selected = ref.watch(Settings.schemeIndexProvider);
+    final bool useMaterial3 = ref.watch(Settings.useMaterial3Provider);
+
+    // Make our FlexThemeModeOptionButton, used for theme selection, border
+    // radius follow the defaults for Card in both M2 and M3 mode, or the
+    // sub theme defined global border radius, if it is defined.
+    final double optionButtonBorderRadius =
+        ref.watch(Settings.useSubThemesProvider)
+            // M3 default for Card is 12.
+            ? ref.watch(Settings.defaultRadiusProvider) ??
+                // M3 or M2 default for Card, if global radius not defined.
+                (useMaterial3 ? 12 : 4)
+            // Use M3 or M2 default for Card, if not using sub-themes.
+            : useMaterial3
+                ? 12
+                : 4;
 
     return PopupMenuButton<int>(
       padding: EdgeInsets.zero,
@@ -58,7 +72,7 @@ class ThemePopupMenu extends ConsumerWidget {
                   borderRadius: 0,
                   optionButtonPadding: EdgeInsets.zero,
                   optionButtonMargin: EdgeInsets.zero,
-                  optionButtonBorderRadius: AppInsets.cornerRadius,
+                  optionButtonBorderRadius: optionButtonBorderRadius,
                 ),
               ),
             ),
@@ -88,7 +102,7 @@ class ThemePopupMenu extends ConsumerWidget {
             borderRadius: 0,
             optionButtonPadding: EdgeInsets.zero,
             optionButtonMargin: EdgeInsets.zero,
-            optionButtonBorderRadius: AppInsets.cornerRadius,
+            optionButtonBorderRadius: optionButtonBorderRadius,
           ),
         ),
       ),

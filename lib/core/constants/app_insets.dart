@@ -22,7 +22,7 @@ class AppInsets {
 
   /// This app uses more than normal rounding on button sides, an shape corners
   /// for example on corners of bottom sheets.
-  static const double cornerRadius = 14;
+  // static const double cornerRadius = 14;
 
   // Outline thickness on outline and toggle buttons.
   static const double outlineThickness = 1.5;
