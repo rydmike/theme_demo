@@ -107,11 +107,8 @@ class _AboutAppIcon extends ConsumerWidget {
         tertiary: scheme.tertiary,
         tertiaryContainer: scheme.tertiaryContainer,
       ),
-      selected: true,
-      selectedBorder: BorderSide(
-        color: scheme.primary,
-        width: AppInsets.outlineThickness,
-      ),
+      selected: false,
+      unselectedBorder: BorderSide.none,
       backgroundColor: scheme.background,
       width: AppInsets.xl,
       height: AppInsets.xl,

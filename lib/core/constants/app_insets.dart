@@ -21,7 +21,7 @@ class AppInsets {
   static const double edge = 12;
 
   // Outline thickness on outline and toggle buttons.
-  static const double outlineThickness = 1.5;
+  // static const double outlineThickness = 1.5;
 
   /// Max width of content pages with text thath should be read.
   ///
