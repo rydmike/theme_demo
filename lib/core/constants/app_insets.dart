@@ -20,9 +20,6 @@ class AppInsets {
   // both phone and larger media.
   static const double edge = 12;
 
-  // Outline thickness on outline and toggle buttons.
-  // static const double outlineThickness = 1.5;
-
   /// Max width of content pages with text thath should be read.
   ///
   /// The max dp width used for layout content on the screen in the available
@@ -30,25 +27,6 @@ class AppInsets {
   /// web pages when they are used on super wide screen. To wide text gets
   /// difficult to read.
   static const double maxBodyWidth = 1000;
-
-  // The minimum media size needed for desktop/large tablet menu view,
-  // this is media size.
-  // Only at higher than this breakpoint will the menu expand from rail and
-  // be possible to toggle between menu and rail. Below this breakpoint it
-  // toggles between hidden in the Drawer and being a Rail, also on phones.
-  // This size was chosen because in combination codeViewWidthBreakpoint, it
-  // gives us a breakpoint where we get code side by side view in desktop
-  // rail mode already, and when it switches to menu mode, the desktop is
-  // wide enough to show both the full width menu and keep showing the
-  // code in side-by-side view. We could do lower the desktop width breakpoint,
-  // but then that view switches temporarily to now showing the code view,
-  // and it is just to much dynamic changes happening, it does not nice.
-  //
-  // static const double desktopWidthBreakpoint = 1350;
-
-  // This breakpoint is only used to further increase margins and insets on
-  // very large desktops.
-  // static const double bigDesktopWidthBreakpoint = 2800;
 
   /// The minimum media width treated as a phone device in this demo.
   static const double phoneWidthBreakpoint = 600;
