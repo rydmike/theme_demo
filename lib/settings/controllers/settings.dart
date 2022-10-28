@@ -167,8 +167,8 @@ class Settings {
   /// The associated provider uses same name with "Provider" added to it.
   static const String _keyThemeMode = 'themeMode';
 
-  /// The themeModeProvider represents a [StateProvider] to provide the state of
-  /// the [ThemeMode], so to be able to toggle the application wide theme mode.
+  /// The themeModeProvider represents a [NotifierProvider] to provide the
+  /// state of the [ThemeMode], to toggle the application wide theme mode.
   ///
   /// Defaults to [_themeMode].
   static final NotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
@@ -396,7 +396,7 @@ class Settings {
   /// The associated provider uses same name with "Provider" added to it.
   static const String _keyTransparentStatusBar = 'transparentStatusBar';
 
-  /// Provider for swapping primary and secondary colors in dark theme mode.
+  /// Provider for android app bar scrim usage.
   ///
   /// Defaults to [_transparentStatusBar].
   static final NotifierProvider<SettingsEntry<bool>, bool>
