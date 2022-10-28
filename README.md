@@ -52,7 +52,7 @@ This example is designed to work with and use the stable releases of **FlexColor
 
 This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. It is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#themedemo-app).
 
-| Home Screen 1/4                                                                                     | Home Screen 2/4                                                                                     |
+| Home Screen 1/4                                                                                    | Home Screen 2/4                                                                                     |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 | <img src="https://github.com/rydmike/theme_demo/blob/master/resources/Screen01-Home.png?raw=true"/> | <img src="https://github.com/rydmike/theme_demo/blob/master/resources/Screen02-Home.png?raw=true"/> |
 
@@ -116,7 +116,7 @@ Another feature is that this demo persists all theme settings as they are change
 
 This example shows how **Riverpod** can be used to change the used key-value database dependency from inside the Flutter app UI. This can be interesting to study, since this app needs this dependency to be able to read its settings and be able to start. Yet we can control this from inside the running Flutter app. In this scenario we are using Riverpod as a service locator and dependency injection replacement.
 
-Is it really necessary to switch the key-value DB persistence implementation at runtime in app? Well maybe not, but the principle might be useful as an in-app development toggle, used during development and testing for other data sources, like using remote data and mock off-line data source. It can be useful to have a setup that allows you to do this, in-app from developer options. Plus I wanted to see if it can be done with just Riverpod, typically I would have done this part with [GetIt](https://pub.dev/packages/get_it), nice to see it can be done with just Riverpod.
+Is it really necessary to switch the key-value DB persistence implementation at runtime from inside the app? Well maybe not, but the principle might be useful as an in-app development toggle, used during development and testing for other data sources, like using remote data and mock off-line data source. It can be useful to have a setup that allows you to do this, in-app from developer options. Plus I wanted to see if it can be done with just Riverpod, typically I would have done this part with [GetIt](https://pub.dev/packages/get_it), nice to see it can be done with just Riverpod.
 
 To be able to do this with only **Riverpod**, we need to define a `ProviderContainer` in just plain Dart before we start the Flutter app. We can then access the provider that gives us the currently used key-value DB implementation. We can then perform whatever async initialization the used key-value DB needs.
 
@@ -381,7 +381,7 @@ That's it for being able to switch in different key-value DB implementation usin
 
 > **Use Cases**
 > 
-> The technique demonstrated above to change the key-value database on the fly, from a toggle inside the running application, has more interesting use cases. It can for example also be used to swap in mock, test and development instances of any data sources that your application needs and uses. This can be handy for both development and demonstration purposes. It can enable you to develop and demo your application off-line, even if it normally requires an on-line data source. You could also also add mock data sources, that contain customer relevant example mock data, that you can change to when you demonstrate the application.
+> The technique demonstrated above to change the key-value database on the fly, from a toggle inside the running application, has more interesting use cases. It can for example also be used to swap in mock, test and development instances of any data sources that your application needs and uses. This can be handy for both development and demonstration purposes. It can enable you to develop and demo your application off-line, even if it normally requires an on-line data source. You could also add mock data sources, that contain customer relevant example mock data, that you can change to when you demonstrate the application.
 
 ## Persistence Design Requirements
 
@@ -389,7 +389,7 @@ One of the goals with the design of the used key-value persistence model and Riv
 
 We could also serialize a big settings class with all the properties to a JSON and save the entire JSON with just one key. We would then be writing the entire "large" JSON file to the key-value DB, every time a single settings value is changed. This was not desired.
 
-We also did not want to use a [**Freezed**](https://pub.dev/packages/freezed) or handwritten immutable class with all the settings properties in it. Then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure it is rebuilt only when its value is changed. We would also need to filter or to store only the property value that was changed into the used key-value DB. In this case we wanted to try avoid this approach, it is a bit more involved. This kind of settings feature, where we need and want full reactive behavior for all its members, is a bit different from a normal data class, where we typically may only need it for a few of its members, and for the rest, the change of entire state it is OK to update everything. I however fits poorly with how we wanted the settings to behave in this application.
+We also did not want to use a [**Freezed**](https://pub.dev/packages/freezed) or handwritten immutable class with all the settings properties in it. Then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure it is rebuilt only when its value is changed. We would also need to filter or to store only the property value that was changed into the used key-value DB. In this case we wanted to avoid this approach, it is a bit more involved. This kind of settings feature, where we need and want full reactive behavior for all its members, is a bit different from a normal data class, where we typically may only need it for a few of its members, and for the rest, the change of entire state, it is OK to update everything. It however fits poorly with how we wanted the settings to behave in this application.
 
 > Maybe later I will add a **ThemeDemo** branch that uses **Freezed** and `myProvider.select()` approach. It is of course possible to do so. It could be an interesting article to compare them and discuss pros and cons with both.
 
@@ -399,7 +399,7 @@ When the app starts, it should set the state for each settings entry value by ch
 
 ## Key-Value Database
 
-For the key-value database that persists the settings we use an abstract interface, and as an example we offer a three implementations. One using a `Map`, and two using popular Flutter packages for storing simple key-value based data.
+For the key-value database that persists the settings we use an abstract interface, and as an example we offer three implementations. One using a `Map`, and two using popular Flutter packages for storing simple key-value based data.
 
 0. KeyValueDb - Abstract interface.
 1. KeyValueDbMem - Volatile memory implementation, just a `Map`.
@@ -529,7 +529,7 @@ We cannot use the absence of a key in the key-value database to represent `null`
 
 To be able to do this, we need to be able to persist nullable values in the key-value DB. The used map for our volatile memory storage allows us to do that, as does Hive. However, SharedPreferences does support storing `null` at all. So its implementation includes a work-around to use some other suitable value to represent the persisted `null` choice, and return `null` back to us when that value is found.
 
-Both the Hive and the Shared Preferences implementations also include converters to persist different `enum`'s in a type safe way, and `Color` as `ìnt` values. Hive provides its own `TypeAdapter` class that allows us to do so. For the Shared Preferences implementation we baked in the type conversions.
+Both the Hive and the Shared Preferences implementations also include converters to persist different `enum`'s in a type safe way, and `Color` as `ìnt` values. Hive provides its own `TypeAdapter` class that allows us to do so. For the SharedPreferences implementation we baked in the type conversions.
 
 Obviously to add support for any additional type safe data types, we must add handling of them to our Hive and Shared Preferences implementations.
 
@@ -645,7 +645,7 @@ Let's examine the `SettingsEntry` class to better understand what is happening i
 
 ### Settings Entry
 
-The `SettingsEntry` class is an extension of the `Notifier` class, which is a bit simpler to use than the `StateNotifier`. It is also a generic, so we can use it with arbitrary data types. The generic types we can use, do however have the limitation that they also has to be supported by our used `KeyValueDb` implementations.
+The `SettingsEntry` class is an extension of the `Notifier` class, which is a bit simpler to use than the `StateNotifier`. It is also a generic, so we can use it with arbitrary data types. The generic types we can use, do however have the limitation that they also have to be supported by our used `KeyValueDb` implementations.
 
 When we use the `Notifier` class instead of `StateNotifier`, we do not need to pass our `SettingsEntry` a Riverpod `Ref` object, that we need to find and read the currently used `KeyValueDb` implementation via the `keyValueDbProvider`. The `ref` is available as a property to all `Notifier` subclasses, we do no need to pass it in. If we use `StateNotifier` we have to pass it a `ref`.
 
@@ -891,7 +891,7 @@ The one for the dark theme is equivalent and not shown here.
 
 The `AppTheme` is again a very simple class, with only static functions and constants. The core functions are the `AppTheme.light` and `AppTheme.dark` ones. The rest is just constants to define some example custom theme colors, and to build a const list that contains all available color themes we can switch between.
 
-The `AppTheme.light` and `AppTheme.dark` functions are pretty equivalent, the dark theme as a few more parameters. Some used parameters share the `Settings` providers, but in cases where it make sense, we have separate `Settings` providers for the light and dark theme, so light and dark theme parameters can be controlled and configured separately.
+The `AppTheme.light` and `AppTheme.dark` functions are pretty equivalent, the dark theme as a few more parameters. Some used parameters share the `Settings` providers, but in cases where it makes sense, we have separate `Settings` providers for the light and dark theme, so light and dark theme parameters can be controlled and configured separately.
 
 ```dart
 /// The themes for this app are defined here.
@@ -997,7 +997,7 @@ To make it give us a bit more information, we show the provider `name` and its `
 
 Let's take a look at what our debug logs look in our `ThemeDemo` application when we start the app.
 
-On app startup we see setup of the default key-value DB implementation, which is **Hive**. We see see its local storage path and filename setup. We also see the configuration of the `listener`. These logs come from other `debugPrints` in the app.
+On app startup we see setup of the default key-value DB implementation, which is **Hive**. We see its local storage path and filename setup. We also see the configuration of the `listener`. These logs come from other `debugPrints` in the app.
 
 ```
 flutter: KeyValueDbHive: init called, _isInitialized = false
@@ -1070,7 +1070,7 @@ flutter:   Old value : ThemeData#f1f1e
 flutter:   New value : ThemeData#6d366
 ```
 
-Again the UI widgets associated `darkSwapColorsProvider` controller property we was modified and its value persisted, but in this case the `darkThemeProvider` also gave us new `ThemeData` for the `darkTheme` in the `MaterialApp` and we saw the theme change, since the `MaterialApp` got new `ThemeData`for the dark mode that we are looking at.
+Again the UI widgets associated `darkSwapColorsProvider` controller property was modified and its value persisted, but in this case the `darkThemeProvider` also gave us new `ThemeData` for the `darkTheme` in the `MaterialApp` and we saw the theme change, since the `MaterialApp` got new `ThemeData`for the dark mode that we are looking at.
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer03.png?raw=true" alt="Observer step 3" width="350"/>
 
@@ -1196,7 +1196,7 @@ flutter: Prefs get   : ["useSubThemes"] = true (bool)
 flutter: Prefs get   : ["defaultRadius"] = -1.0 (double?)
 ```
 
-Lastly and as before, if the settings controller providers, gets new values, the `ThemeData` will update and the `MaterialApp` will rebuild and we see a theme that the matches the settings values that were stored in the settings key-value DB we changed to:
+Lastly and as before, if the settings controller providers, gets new values, the `ThemeData` will update and the `MaterialApp` will rebuild, and we see a theme that the matches the settings values that were stored in the settings key-value DB we changed to:
 
 ```
 flutter: PROVIDER    : lightThemeProvider
@@ -1209,11 +1209,11 @@ flutter:   Old value : ThemeData#67f91
 flutter:   New value : ThemeData#667cc
 ```
 
-As a result we got a totally new new theme that came from whatever settings had been previously stored in the local Shared Preferences storage, could have been app defaults to if it had never been used before on this device.
+As a result we got a totally new theme that came from whatever settings had been previously stored in the local Shared Preferences storage, could have been app defaults to if it had never been used before on this device.
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/observer06.png?raw=true" alt="Observer step 6" width="350"/>
 
-This is honestly pretty cool and handy stuff, and kind of hyper reactive in an very nice "everything is connected" way. 
+This is honestly pretty cool and handy stuff, and kind of hyper reactive in a very nice "everything is connected" way. 
 
 To really see and understand all the above, try building the app yourself and running it in debug mode.First play around and make sure you have modified enough settings values in both Hive and Shared Preferences implementations. Then do a **hot restart** of the app and follow the steps above, observe the app UI and the debug logs as you do. It gives very good insights into what is going on in the app. Feel free to play around with it more to see how other UI control widgets behave. 
 
@@ -1221,11 +1221,11 @@ You will notice that FlexColorScheme and Riverpod plays well together here, and 
 
 ## More About FlexColorScheme
 
-To learn more about what **FlexColorScheme** does with all the properties we used above, and understanding what is involved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and also to when needed check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html). Doing so, you will not only learn about FlexcolorScheme, but also get a deeper understand of theming Flutter apps in general, and get a handle on seed generated Material 3 ColorSchemes as well.
+To learn more about what **FlexColorScheme** does with all the properties we used above, and understanding what is involved in all its theming magic, I recommend reading the [FlexColorScheme docs](https://docs.flexcolorscheme.com/) from start to finnish, and also to when needed check out its very complete [API documentation](https://pub.dev/documentation/flex_color_scheme/latest/flex_color_scheme/flex_color_scheme-library.html). Doing so, you will not only learn about FlexColorScheme, but also get a deeper understand of theming Flutter apps in general, and get a handle on seed generated Material 3 ColorSchemes as well.
 
 ## Questions?
 
-If there is anything in this additional stand-alone **FlexColorScheme** with **Riverpod** tutorial **ThemeDemo** app, that you would like further explanations and insights on, or maybe just to discuss the ThemeDemo app in general. Then your are welcome to ask your questions and add comments in the repo [Discussions](https://github.com/rydmike/theme_demo/discussions). I might extend this readme to clarify any frequent questions, or answer your questions directly in the discussions.
+If there is anything in this additional stand-alone **FlexColorScheme** with **Riverpod** tutorial **ThemeDemo** app, that you would like further explanations and insights on, or maybe just to discuss the ThemeDemo app in general. Then you are welcome to ask your questions and add comments in the repo [Discussions](https://github.com/rydmike/theme_demo/discussions). I might extend this readme to clarify any frequent questions, or answer your questions directly in the discussions.
 
 | Theme Showcase 1/2                                                                                   | Theme Showcase 2/2                                                                                   |
 | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
