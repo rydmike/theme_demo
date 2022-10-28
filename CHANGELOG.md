@@ -2,10 +2,9 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
-
 ## 0.9.2
 
-**Oct 27-28, 2022**
+**Oct 28, 2022**
 
 This version bump is an internal change to using `Notifier` instead of `StateNotifier` when possible. It also moves the counter `StateProvider` to `NotifierProvider` to make its code more expressive. Application functionality remains unchanged. This change uses the new Riverpod 2 `Notifier` and `NotifierProvider`.
 
@@ -13,8 +12,6 @@ This version bump is an internal change to using `Notifier` instead of `StateNot
 * Changed `SettingsEntry` from extending `StateNotifier` to simpler `Notifier` class.
 * Changed all `Settings` providers from `StateNotifierProvider` to `NotifierProvider`.
  
-
-
 ## 0.9.1
 
 **Oct 27-28, 2022**
