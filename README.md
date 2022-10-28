@@ -537,7 +537,7 @@ We won't go through these implementations here, but you can find the [Hive one h
 
 ## Settings
 
-The settings approach used in this demo might be considered a bit controversial. I like it for the simplicity it results in when persisting and using the individual key-value pair controllers. Because it also gives each `Settings` entry value its own provider, it is very simple to use in UI widgets.
+The settings approach used in this demo might be considered a bit controversial. I like it for the simplicity it results in when persisting and using all the individual key-value pair controllers. Because it also gives each `Settings` entry value its own provider, it is very simple to use in UI widgets.
 
 The used `Settings` class is actually only a static container class. We could just as well have it all as top level `const` and `final` values. However, wrapping them in `Settings` class, name spaces them and encapsulates them nicely. Basically this is like using classes to wrap app config constant values. Purist Dart guide says don't do this. I say do, even Flutter repo uses them, so in my [lint rules](https://rydmike.com/blog_flutter_linting) I also allow them, in fact I like and prefer them. Do it for the global name spacing and nice code completion it gives you when using them. This demo app also uses this for a number application constants in several `AppNnnn` const classes, you can find them in the `core\constants` folder.
 
@@ -547,7 +547,7 @@ In the `Settings` statics only class, we basically have the following:
 - Private static constant string keys for all the settings entry DB keys.
 - A static function to `reset` all settings to their default values.
 - A static function to `init` all settings entry values to the values they have in the DB.
-- A static final `StateNotifierProvider` of type `SettingsEntry` for every settings value.
+- A static final `NotifierProvider` of type `SettingsEntry` for every settings value.
 
 We can see this below where three settings values implementations are presented as an example.
 
@@ -588,14 +588,13 @@ class Settings {
     // 8< - - - snip, repetitive init code cut. - - - 
   }
 
-  /// String DB key used for defining if we use Material 3 or Material 2.
+  /// String key used for defining if we use Material 3 or Material 2.
   static const String _keyUseMaterial3 = 'useMaterial3';
   /// Provider for swapping primary and secondary colors in light theme mode.
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-  useMaterial3Provider = StateNotifierProvider<SettingsEntry<bool>, bool>(
-            (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      useMaterial3Provider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _useMaterial3,
         key: _keyUseMaterial3,
       );
@@ -604,16 +603,14 @@ class Settings {
     name: '${_keyUseMaterial3}Provider',
   );
 
-  /// String DB key used for storing the last used app theme mode.
+  /// String key used for storing the last used app theme mode.
   static const String _keyThemeMode = 'themeMode';
   /// The themeModeProvider represents a [StateProvider] to provide the state of
   /// the [ThemeMode], so to be able to toggle the application wide theme mode.
-  static final StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
-  themeModeProvider =
-  StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>(
-            (StateNotifierProviderRef<SettingsEntry<ThemeMode>, ThemeMode> ref) {
+  static final NotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
+      themeModeProvider = NotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>(
+    () {
       return SettingsEntry<ThemeMode>(
-        ref,
         defaultValue: _themeMode,
         key: _keyThemeMode,
       );
@@ -621,14 +618,14 @@ class Settings {
     name: '${_keyThemeMode}Provider',
   );
 
-  /// String DB key for storing theme settings index.
+  /// String key for storing theme settings index.
   static const String _keySchemeIndex = 'schemeIndex';
+
   /// The index provider of the currently used color scheme and theme.
-  static final StateNotifierProvider<SettingsEntry<int>, int>
-  schemeIndexProvider = StateNotifierProvider<SettingsEntry<int>, int>(
-            (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+  static final NotifierProvider<SettingsEntry<int>, int> schemeIndexProvider =
+      NotifierProvider<SettingsEntry<int>, int>(
+    () {
       return SettingsEntry<int>(
-        ref,
         defaultValue: _schemeIndex,
         key: _keySchemeIndex,
       );
@@ -642,19 +639,19 @@ class Settings {
 ```
 
 All the above are just static definitions, sure there is quite a bit of them, but it is
-pretty straight forward. The `SettingsEntry` based `StateNotifierProvider` providers may look a bit complex, perhaps it is because this code base uses lint rules that requires you to explicitly always specify all types.
+pretty straight forward. The `SettingsEntry` based `NotifierProvider` providers may look a bit complex, perhaps it is because this code base uses lint rules that requires you to explicitly always specify all types. 
 
 Let's examine the `SettingsEntry` class to better understand what is happening in it.
 
 ### Settings Entry
 
-The `SettingsEntry` class is a an extension of the `StateNotifier` class. It is also a generic, so we can use it with arbitrary data types. The generic types we can use, does however have the limitation that it also has to be supported by our used `KeyValueDb` implementations.
+The `SettingsEntry` class is an extension of the `Notifier` class, which is a bit simpler to use than the `StateNotifier`. It is also a generic, so we can use it with arbitrary data types. The generic types we can use, do however have the limitation that they also has to be supported by our used `KeyValueDb` implementations.
 
-A `SettingsEntry` gets a Riverpod `Ref` object, that we use to find the currently used `KeyValueDb` implementation via the `keyValueDbProvider`.
+When we use the `Notifier` class instead of `StateNotifier`, we do not need to pass our `SettingsEntry` a Riverpod `Ref` object, that we need to find and read the currently used `KeyValueDb` implementation via the `keyValueDbProvider`. The `ref` is available as a property to all `Notifier` subclasses, we do no need to pass it in. If we use `StateNotifier` we have to pass it a `ref`.
 
-It also requires a default value of same generic type `<T>`, that we will use to tell the DB to return if there is no value stored for the String `key`, that is required to get the stored settings value.
+The `SettingsEntry` class requires a default value of same generic type `<T>`, that we will use to tell the DB to return if there is no value stored for the String `key`, that is also required and used to get the stored settings value for this entry.
 
-When we read a `StateNotifierProvider` of type `SettingsEntry`, it will be instantiated and initialized with appropriate start value via its `init()` method, by getting a value either from the key-value DB, if it had a value stored for the used `key`, or via the provided `defaultValue`.
+When we read a `NotifierProvider` of type `SettingsEntry`, it will be instantiated and initialized with appropriate start value via its `init()` method, by getting a value either from the key-value DB, if it had a value stored for the used `key`, or via the provided `defaultValue`.
 
 We also define a `set(T newValue)` function that will update both the state of the provider, and the key-value DB entry to the new value.
 
@@ -662,30 +659,42 @@ We also define a `set(T newValue)` function that will update both the state of t
 /// A persisted app settings entry class.
 ///
 /// Can be of any value type that the used key-value DB implementation supports.
-class SettingsEntry<T> extends StateNotifier<T> {
-  final Ref ref;
-  final T defaultValue;
-  final String key;
-
-  SettingsEntry(
-    this.ref, {
+class SettingsEntry<T> extends Notifier<T> {
+  SettingsEntry({
     required this.key,
     required this.defaultValue,
-  }) : super(defaultValue) {
-    // Initialize the notifier's state value.
+  });
+
+  /// The default value of the Settings entry, used if no value in ke-value DB
+  /// exists.
+  final T defaultValue;
+
+  /// The key used to retrieve the settings entry value from the key-value DB.
+  final String key;
+
+  /// Creating the Notifier sets state to [defaultValue] runs [init] and
+  /// returns state.
+  ///
+  /// In [init] if key-value db had a value with given key, it sets state to
+  /// it, else it sets state to [defaultValue].
+  @override
+  T build() {
+    // To make sure the Notifier's state is initialized start by giving it,
+    // a default value.
+    state = defaultValue;
     init();
+    return state;
   }
 
   /// Init the settings entry from the used key-value DB implementation.
   void init() {
     // Get the used-key value DB implementation.
+    // Notifier has access to ref directly, new and handy in Riverpod 2.
     final KeyValueDb db = ref.read(keyValueDbProvider);
     // Read the value for the provided key from the used key-value DB.
     // The db value get returns the default value if key does not exist in it.
     final T newValue = db.get(key, defaultValue);
     // Only set state to db value if it is different from current value.
-    // StateNotifier does not emit a new state either if value is identical,
-    // but we check too so we can exit earlier and to be very explicit about it.
     if (state != newValue) state = newValue;
   }
 
@@ -1037,7 +1046,7 @@ Next let's only tap the **Theme mode** control and change from current `light` t
 
 ```
 flutter: PROVIDER    : themeModeProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<ThemeMode>, ThemeMode>
 flutter:   Old value : ThemeMode.light
 flutter:   New value : ThemeMode.dark
 flutter: Hive put    : ["themeMode"] = ThemeMode.dark (ThemeMode)
@@ -1051,7 +1060,7 @@ Let's then try to toggle something that will only affect the dark theme. The **S
 
 ```
 flutter: PROVIDER    : darkSwapColorsProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<bool>, bool>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<bool>, bool>
 flutter:   Old value : false
 flutter:   New value : true
 flutter: Hive put    : ["darkSwapColors"] = true (bool)
@@ -1069,7 +1078,7 @@ Let's try a toggle that will affect both the light and dark theme, one that shar
 
 ```
 flutter: PROVIDER    : useMaterial3Provider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<bool>, bool>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<bool>, bool>
 flutter:   Old value : false
 flutter:   New value : true
 flutter: Hive put    : ["useMaterial3"] = true (bool)
@@ -1091,7 +1100,7 @@ Next let's toggle back to light theme mode:
 
 ```
 flutter: PROVIDER    : themeModeProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<ThemeMode>, ThemeMode>
 flutter:   Old value : ThemeMode.dark
 flutter:   New value : ThemeMode.light
 flutter: Hive put    : ["themeMode"] = ThemeMode.light (ThemeMode)
@@ -1129,7 +1138,7 @@ Above we see that the old `keyValueDbProvider` is disposed when we used the UI `
 
 The change in value of the `usedKeyValueDbProvider` triggered the callback on the `listener` we have defined, where the new Shared Preferences key-value DB is initialized with an async `keyValueDb.init()` call, and `Settings.init()` is also called.
 
-Calling `Settings.init` causes all settings values to be retrieved from the Shared Preference key-value DB. If a settings value stored in it, has a different value than the UI control currently has, each impacted UI control is also updated. This happens since each associated provider state is changed in `Settings.init` if its value was different in the swapped in settings key-value DB. Below we see the values gotten from the `KeyValueDbPrefs` and `StateNotifierProvider<SettingsEntry>` providers being updated only if the value changed from previous value. In the app we see it as UI theme controls changing positions and values:
+Calling `Settings.init` causes all settings values to be retrieved from the Shared Preference key-value DB. If a settings value stored in it, has a different value than the UI control currently has, each impacted UI control is also updated. This happens since each associated provider state is changed in `Settings.init` if its value was different in the swapped in settings key-value DB. Below we see the values gotten from the `KeyValueDbPrefs` and `NotifierProvider<SettingsEntry>` providers being updated only if the value changed from previous value. In the app we see it as UI theme controls changing positions and values:
 
 ```
 flutter: Settings: init DB values
@@ -1138,7 +1147,7 @@ flutter: Prefs type  : ThemeMode    : themeMode as 1
 flutter: Prefs get   : ["themeMode"] = 1 (int)
 flutter: Prefs get   : ["schemeIndex"] = 13 (int)
 flutter: PROVIDER    : schemeIndexProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<int>, int>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<int>, int>
 flutter:   Old value : 29
 flutter:   New value : 13
 flutter: Prefs type  : FlexSurfaceMode  : lightSurfaceMode as null
@@ -1147,18 +1156,18 @@ flutter: Prefs type  : FlexSurfaceMode  : darkSurfaceMode as null
 flutter: Prefs get   : ["darkSurfaceMode"] = null (Null)
 flutter: Prefs get   : ["lightBlendLevel"] = 16 (int)
 flutter: PROVIDER    : lightBlendLevelProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<int>, int>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<int>, int>
 flutter:   Old value : 5
 flutter:   New value : 16
 flutter: Prefs get   : ["darkBlendLevel"] = 28 (int)
 flutter: PROVIDER    : darkBlendLevelProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<int>, int>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<int>, int>
 flutter:   Old value : 25
 flutter:   New value : 28
 flutter: Prefs get   : ["lightSwapColors"] = false (bool)
 flutter: Prefs get   : ["darkSwapColors"] = false (bool)
 flutter: PROVIDER    : darkSwapColorsProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<bool>, bool>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<bool>, bool>
 flutter:   Old value : true
 flutter:   New value : false
 flutter: Prefs get   : ["appBarElevation"] = 0.0 (double)
@@ -1167,14 +1176,14 @@ flutter: Prefs get   : ["lightAppBarStyle"] = -1 (int)
 flutter: Prefs type  : FlexAppBarStyle? : darkAppBarStyle as 2
 flutter: Prefs get   : ["darkAppBarStyle"] = 2 (int)
 flutter: PROVIDER    : darkAppBarStyleProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>
 flutter:   Old value : null
 flutter:   New value : FlexAppBarStyle.surface
 flutter: Prefs get   : ["transparentStatusBar"] = true (bool)
 flutter: Prefs get   : ["lightAppBarOpacity"] = 0.95 (double)
 flutter: Prefs get   : ["darkAppBarOpacity"] = 0.93 (double)
 flutter: PROVIDER    : darkAppBarOpacityProvider
-flutter:   Type      : StateNotifierProvider<SettingsEntry<double>, double>
+flutter:   Type      : NotifierProviderImpl<SettingsEntry<double>, double>
 flutter:   Old value : 0.91
 flutter:   New value : 0.93
 flutter: Prefs get   : ["darkIsTrueBlack"] = false (bool)
