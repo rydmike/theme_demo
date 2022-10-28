@@ -177,7 +177,7 @@ class _MyHomePageState extends ConsumerState<HomePage> {
       floatingActionButton: FloatingActionButton(
         heroTag: null,
         onPressed: () {
-          ref.read(counterProvider.notifier).update((int state) => state + 1);
+          ref.read(counterProvider.notifier).increment();
         },
         tooltip: 'Increment',
         child: const Icon(AppIcons.add),
