@@ -8,18 +8,31 @@ import '../../persistence/key_value/models/key_value_db_provider.dart';
 /// A persisted app settings entry class.
 ///
 /// Can be of any value type that the used key-value DB implementation supports.
-class SettingsEntry<T> extends StateNotifier<T> {
-  final Ref ref;
-  final T defaultValue;
-  final String key;
-
-  SettingsEntry(
-    this.ref, {
+class SettingsEntry<T> extends Notifier<T> {
+  SettingsEntry({
     required this.key,
     required this.defaultValue,
-  }) : super(defaultValue) {
-    // Initialize the notifier's state value.
+  });
+
+  /// The default value of the Settings entry, used if no value in ke-value DB
+  /// exists.
+  final T defaultValue;
+
+  /// The key used to retrieve the settings entry value from the key-value DB.
+  final String key;
+
+  /// Creating the Notifier sets state to [defaultValue] runs [init] and
+  /// returns state.
+  ///
+  /// In [init] if key-value db had a value with given key, it sets state to
+  /// it, else it sets state to [defaultValue].
+  @override
+  T build() {
+    // To make sure the Notifier's state is initialized start by giving it,
+    // a default value.
+    state = defaultValue;
     init();
+    return state;
   }
 
   /// Init the settings entry from the used key-value DB implementation.
@@ -34,13 +47,12 @@ class SettingsEntry<T> extends StateNotifier<T> {
   /// already initialized, use the current state value of the notifier for that.
   void init() {
     // Get the used-key value DB implementation.
+    // Notifier has access to ref directly, new and handy in Riverpod 2.
     final KeyValueDb db = ref.read(keyValueDbProvider);
     // Read the value for the provided key from the used key-value DB.
     // The db value get returns the default value if key does not exist in it.
     final T newValue = db.get(key, defaultValue);
     // Only set state to db value if it is different from current value.
-    // StateNotifier does not emit a new state either if value is identical,
-    // but we check too so we can exit earlier and to be very explicit about it.
     if (state != newValue) state = newValue;
   }
 

@@ -150,11 +150,10 @@ class Settings {
   /// Provider for swapping primary and secondary colors in light theme mode.
   ///
   /// Defaults to [_useMaterial3].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      useMaterial3Provider = StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      useMaterial3Provider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _useMaterial3,
         key: _keyUseMaterial3,
       );
@@ -172,12 +171,10 @@ class Settings {
   /// the [ThemeMode], so to be able to toggle the application wide theme mode.
   ///
   /// Defaults to [_themeMode].
-  static final StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
-      themeModeProvider =
-      StateNotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>(
-    (StateNotifierProviderRef<SettingsEntry<ThemeMode>, ThemeMode> ref) {
+  static final NotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>
+      themeModeProvider = NotifierProvider<SettingsEntry<ThemeMode>, ThemeMode>(
+    () {
       return SettingsEntry<ThemeMode>(
-        ref,
         defaultValue: _themeMode,
         key: _keyThemeMode,
       );
@@ -193,11 +190,10 @@ class Settings {
   /// The index provider of the currently used color scheme and theme.
   ///
   /// Defaults to first color scheme index: [_schemeIndex].
-  static final StateNotifierProvider<SettingsEntry<int>, int>
-      schemeIndexProvider = StateNotifierProvider<SettingsEntry<int>, int>(
-    (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+  static final NotifierProvider<SettingsEntry<int>, int> schemeIndexProvider =
+      NotifierProvider<SettingsEntry<int>, int>(
+    () {
       return SettingsEntry<int>(
-        ref,
         defaultValue: _schemeIndex,
         key: _keySchemeIndex,
       );
@@ -214,13 +210,11 @@ class Settings {
   /// The primary colored light surface branding mode provider.
   ///
   /// Defaults to [_lightSurfaceMode].
-  static final StateNotifierProvider<SettingsEntry<FlexSurfaceMode>,
-          FlexSurfaceMode> lightSurfaceModeProvider =
-      StateNotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>(
-    (StateNotifierProviderRef<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>
-        ref) {
+  static final NotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>
+      lightSurfaceModeProvider =
+      NotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>(
+    () {
       return SettingsEntry<FlexSurfaceMode>(
-        ref,
         defaultValue: _lightSurfaceMode,
         key: _keyLightSurfaceMode,
       );
@@ -237,13 +231,11 @@ class Settings {
   /// The primary colored dark surface branding mode provider.
   ///
   /// Defaults to [_darkSurfaceMode].
-  static final StateNotifierProvider<SettingsEntry<FlexSurfaceMode>,
-          FlexSurfaceMode> darkSurfaceModeProvider =
-      StateNotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>(
-    (StateNotifierProviderRef<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>
-        ref) {
+  static final NotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>
+      darkSurfaceModeProvider =
+      NotifierProvider<SettingsEntry<FlexSurfaceMode>, FlexSurfaceMode>(
+    () {
       return SettingsEntry<FlexSurfaceMode>(
-        ref,
         defaultValue: _darkSurfaceMode,
         key: _keyDarkSurfaceMode,
       );
@@ -260,11 +252,10 @@ class Settings {
   /// Provider for the strength of the blend level used by light surface mode.
   ///
   /// Defaults to [_lightBlendLevel].
-  static final StateNotifierProvider<SettingsEntry<int>, int>
-      lightBlendLevelProvider = StateNotifierProvider<SettingsEntry<int>, int>(
-    (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+  static final NotifierProvider<SettingsEntry<int>, int>
+      lightBlendLevelProvider = NotifierProvider<SettingsEntry<int>, int>(
+    () {
       return SettingsEntry<int>(
-        ref,
         defaultValue: _lightBlendLevel,
         key: _keyLightBlendLevel,
       );
@@ -281,11 +272,10 @@ class Settings {
   /// Provider for the strength of the blend level used by dark surface mode.
   ///
   /// Defaults to [_darkBlendLevel].
-  static final StateNotifierProvider<SettingsEntry<int>, int>
-      darkBlendLevelProvider = StateNotifierProvider<SettingsEntry<int>, int>(
-    (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+  static final NotifierProvider<SettingsEntry<int>, int>
+      darkBlendLevelProvider = NotifierProvider<SettingsEntry<int>, int>(
+    () {
       return SettingsEntry<int>(
-        ref,
         defaultValue: _darkBlendLevel,
         key: _keyDarkBlendLevel,
       );
@@ -302,12 +292,10 @@ class Settings {
   /// Provider for swapping primary and secondary colors in light theme mode.
   ///
   /// Defaults to [_lightSwapColors].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      lightSwapColorsProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      lightSwapColorsProvider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _lightSwapColors,
         key: _keyLightSwapColors,
       );
@@ -324,11 +312,10 @@ class Settings {
   /// Provider for swapping primary and secondary colors in dark theme mode.
   ///
   /// Defaults to [_darkSwapColors].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      darkSwapColorsProvider = StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      darkSwapColorsProvider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _darkSwapColors,
         key: _keyDarkSwapColors,
       );
@@ -345,12 +332,10 @@ class Settings {
   /// Provider for the elevation level used on the AppBar theme.
   ///
   /// Defaults to [_appBarElevation].
-  static final StateNotifierProvider<SettingsEntry<double>, double>
-      appBarElevationProvider =
-      StateNotifierProvider<SettingsEntry<double>, double>(
-    (StateNotifierProviderRef<SettingsEntry<double>, double> ref) {
+  static final NotifierProvider<SettingsEntry<double>, double>
+      appBarElevationProvider = NotifierProvider<SettingsEntry<double>, double>(
+    () {
       return SettingsEntry<double>(
-        ref,
         defaultValue: _appBarElevation,
         key: _keyAppBarElevation,
       );
@@ -368,13 +353,11 @@ class Settings {
   ///
   /// Defaults to [_lightAppBarStyle].
   /// Primary color is the default for Material 2 apps.
-  static final StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>,
+  static final NotifierProvider<SettingsEntry<FlexAppBarStyle?>,
           FlexAppBarStyle?> lightAppBarStyleProvider =
-      StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>(
-    (StateNotifierProviderRef<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>
-        ref) {
+      NotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>(
+    () {
       return SettingsEntry<FlexAppBarStyle?>(
-        ref,
         defaultValue: _lightAppBarStyle,
         key: _keyLightAppBarStyle,
       );
@@ -395,13 +378,11 @@ class Settings {
   /// the Material background color  for active theme mode. The used default
   /// here [FlexAppBarStyle.background] is the background color that gets
   /// primary color branding based on the current [FlexSurfaceMode] setting.
-  static final StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>,
+  static final NotifierProvider<SettingsEntry<FlexAppBarStyle?>,
           FlexAppBarStyle?> darkAppBarStyleProvider =
-      StateNotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>(
-    (StateNotifierProviderRef<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>
-        ref) {
+      NotifierProvider<SettingsEntry<FlexAppBarStyle?>, FlexAppBarStyle?>(
+    () {
       return SettingsEntry<FlexAppBarStyle?>(
-        ref,
         defaultValue: _darkAppBarStyle,
         key: _keyDarkAppBarStyle,
       );
@@ -418,12 +399,11 @@ class Settings {
   /// Provider for swapping primary and secondary colors in dark theme mode.
   ///
   /// Defaults to [_transparentStatusBar].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+  static final NotifierProvider<SettingsEntry<bool>, bool>
       transparentStatusBarProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _transparentStatusBar,
         key: _keyTransparentStatusBar,
       );
@@ -440,12 +420,11 @@ class Settings {
   /// Provider for the light [AppBar] opacity.
   ///
   /// Defaults to [_lightAppBarOpacity].
-  static final StateNotifierProvider<SettingsEntry<double>, double>
+  static final NotifierProvider<SettingsEntry<double>, double>
       lightAppBarOpacityProvider =
-      StateNotifierProvider<SettingsEntry<double>, double>(
-    (StateNotifierProviderRef<SettingsEntry<double>, double> ref) {
+      NotifierProvider<SettingsEntry<double>, double>(
+    () {
       return SettingsEntry<double>(
-        ref,
         defaultValue: _lightAppBarOpacity,
         key: _keyLightAppBarOpacity,
       );
@@ -462,12 +441,11 @@ class Settings {
   /// Provider for the dark [AppBar] opacity.
   ///
   /// Defaults to [_darkAppBarOpacity].
-  static final StateNotifierProvider<SettingsEntry<double>, double>
+  static final NotifierProvider<SettingsEntry<double>, double>
       darkAppBarOpacityProvider =
-      StateNotifierProvider<SettingsEntry<double>, double>(
-    (StateNotifierProviderRef<SettingsEntry<double>, double> ref) {
+      NotifierProvider<SettingsEntry<double>, double>(
+    () {
       return SettingsEntry<double>(
-        ref,
         defaultValue: _darkAppBarOpacity,
         key: _keyDarkAppBarOpacity,
       );
@@ -484,12 +462,10 @@ class Settings {
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
   /// Defaults to [_darkIsTrueBlack].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      darkIsTrueBlackProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      darkIsTrueBlackProvider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _darkIsTrueBlack,
         key: _keyDarkIsTrueBlack,
       );
@@ -519,12 +495,10 @@ class Settings {
   /// that you think work well enough and use that as the dark scheme color
   /// input instead. There is an example of this in the FlexColorScheme package
   /// tutorial as well.
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      darkComputeThemeProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      darkComputeThemeProvider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _darkComputeTheme,
         key: _keyDarkComputeTheme,
       );
@@ -548,11 +522,10 @@ class Settings {
   /// scheme colors are, and personal preferences.
   ///
   /// Defaults to [_darkComputeLevel]%.
-  static final StateNotifierProvider<SettingsEntry<int>, int>
-      darkComputeLevelProvider = StateNotifierProvider<SettingsEntry<int>, int>(
-    (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+  static final NotifierProvider<SettingsEntry<int>, int>
+      darkComputeLevelProvider = NotifierProvider<SettingsEntry<int>, int>(
+    () {
       return SettingsEntry<int>(
-        ref,
         defaultValue: _darkComputeLevel,
         key: _keyDarkComputeLevel,
       );
@@ -570,12 +543,10 @@ class Settings {
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
   /// Defaults to [_usePrimaryKeyColor].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      usePrimaryKeyColorProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      usePrimaryKeyColorProvider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _usePrimaryKeyColor,
         key: _keyUsePrimaryKeyColor,
       );
@@ -593,12 +564,11 @@ class Settings {
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
   /// Defaults to [_useSecondaryKeyColor].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
+  static final NotifierProvider<SettingsEntry<bool>, bool>
       useSecondaryKeyColorProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+      NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _useSecondaryKeyColor,
         key: _keyUseSecondaryKeyColor,
       );
@@ -616,12 +586,10 @@ class Settings {
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
   /// Defaults to [_useTertiaryKeyColor].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      useTertiaryKeyColorProvider =
-      StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      useTertiaryKeyColorProvider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _useTertiaryKeyColor,
         key: _keyUseTertiaryKeyColor,
       );
@@ -645,11 +613,10 @@ class Settings {
   /// example of that, until I change it to an enum :)
   ///
   /// Defaults to [_usedFlexTone].
-  static final StateNotifierProvider<SettingsEntry<int>, int>
-      usedFlexToneProvider = StateNotifierProvider<SettingsEntry<int>, int>(
-    (StateNotifierProviderRef<SettingsEntry<int>, int> ref) {
+  static final NotifierProvider<SettingsEntry<int>, int> usedFlexToneProvider =
+      NotifierProvider<SettingsEntry<int>, int>(
+    () {
       return SettingsEntry<int>(
-        ref,
         defaultValue: _usedFlexTone,
         key: _keyUsedFlexTone,
       );
@@ -666,11 +633,10 @@ class Settings {
   /// Provider for using true black, instead of normal dark, in dark theme mode.
   ///
   /// Defaults to [_useSubThemes].
-  static final StateNotifierProvider<SettingsEntry<bool>, bool>
-      useSubThemesProvider = StateNotifierProvider<SettingsEntry<bool>, bool>(
-    (StateNotifierProviderRef<SettingsEntry<bool>, bool> ref) {
+  static final NotifierProvider<SettingsEntry<bool>, bool>
+      useSubThemesProvider = NotifierProvider<SettingsEntry<bool>, bool>(
+    () {
       return SettingsEntry<bool>(
-        ref,
         defaultValue: _useSubThemes,
         key: _keyUseSubThemes,
       );
@@ -687,12 +653,10 @@ class Settings {
   /// Provider for the default border radius.
   ///
   /// Defaults to [_defaultRadius].
-  static final StateNotifierProvider<SettingsEntry<double?>, double?>
-      defaultRadiusProvider =
-      StateNotifierProvider<SettingsEntry<double?>, double?>(
-    (StateNotifierProviderRef<SettingsEntry<double?>, double?> ref) {
+  static final NotifierProvider<SettingsEntry<double?>, double?>
+      defaultRadiusProvider = NotifierProvider<SettingsEntry<double?>, double?>(
+    () {
       return SettingsEntry<double?>(
-        ref,
         defaultValue: _defaultRadius,
         key: _keyDefaultRadius,
       );

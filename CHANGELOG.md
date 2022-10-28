@@ -7,9 +7,12 @@ All notable changes to the **ThemeDemo** application are documented here.
 
 **Oct 27-28, 2022**
 
-* Example of using NotifierProvider instead of StateProvider, gives us more expressive code.
- * Change counterProver from StateProvider to NotifierProvider.
+This version bump is an internal change to using `Notifier` instead of `StateNotifier` when possible. It also moves the counter `StateProvider` to `NotifierProvider` to make its code more expressive. Application functionality remains unchanged. This change uses the new Riverpod 2 `Notifier` and `NotifierProvider`.
 
+* Counter demo got a `Counter` model class that extends `Notifier` and it got an `incement` method. Its provider was changed StateProvider, to a `NotifierProvider`.
+* Changed `SettingsEntry` from extending `StateNotifier` to simpler `Notifier` class.
+* Changed all `Settings` providers from `StateNotifierProvider` to `NotifierProvider`.
+ 
 
 
 ## 0.9.1
