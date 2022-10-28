@@ -61,9 +61,9 @@ This demo is provided as an additional example to the six examples already inclu
 
 The demo UI uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based widgets as well as [SwitchListTile.adaptive](https://api.flutter.dev/flutter/material/SwitchListTile/SwitchListTile.adaptive.html), [Slider.adaptive](https://api.flutter.dev/flutter/material/Slider/Slider.adaptive.html) and [PopupMenuButton](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html), to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme theming features.
 
-The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `StateNotifierProviders`. They are used to define the current `ThemeData` for light and dark theme, as well as theme mode states.
+The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `NotifierProviders`. They are used to define the current `ThemeData` for light and dark theme, as well as theme mode states.
 
-It also shows how simple it is to make small UI theme control widgets that can be dropped in anywhere, were needed in an app, and then used to manipulate and modify the `ThemeData` of the application. The UI view widgets modify Riverpod `StateNotifierProviders`, that act as theme property controllers in `ThemeData` providers. The `MaterialApp` widget watches these providers for changes, and the application is rebuilt using new `ThemeData` whenever a single theming UI widget is changed anywhere in the application.
+It also shows how simple it is to make small UI theme control widgets that can be dropped in anywhere, were needed in an app, and then used to manipulate and modify the `ThemeData` of the application. The UI view widgets modify Riverpod `NotifierProviders`, that act as theme property controllers in `ThemeData` providers. The `MaterialApp` widget watches these providers for changes, and the application is rebuilt using new `ThemeData` whenever a single theming UI widget is changed anywhere in the application.
 
 | Home Screen 3/4                                                                                     | Home Screen 4/4                                                                                     |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -393,7 +393,7 @@ We also did not want to use a [**Freezed**](https://pub.dev/packages/freezed) or
 
 > Maybe later I will add a **ThemeDemo** branch that uses **Freezed** and `myProvider.select()` approach. It is of course possible to do so. It could be an interesting article to compare them and discuss pros and cons with both.
 
-For the settings entry properties, we could alternatively use just simple `StateProviders`. I have done so before, it works well. However, if we use `StateNotifier` and `StateNotifierProvider`, we have more control and can make an API for our settings entries that provides functions that reads very nicely when we use them.
+For the settings entry properties, we could alternatively use just simple `StateProviders`. I have done so before, it works well. However, if we use `Notifier` and `NotifierProvider`, we have more control and can make an API for our settings entries that provides functions that reads very nicely when we use them.
 
 When the app starts, it should set the state for each settings entry value by checking if its key exists in the key-value DB. If it exists, then this previously persisted value is used as start value. If the key did not exist, then a hard coded const default value for the settings entry value in question is used.
 
@@ -749,7 +749,7 @@ class UseMaterial3Switch extends ConsumerWidget {
 
 It is easy to see with a little of Riverpod insights that the switch `value` will change as soon as the `ref.watch(Settings.useMaterial3Provider)` changes its state value.
 
-You may first think that the `onChanged` callback function `ref.read(Settings.useMaterial3Provider.notifier).set` looks unfamiliar. It is however only a tear-off using the `set` method of the provider, which in this case will also be a function that takes a `bool` value, matching the signature of the switch `onChanged` callback. The `notifier` on the `ref.Read` on the `Settings.useMaterial3Provider` returns the underlying notifier, in this case `StateNotifier<Bool>`, we can then use its methods, in this case `set(bool newValue)`.
+You may first think that the `onChanged` callback function `ref.read(Settings.useMaterial3Provider.notifier).set` looks unfamiliar. It is however only a tear-off using the `set` method of the provider, which in this case will also be a function that takes a `bool` value, matching the signature of the switch `onChanged` callback. The `notifier` on the `ref.Read` on the `Settings.useMaterial3Provider` returns the underlying notifier, in this case `Notifier<Bool>`, we can then use its methods, in this case `set(bool newValue)`.
 
 For the UI we end with a simple `const` constructor widget, that needs no properties, we can drop it in as a widget wherever we want to control this setting in the application's UI. We can use it in **any** screen, dialog, drawer, bottom sheet, etc. When the switch is toggled, the updated settings value will be persisted and the application theme will change to reflect the new theme result.
 
