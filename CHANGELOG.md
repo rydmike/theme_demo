@@ -2,6 +2,16 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
+
+## 0.9.2
+
+**Oct 27-28, 2022**
+
+* Example of using NotifierProvider instead of StateProvider, gives us more expressive code.
+ * Change counterProver from StateProvider to NotifierProvider.
+
+
+
 ## 0.9.1
 
 **Oct 27-28, 2022**
