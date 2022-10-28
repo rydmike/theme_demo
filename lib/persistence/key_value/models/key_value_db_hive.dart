@@ -96,17 +96,17 @@ class KeyValueDbHive implements KeyValueDb {
   /// Don't change the adapter TypeIDs below. If you do make sure to delete
   /// the Hive storage box and start from a new one.
   void _registerHiveAdapters() {
-    _safeRegisterAdapter(150, ThemeModeAdapter(150));
-    _safeRegisterAdapter(151, ColorAdapter(151));
-    _safeRegisterAdapter(152, FlexSchemeAdapter(152));
-    _safeRegisterAdapter(153, FlexSurfaceModeAdapter(153));
-    _safeRegisterAdapter(154, FlexInputBorderTypeAdapter(154));
-    _safeRegisterAdapter(155, FlexAppBarStyleAdapter(155));
-    _safeRegisterAdapter(156, FlexTabBarStyleAdapter(156));
-    _safeRegisterAdapter(157, FlexSystemNavBarStyleAdapter(157));
-    _safeRegisterAdapter(158, FlexSchemeColorAdapter(158));
-    _safeRegisterAdapter(159, NavigationDestinationLabelBehaviorAdapter(159));
-    _safeRegisterAdapter(160, NavigationRailLabelTypeAdapter(160));
+    _safeRegisterAdapter(150, _ThemeModeAdapter(150));
+    _safeRegisterAdapter(151, _ColorAdapter(151));
+    _safeRegisterAdapter(152, _FlexSchemeAdapter(152));
+    _safeRegisterAdapter(153, _FlexSurfaceModeAdapter(153));
+    _safeRegisterAdapter(154, _FlexInputBorderTypeAdapter(154));
+    _safeRegisterAdapter(155, _FlexAppBarStyleAdapter(155));
+    _safeRegisterAdapter(156, _FlexTabBarStyleAdapter(156));
+    _safeRegisterAdapter(157, _FlexSystemNavBarStyleAdapter(157));
+    _safeRegisterAdapter(158, _FlexSchemeColorAdapter(158));
+    _safeRegisterAdapter(159, _NavigationDestinationLabelBehaviorAdapter(159));
+    _safeRegisterAdapter(160, _NavigationRailLabelTypeAdapter(160));
   }
 
   /// Hive keeps registered type adapters in a singleton that is not
@@ -169,8 +169,8 @@ class KeyValueDbHive implements KeyValueDb {
 }
 
 /// A Hive data type adapter for enum [ThemeMode].
-class ThemeModeAdapter extends TypeAdapter<ThemeMode> {
-  ThemeModeAdapter(this.id);
+class _ThemeModeAdapter extends TypeAdapter<ThemeMode> {
+  _ThemeModeAdapter(this.id);
   final int id;
 
   @override
@@ -189,8 +189,8 @@ class ThemeModeAdapter extends TypeAdapter<ThemeMode> {
 }
 
 /// A Hive data type adapter for class [Color].
-class ColorAdapter extends TypeAdapter<Color> {
-  ColorAdapter(this.id);
+class _ColorAdapter extends TypeAdapter<Color> {
+  _ColorAdapter(this.id);
   final int id;
 
   @override
@@ -209,8 +209,8 @@ class ColorAdapter extends TypeAdapter<Color> {
 }
 
 /// A Hive data type adapter for enum [FlexScheme].
-class FlexSchemeAdapter extends TypeAdapter<FlexScheme> {
-  FlexSchemeAdapter(this.id);
+class _FlexSchemeAdapter extends TypeAdapter<FlexScheme> {
+  _FlexSchemeAdapter(this.id);
   final int id;
 
   @override
@@ -229,8 +229,8 @@ class FlexSchemeAdapter extends TypeAdapter<FlexScheme> {
 }
 
 /// A Hive data type adapter for enum [FlexSurfaceMode].
-class FlexSurfaceModeAdapter extends TypeAdapter<FlexSurfaceMode> {
-  FlexSurfaceModeAdapter(this.id);
+class _FlexSurfaceModeAdapter extends TypeAdapter<FlexSurfaceMode> {
+  _FlexSurfaceModeAdapter(this.id);
   final int id;
 
   @override
@@ -249,8 +249,8 @@ class FlexSurfaceModeAdapter extends TypeAdapter<FlexSurfaceMode> {
 }
 
 /// A Hive data type adapter for enum [FlexInputBorderType].
-class FlexInputBorderTypeAdapter extends TypeAdapter<FlexInputBorderType> {
-  FlexInputBorderTypeAdapter(this.id);
+class _FlexInputBorderTypeAdapter extends TypeAdapter<FlexInputBorderType> {
+  _FlexInputBorderTypeAdapter(this.id);
   final int id;
 
   @override
@@ -269,8 +269,8 @@ class FlexInputBorderTypeAdapter extends TypeAdapter<FlexInputBorderType> {
 }
 
 /// A Hive data type adapter for enum [FlexAppBarStyle].
-class FlexAppBarStyleAdapter extends TypeAdapter<FlexAppBarStyle> {
-  FlexAppBarStyleAdapter(this.id);
+class _FlexAppBarStyleAdapter extends TypeAdapter<FlexAppBarStyle> {
+  _FlexAppBarStyleAdapter(this.id);
   final int id;
 
   @override
@@ -289,8 +289,8 @@ class FlexAppBarStyleAdapter extends TypeAdapter<FlexAppBarStyle> {
 }
 
 /// A Hive data type adapter for enum [FlexTabBarStyle].
-class FlexTabBarStyleAdapter extends TypeAdapter<FlexTabBarStyle> {
-  FlexTabBarStyleAdapter(this.id);
+class _FlexTabBarStyleAdapter extends TypeAdapter<FlexTabBarStyle> {
+  _FlexTabBarStyleAdapter(this.id);
   final int id;
 
   @override
@@ -309,8 +309,8 @@ class FlexTabBarStyleAdapter extends TypeAdapter<FlexTabBarStyle> {
 }
 
 /// A Hive data type adapter for enum [FlexSystemNavBarStyle].
-class FlexSystemNavBarStyleAdapter extends TypeAdapter<FlexSystemNavBarStyle> {
-  FlexSystemNavBarStyleAdapter(this.id);
+class _FlexSystemNavBarStyleAdapter extends TypeAdapter<FlexSystemNavBarStyle> {
+  _FlexSystemNavBarStyleAdapter(this.id);
   final int id;
 
   @override
@@ -332,8 +332,8 @@ class FlexSystemNavBarStyleAdapter extends TypeAdapter<FlexSystemNavBarStyle> {
 ///
 /// Handles storing <null> value as -1 and returns anything out of enum
 /// index range as null value.
-class FlexSchemeColorAdapter extends TypeAdapter<SchemeColor?> {
-  FlexSchemeColorAdapter(this.id);
+class _FlexSchemeColorAdapter extends TypeAdapter<SchemeColor?> {
+  _FlexSchemeColorAdapter(this.id);
   final int id;
 
   @override
@@ -356,9 +356,9 @@ class FlexSchemeColorAdapter extends TypeAdapter<SchemeColor?> {
 }
 
 /// A Hive data type adapter for enum [NavigationDestinationLabelBehavior].
-class NavigationDestinationLabelBehaviorAdapter
+class _NavigationDestinationLabelBehaviorAdapter
     extends TypeAdapter<NavigationDestinationLabelBehavior> {
-  NavigationDestinationLabelBehaviorAdapter(this.id);
+  _NavigationDestinationLabelBehaviorAdapter(this.id);
   final int id;
 
   @override
@@ -377,9 +377,9 @@ class NavigationDestinationLabelBehaviorAdapter
 }
 
 /// A Hive data type adapter for enum [NavigationRailLabelType].
-class NavigationRailLabelTypeAdapter
+class _NavigationRailLabelTypeAdapter
     extends TypeAdapter<NavigationRailLabelType> {
-  NavigationRailLabelTypeAdapter(this.id);
+  _NavigationRailLabelTypeAdapter(this.id);
   final int id;
 
   @override
