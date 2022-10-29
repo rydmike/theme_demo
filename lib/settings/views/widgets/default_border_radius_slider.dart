@@ -8,9 +8,9 @@ class DefaultBorderRadiusSlider extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final TextStyle style = Theme.of(context).textTheme.bodySmall!;
     final double? defaultRadius = ref.watch(Settings.defaultRadiusProvider);
     final bool useSubThemes = ref.watch(Settings.useSubThemesProvider);
-
     return ListTile(
       title: Slider.adaptive(
         min: -1,
@@ -37,7 +37,7 @@ class DefaultBorderRadiusSlider extends ConsumerWidget {
           children: <Widget>[
             Text(
               'RADIUS',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: style,
             ),
             Text(
               useSubThemes
@@ -45,10 +45,7 @@ class DefaultBorderRadiusSlider extends ConsumerWidget {
                       ? 'default'
                       : defaultRadius.toStringAsFixed(0)
                   : 'default 4',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: style.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),

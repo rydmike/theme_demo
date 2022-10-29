@@ -7,8 +7,8 @@ class AppBarElevationSlider extends ConsumerWidget {
   const AppBarElevationSlider({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final TextStyle style = Theme.of(context).textTheme.bodySmall!;
     final double elevation = ref.watch(Settings.appBarElevationProvider);
-    final TextTheme textTheme = Theme.of(context).textTheme;
     return ListTile(
       title: const Text('AppBar elevation'),
       subtitle: Column(
@@ -30,11 +30,11 @@ class AppBarElevationSlider extends ConsumerWidget {
           children: <Widget>[
             Text(
               'Elevation',
-              style: textTheme.caption,
+              style: style,
             ),
             Text(
               elevation.toStringAsFixed(1),
-              style: textTheme.caption!.copyWith(fontWeight: FontWeight.bold),
+              style: style.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),

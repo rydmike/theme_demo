@@ -95,6 +95,7 @@ class Settings {
     ref.read(usePrimaryKeyColorProvider.notifier).reset();
     ref.read(useSecondaryKeyColorProvider.notifier).reset();
     ref.read(useTertiaryKeyColorProvider.notifier).reset();
+    ref.read(usedFlexToneProvider.notifier).reset();
     // Use FlexColorScheme opinionated component themes.
     ref.read(useSubThemesProvider.notifier).reset();
     // Component theme global border radius.
@@ -136,6 +137,7 @@ class Settings {
     ref.read(usePrimaryKeyColorProvider.notifier).init();
     ref.read(useSecondaryKeyColorProvider.notifier).init();
     ref.read(useTertiaryKeyColorProvider.notifier).init();
+    ref.read(usedFlexToneProvider.notifier).init();
     // Use FlexColorScheme opinionated component themes.
     ref.read(useSubThemesProvider.notifier).init();
     // Component theme global border radius.

@@ -7,8 +7,8 @@ class LightSurfaceBlendLevelSlider extends ConsumerWidget {
   const LightSurfaceBlendLevelSlider({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final TextStyle style = Theme.of(context).textTheme.bodySmall!;
     final int level = ref.watch(Settings.lightBlendLevelProvider);
-    final TextTheme textTheme = Theme.of(context).textTheme;
     return ListTile(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,11 +33,11 @@ class LightSurfaceBlendLevelSlider extends ConsumerWidget {
           children: <Widget>[
             Text(
               'Level',
-              style: textTheme.caption,
+              style: style,
             ),
             Text(
               level.toString(),
-              style: textTheme.caption!.copyWith(fontWeight: FontWeight.bold),
+              style: style.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),

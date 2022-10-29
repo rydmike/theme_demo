@@ -8,6 +8,8 @@ class DarkLevelSlider extends ConsumerWidget {
   const DarkLevelSlider({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final TextStyle style = Theme.of(context).textTheme.bodySmall!;
+    final int level = ref.watch(Settings.darkComputeLevelProvider);
     return AnimatedHide(
       hide: !ref.watch(Settings.darkComputeThemeProvider) ||
           ref.watch(Settings.usePrimaryKeyColorProvider),
@@ -15,8 +17,8 @@ class DarkLevelSlider extends ConsumerWidget {
         title: Slider.adaptive(
           max: 100,
           divisions: 100,
-          label: ref.read(Settings.darkComputeLevelProvider).toString(),
-          value: ref.watch(Settings.darkComputeLevelProvider).toDouble(),
+          label: level.toString(),
+          value: level.roundToDouble(),
           onChanged: (double value) {
             ref
                 .read(Settings.darkComputeLevelProvider.notifier)
@@ -30,14 +32,11 @@ class DarkLevelSlider extends ConsumerWidget {
             children: <Widget>[
               Text(
                 'LEVEL',
-                style: Theme.of(context).textTheme.caption,
+                style: style,
               ),
               Text(
-                '${ref.read(Settings.darkComputeLevelProvider)} %',
-                style: Theme.of(context)
-                    .textTheme
-                    .caption!
-                    .copyWith(fontWeight: FontWeight.bold),
+                '$level %',
+                style: style.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),

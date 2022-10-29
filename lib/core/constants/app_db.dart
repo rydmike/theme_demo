@@ -1,7 +1,7 @@
-// ignore_for_file: comment_references
-
 import '../../persistence/key_value/models/key_value_db_prefs.dart';
 import '../../persistence/key_value/models/used_key_value_db.dart';
+
+// ignore_for_file: comment_references
 
 /// App name and info constants.
 class AppDb {
