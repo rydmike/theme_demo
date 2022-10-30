@@ -36,6 +36,7 @@ class ThemeShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -100,8 +101,7 @@ class ThemeShowcase extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text('Normal TextTheme',
-                      style: Theme.of(context).textTheme.titleMedium),
+                  child: Text('Normal TextTheme', style: textTheme.titleMedium),
                 ),
                 const TextThemeShowcase(),
               ],
@@ -118,8 +118,8 @@ class ThemeShowcase extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text('Primary TextTheme',
-                      style: Theme.of(context).primaryTextTheme.titleMedium),
+                  child:
+                      Text('Primary TextTheme', style: textTheme.titleMedium),
                 ),
                 const PrimaryTextThemeShowcase(),
               ],
@@ -1013,10 +1013,8 @@ class TabBarForAppBarShowcase extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final bool isDark = theme.brightness == Brightness.dark;
     final ColorScheme colorScheme = theme.colorScheme;
-
-    final Color effectiveTabBackground =
-        Theme.of(context).appBarTheme.backgroundColor ??
-            (isDark ? colorScheme.surface : colorScheme.primary);
+    final Color effectiveTabBackground = theme.appBarTheme.backgroundColor ??
+        (isDark ? colorScheme.surface : colorScheme.primary);
     final TextStyle denseHeader = theme.textTheme.titleMedium!.copyWith(
       fontSize: 13,
     );
@@ -1625,11 +1623,9 @@ class MaterialAndBottomSheetShowcase extends StatelessWidget {
                 Brightness.light
             ? Colors.black
             : Colors.white;
+    // TODO(rydmike): Follow up that this mod works.
     final TextStyle snackStyle = theme.snackBarTheme.contentTextStyle ??
-        ThemeData(brightness: Brightness.light)
-            .textTheme
-            .titleMedium!
-            .copyWith(color: snackForeground);
+        theme.textTheme.titleMedium!.copyWith(color: snackForeground);
     final TextStyle denseHeader = theme.textTheme.titleMedium!.copyWith(
       fontSize: 13,
     );
@@ -1972,12 +1968,12 @@ class MaterialAndBottomSheetShowcase extends StatelessWidget {
                     const SizedBox(height: 20),
                     Text(
                       'A Material BottomSheet',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: theme.textTheme.titleMedium,
                     ),
                     Text(
                       'Like Drawer it uses Material of type canvas as '
                       'background.',
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: theme.textTheme.bodySmall,
                       textAlign: TextAlign.center,
                     ),
                     const Spacer(),
