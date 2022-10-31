@@ -13,7 +13,7 @@ class ColorSchemeBox extends StatelessWidget {
     this.foregroundColor,
     this.backgroundColor,
     this.borderColor,
-    this.size = const Size(45, 35),
+    this.size,
     this.defaultOption = false,
     this.optionIcon = Icons.palette_outlined,
     this.defaultOptionIcon = Icons.texture_outlined,
@@ -43,8 +43,9 @@ class ColorSchemeBox extends StatelessWidget {
 
   /// Size of the item.
   ///
-  /// Defaults to const Size(45, 35),.
-  final Size size;
+  /// Defaults to Themed ToggleButtons min width+16 and height constraints, if
+  /// one fo them is not defined, then defaults to width 45+16 and height 35.
+  final Size? size;
 
   /// This is the default options.
   ///
@@ -79,17 +80,25 @@ class ColorSchemeBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme scheme = Theme.of(context).colorScheme;
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme scheme = theme.colorScheme;
     final Color foreground =
         foregroundColor ?? _onColor(backgroundColor ?? scheme.background);
+    final double width =
+        size?.width ?? theme.toggleButtonsTheme.constraints?.minWidth ?? 45;
+    final double height =
+        size?.height ?? theme.toggleButtonsTheme.constraints?.minHeight ?? 35;
+    final BorderRadius borderRadius = theme.toggleButtonsTheme.borderRadius ??
+        const BorderRadius.all(Radius.circular(12));
+
     return SizedBox(
-      width: size.width,
-      height: size.height,
+      width: width + 16,
+      height: height,
       child: Material(
         color: backgroundColor ?? scheme.background,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          borderRadius: borderRadius,
           side: BorderSide(
             color: borderColor ?? scheme.outline,
             width: selected ? 2 : 1,

@@ -36,7 +36,7 @@ class ThemeShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
+    final ThemeData theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -101,7 +101,8 @@ class ThemeShowcase extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text('Normal TextTheme', style: textTheme.titleMedium),
+                  child: Text('Normal TextTheme',
+                      style: theme.textTheme.titleMedium),
                 ),
                 const TextThemeShowcase(),
               ],
@@ -110,7 +111,7 @@ class ThemeShowcase extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Card(
-          color: Theme.of(context).colorScheme.primary,
+          color: theme.colorScheme.primary,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -118,8 +119,8 @@ class ThemeShowcase extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child:
-                      Text('Primary TextTheme', style: textTheme.titleMedium),
+                  child: Text('Primary TextTheme',
+                      style: theme.primaryTextTheme.titleMedium),
                 ),
                 const PrimaryTextThemeShowcase(),
               ],
