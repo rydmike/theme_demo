@@ -29,7 +29,7 @@ class KeyValueDbListener {
   void _init() {
     if (_debug) debugPrint('KeyValueDbListener: _init() setup listen');
     // Listen to state changes in keyValueDbProvider.state.
-    ref.listen<StateController<KeyValueDb>>(keyValueDbProvider.state,
+    ref.listen<StateController<KeyValueDb>>(keyValueDbProvider.notifier,
         (StateController<KeyValueDb>? previous,
             StateController<KeyValueDb> current) async {
       // This callback executes when the keyValueDbProvider value changes.
