@@ -20,10 +20,13 @@ Future<void> main() async {
 
   // Get default keyValueDb implementation and initialize it for use.
   await container.read(keyValueDbProvider).init();
-  // The app will also listen to state changes in keyValueDbProvider.
-  // This allows us to swap the keyValueDb implementation used in the app
+
+  // By reading the keyValueDbListenerProvider, we instantiate it. This sets up
+  // a listener that listens to state changes in keyValueDbProvider. In the
+  // listener we can swap the keyValueDb implementation used in the app
   // dynamically between: Hive, SharedPreferences and volatile memory.
   container.read(keyValueDbListenerProvider);
+
   runApp(
     UncontrolledProviderScope(
       container: container,

@@ -2,15 +2,15 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
-## 0.9.3 WIP
+## 0.9.3
 
 **Oct 31, 2022**
 
-This version is not yet released as a new WEB build or GitHub release. It is still work in progress, pending potential additional review feedback and corrections.
-
 * FIX: Add missing usedFlexToneProvider.init() and .reset() to Settings.init and .reset.
-* UI design: ColorSchemeBox popup indicator follows ToggleButtons theme radius and height.
+* UI design: ColorSchemeBox popup indicator now follows ToggleButtons theme radius and height.
 * Minor ThemeShowcase and slider widgets cleanup.
+* Readme and doc comments typo and language corrections.
+* Update web ThemeDemo app build to use Flutter 3.3.6.
 
 ## 0.9.2
 

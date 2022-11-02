@@ -116,13 +116,13 @@ Another feature is that this demo persists all theme settings as they are change
 
 This example shows how **Riverpod** can be used to change the used key-value database dependency from inside the Flutter app UI. This can be interesting to study, since this app needs this dependency to be able to read its settings and be able to start. Yet we can control this from inside the running Flutter app. In this scenario we are using Riverpod as a service locator and dependency injection replacement.
 
-Is it really necessary to switch the key-value DB persistence implementation at runtime from inside the app? Well maybe not, but the principle might be useful as an in-app development toggle, used during development and testing for other data sources, like using remote data and mock off-line data source. It can be useful to have a setup that allows you to do this, in-app from developer options. Plus I wanted to see if it can be done with just Riverpod, typically I would have done this part with [GetIt](https://pub.dev/packages/get_it), nice to see it can be done with just Riverpod.
+Is it really necessary to switch the key-value DB persistence implementation at runtime from inside the app? Well maybe not, but the principle might be useful as an in-app development toggle, used during development and testing for other data sources, like using remote data and mock off-line data source. It can be useful to have a setup that allows you to do this, in-app from developer options. Plus I wanted to see if it can be done with just Riverpod, typically I would have done this part with [GetIt](https://pub.dev/packages/get_it), but nice to see it can be done with just Riverpod.
 
 To be able to do this with only **Riverpod**, we need to define a `ProviderContainer` in just plain Dart before we start the Flutter app. We can then access the provider that gives us the currently used key-value DB implementation. We can then perform whatever async initialization the used key-value DB needs.
 
-Before we start the Flutter app, we also access a provider that sets upp a listener that will run whenever the key-value DB provider is changed.
+Before we start the Flutter app, we also access a provider that sets up a listener that will run whenever the key-value DB provider is changed.
 
-Below we also define a `AppProviderObserver` as a `ProviderObserver`, we use it to print debug logs whenever any provider in this app changes.
+Below we also define a `AppProviderObserver` as a `ProviderObserver`. We use it to print debug logs whenever any provider in this app changes.
 
 ### The `main` Function
 
@@ -139,8 +139,10 @@ Future<void> main() async {
   );
   // Get default keyValueDb implementation and initialize it for use.
   await container.read(keyValueDbProvider).init();
-  // The app will also listen to state changes in keyValueDbProvider.
-  // This allows us to swap the keyValueDb implementation used in the app
+  
+  // By reading the keyValueDbListenerProvider, we instantiate it. This sets up
+  // a listener that listens to state changes in keyValueDbProvider. In the 
+  // listener we can swap the keyValueDb implementation used in the app 
   // dynamically between: Hive, SharedPreferences and volatile memory.
   container.read(keyValueDbListenerProvider);
   runApp(
