@@ -1,7 +1,7 @@
 name: theme_demo
-description: Theme demo with FlexColorScheme and Riverpod.
+description: Flutter theme demo using FlexColorScheme and Riverpod.
 publish_to: 'none'
-version: 0.9.3
+version: 0.9.4
 
 environment:
   sdk: '>=2.18.0 <3.0.0'

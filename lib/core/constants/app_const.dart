@@ -1,5 +1,3 @@
-// ignore_for_file: comment_references
-
 /// App name and info constants.
 class AppConst {
   // This class is not meant to be instantiated or extended; this constructor
@@ -10,13 +8,13 @@ class AppConst {
   static const String appName = 'ThemeDemo';
 
   /// Current app version.
-  static const String version = '0.9.3';
+  static const String version = '0.9.4';
 
   /// Used version of FlexColorScheme package.
   static const String packageVersion = '6.0.1';
 
   /// Build with Flutter version.
-  static const String flutterVersion = 'Channel stable v3.3.6';
+  static const String flutterVersion = 'Channel stable v3.3.7';
 
   /// Copyright years notice.
   static const String copyright = '© 2021, 2022';

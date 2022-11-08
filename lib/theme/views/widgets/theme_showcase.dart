@@ -17,26 +17,10 @@ import '../../../core/views/widgets/universal/switch_list_tile_adaptive.dart';
 /// however not so useful, unless all you really want to do is to show what
 /// Flutter Widgets look like.
 class ThemeShowcase extends StatelessWidget {
-  const ThemeShowcase({
-    super.key,
-    this.useRailAssertWorkAround = true,
-  });
-
-  // Flag set to true to make a work around to avoid unnecessarily
-  // eager assert in NavigationRail SDK API.
-  //
-  // Assertion: line 562 pos 7: 'useIndicator || indicatorColor == null'
-  // A flag is used to do trickery with transparency for this
-  // assertion that we cannot avoid since the theme controls the
-  // setup and user it. User may enter combo that has no effect, and
-  // triggers the assert.
-  // It should be obvious that if you have no indicator color
-  // you cannot use an indicator, why assert it? Just don't show one!
-  final bool useRailAssertWorkAround;
+  const ThemeShowcase({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -82,14 +66,15 @@ class ThemeShowcase extends StatelessWidget {
         const NavigationBarShowcase(),
         const SizedBox(height: 8),
         const Divider(),
-        NavigationRailShowcase(useAssertWorkAround: useRailAssertWorkAround),
+        const NavigationRailShowcase(),
         const SizedBox(height: 8),
         const Divider(),
         const AlertDialogShowcase(),
         const TimePickerDialogShowcase(),
         const DatePickerDialogShowcase(),
-        const Divider(),
-        const MaterialAndBottomSheetShowcase(),
+        const BannerBottomSheetSnackShowcase(),
+        const Divider(height: 32),
+        const MaterialShowcase(),
         const Divider(height: 32),
         const CardShowcase(),
         const SizedBox(height: 8),
@@ -102,7 +87,7 @@ class ThemeShowcase extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text('Normal TextTheme',
-                      style: theme.textTheme.titleMedium),
+                      style: Theme.of(context).textTheme.titleMedium),
                 ),
                 const TextThemeShowcase(),
               ],
@@ -111,7 +96,7 @@ class ThemeShowcase extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Card(
-          color: theme.colorScheme.primary,
+          color: Theme.of(context).colorScheme.primary,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -120,7 +105,7 @@ class ThemeShowcase extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text('Primary TextTheme',
-                      style: theme.primaryTextTheme.titleMedium),
+                      style: Theme.of(context).primaryTextTheme.titleMedium),
                 ),
                 const PrimaryTextThemeShowcase(),
               ],
@@ -1014,8 +999,10 @@ class TabBarForAppBarShowcase extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final bool isDark = theme.brightness == Brightness.dark;
     final ColorScheme colorScheme = theme.colorScheme;
-    final Color effectiveTabBackground = theme.appBarTheme.backgroundColor ??
-        (isDark ? colorScheme.surface : colorScheme.primary);
+
+    final Color effectiveTabBackground =
+        Theme.of(context).appBarTheme.backgroundColor ??
+            (isDark ? colorScheme.surface : colorScheme.primary);
     final TextStyle denseHeader = theme.textTheme.titleMedium!.copyWith(
       fontSize: 13,
     );
@@ -1322,7 +1309,6 @@ class NavigationRailShowcase extends StatefulWidget {
     super.key,
     this.child,
     this.height = 400,
-    this.useAssertWorkAround = true,
   });
 
   /// A child widget that we can use to place controls on the
@@ -1331,19 +1317,6 @@ class NavigationRailShowcase extends StatefulWidget {
 
   /// The vertical space for the navigation bar.
   final double height;
-
-  // TODO(rydmike): Unnecessary assert, raise SDK issue explain why not needed.
-  // Flag set to true to make a work around to avoid unnecessarily
-  // eager assert in SDK.
-  //
-  // Assertion: line 562 pos 7: 'useIndicator || indicatorColor == null'
-  // A flag is used to do trickery with transparency for this
-  // assertion that we cannot avoid since the theme controls the
-  // setup and user it. User may enter combo that has no effect, and
-  // triggers the assert.
-  // It should be obvious that if you have no indicator color
-  // you cannot use an indicator, why assert it? Just don't show one!
-  final bool useAssertWorkAround;
 
   @override
   State<NavigationRailShowcase> createState() => _NavigationRailShowcaseState();
@@ -1399,11 +1372,7 @@ class _NavigationRailShowcaseState extends State<NavigationRailShowcase> {
                     removeTop: true,
                     child: NavigationRail(
                       extended: isExtended,
-                      useIndicator: widget.useAssertWorkAround ? true : null,
                       minExtendedWidth: 150,
-                      indicatorColor: widget.useAssertWorkAround
-                          ? Colors.transparent
-                          : null,
                       labelType:
                           isExtended ? NavigationRailLabelType.none : null,
                       selectedIndex: buttonIndex,
@@ -1604,8 +1573,8 @@ class AlertDialogShowcase extends StatelessWidget {
   }
 }
 
-class MaterialAndBottomSheetShowcase extends StatelessWidget {
-  const MaterialAndBottomSheetShowcase({super.key});
+class BannerBottomSheetSnackShowcase extends StatelessWidget {
+  const BannerBottomSheetSnackShowcase({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -1624,9 +1593,87 @@ class MaterialAndBottomSheetShowcase extends StatelessWidget {
                 Brightness.light
             ? Colors.black
             : Colors.white;
-    // TODO(rydmike): Follow up that this mod works.
     final TextStyle snackStyle = theme.snackBarTheme.contentTextStyle ??
-        theme.textTheme.titleMedium!.copyWith(color: snackForeground);
+        ThemeData(brightness: Brightness.light)
+            .textTheme
+            .titleMedium!
+            .copyWith(color: snackForeground);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(height: 8),
+        const Divider(height: 1),
+        MaterialBanner(
+          padding: const EdgeInsets.all(20),
+          content: const Text('Hello, I am a Material Banner'),
+          leading: const Icon(Icons.agriculture_outlined),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OPEN'),
+              onPressed: () {},
+            ),
+            TextButton(
+              child: const Text('DISMISS'),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        AbsorbPointer(
+          child: BottomSheet(
+            enableDrag: false,
+            onClosing: () {},
+            builder: (final BuildContext context) => SizedBox(
+              height: 150,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const SizedBox(height: 20),
+                    Text(
+                      'A Material BottomSheet',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      'Like Drawer it uses Material of type canvas as '
+                      'background.',
+                      style: Theme.of(context).textTheme.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                    const Spacer(),
+                    Material(
+                      color: snackBackground,
+                      elevation: 0,
+                      surfaceTintColor: colorScheme.surfaceTint,
+                      shadowColor: colorScheme.shadow,
+                      child: SizedBox(
+                        height: 40,
+                        child: Center(
+                          child: Text(
+                              'A Material SnackBar, style simulation only',
+                              style: snackStyle),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MaterialShowcase extends StatelessWidget {
+  const MaterialShowcase({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
     final TextStyle denseHeader = theme.textTheme.titleMedium!.copyWith(
       fontSize: 13,
     );
@@ -1937,67 +1984,6 @@ class MaterialAndBottomSheetShowcase extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        const Divider(),
-        const SizedBox(height: 8),
-        const Divider(height: 1),
-        MaterialBanner(
-          padding: const EdgeInsets.all(20),
-          content: const Text('Hello, I am a Material Banner'),
-          leading: const Icon(Icons.agriculture_outlined),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OPEN'),
-              onPressed: () {},
-            ),
-            TextButton(
-              child: const Text('DISMISS'),
-              onPressed: () {},
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        AbsorbPointer(
-          child: BottomSheet(
-            enableDrag: false,
-            onClosing: () {},
-            builder: (final BuildContext context) => SizedBox(
-              height: 150,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(height: 20),
-                    Text(
-                      'A Material BottomSheet',
-                      style: theme.textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Like Drawer it uses Material of type canvas as '
-                      'background.',
-                      style: theme.textTheme.bodySmall,
-                      textAlign: TextAlign.center,
-                    ),
-                    const Spacer(),
-                    Material(
-                      color: snackBackground,
-                      elevation: 0,
-                      surfaceTintColor: colorScheme.surfaceTint,
-                      shadowColor: colorScheme.shadow,
-                      child: SizedBox(
-                        height: 40,
-                        child: Center(
-                          child: Text(
-                              'A Material SnackBar, style simulation only',
-                              style: snackStyle),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -2025,9 +2011,10 @@ class CardShowcase extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Default background color comes from Material of type card. '
+            'Default background color comes from Material of type card, which '
+            'by default is set to theme colorScheme surface. '
             'When useMaterial3 is true, Card gets elevation based '
-            'surfaceTint, when it is false and using M2, surfaceTint has no '
+            'surfaceTint. When it is false, surfaceTint has no '
             'effect even if specified.',
             style: denseBody,
           ),
@@ -2057,7 +2044,7 @@ class CardShowcase extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Center(
                   child: Text(
-                'Card, elevation 1, default',
+                'Card, elevation 1, default surfaceTint and shadow',
                 textAlign: TextAlign.center,
               )),
             ),
@@ -2073,7 +2060,7 @@ class CardShowcase extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  'Card, elevation 1, with surfaceTint',
+                  'Card, elevation 1, with surfaceTint, default shadow',
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -2108,7 +2095,7 @@ class CardShowcase extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  'Card, elevation 4, default',
+                  'Card, elevation 4, default surfaceTint and shadow',
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -2123,7 +2110,7 @@ class CardShowcase extends StatelessWidget {
             height: 60,
             child: Center(
               child: Text(
-                'Card, elevation 4, with surfaceTint',
+                'Card, elevation 4, with surfaceTint, default shadow',
                 textAlign: TextAlign.center,
               ),
             ),
@@ -2157,7 +2144,7 @@ class CardShowcase extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  'Card, elevation 10, default',
+                  'Card, elevation 10, default surfaceTint and shadow',
                   textAlign: TextAlign.center,
                 ),
               ),

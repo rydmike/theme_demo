@@ -2,6 +2,12 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
+## 0.9.4
+
+**Nov 8, 2024**
+
+* Updates and fixes to `ThemeShowcase`.
+
 ## 0.9.3
 
 **Oct 31, 2022**
