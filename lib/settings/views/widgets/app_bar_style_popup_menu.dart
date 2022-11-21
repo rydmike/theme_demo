@@ -30,6 +30,7 @@ class AppBarStylePopupMenu extends StatelessWidget {
     this.labelForDefault = 'default (null)',
     this.popupLabelDefault,
     this.customAppBarColor,
+    this.customScaffoldColor,
   });
   final int index;
   final ValueChanged<int>? onChanged;
@@ -39,6 +40,7 @@ class AppBarStylePopupMenu extends StatelessWidget {
   final String labelForDefault;
   final String? popupLabelDefault;
   final Color? customAppBarColor;
+  final Color? customScaffoldColor;
 
   Color _appBarStyleColor(
     final FlexAppBarStyle? style,
@@ -57,6 +59,8 @@ class AppBarStylePopupMenu extends StatelessWidget {
         return colorScheme.surface;
       case FlexAppBarStyle.background:
         return colorScheme.background;
+      case FlexAppBarStyle.scaffoldBackground:
+        return customScaffoldColor ?? colorScheme.background;
       case FlexAppBarStyle.custom:
         return customAppBarColor ?? colorScheme.tertiaryContainer;
       case null:
@@ -90,6 +94,8 @@ class AppBarStylePopupMenu extends StatelessWidget {
         return 'Surface color, with primary color blend';
       case FlexAppBarStyle.background:
         return 'Background color, with primary color blend';
+      case FlexAppBarStyle.scaffoldBackground:
+        return 'Scaffold background color, with primary color blend';
       case FlexAppBarStyle.custom:
         return 'Custom. Built-in schemes use tertiary color, '
             'but you can use any color';

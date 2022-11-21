@@ -43,6 +43,7 @@ class LightAppBarStylePopupMenu extends ConsumerWidget {
       // show them as well on the PopupMenu button.
       customAppBarColor: AppTheme
           .schemes[ref.watch(Settings.schemeIndexProvider)].light.appBarColor,
+      customScaffoldColor: Theme.of(context).scaffoldBackgroundColor,
     );
   }
 }

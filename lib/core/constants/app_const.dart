@@ -8,13 +8,13 @@ class AppConst {
   static const String appName = 'ThemeDemo';
 
   /// Current app version.
-  static const String version = '0.9.4';
+  static const String version = '0.9.5';
 
   /// Used version of FlexColorScheme package.
-  static const String packageVersion = '6.0.1';
+  static const String packageVersion = '6.1.0';
 
   /// Build with Flutter version.
-  static const String flutterVersion = 'Channel stable v3.3.7';
+  static const String flutterVersion = 'Channel stable v3.3.8';
 
   /// Copyright years notice.
   static const String copyright = '© 2021, 2022';

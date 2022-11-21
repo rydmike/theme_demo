@@ -2,9 +2,16 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
+## 0.9.5
+
+**Nov 21, 2022**
+
+* Bump package version, most significantly FlexColorScheme to version 6.1.0.
+* Update `ThemeShowcase` to the one Themes Playground 6.1.0 uses.
+
 ## 0.9.4
 
-**Nov 8, 2024**
+**Nov 8, 2022**
 
 * Updates and fixes to `ThemeShowcase`.
 

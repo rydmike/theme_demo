@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/views/widgets/universal/switch_list_tile_adaptive.dart';
-
 /// Theme showcase for the current theme.
 ///
 /// Use this widget to review your theme's impact on [ThemeData] and see
@@ -21,6 +19,7 @@ class ThemeShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -40,14 +39,20 @@ class ThemeShowcase extends StatelessWidget {
         const ChipShowcase(),
         const Divider(),
         const SizedBox(height: 8),
-        const PopupMenuShowcase(),
+        const PopupMenuButtonShowcase(),
         const SizedBox(height: 8),
+        const Divider(),
         const SizedBox(height: 8),
-        const IconButtonCircleAvatarDropdownTooltipShowcase(),
+        const TooltipShowcase(),
+        const SizedBox(height: 16),
+        const IconButtonCircleAvatarDropdownShowcase(),
         const Divider(),
         const SwitchShowcase(),
         const CheckboxShowcase(),
         const RadioShowcase(),
+        const SizedBox(height: 8),
+        const Divider(),
+        const SliderShowcase(),
         const SizedBox(height: 8),
         const Divider(),
         const ListTileShowcase(),
@@ -72,7 +77,9 @@ class ThemeShowcase extends StatelessWidget {
         const AlertDialogShowcase(),
         const TimePickerDialogShowcase(),
         const DatePickerDialogShowcase(),
-        const BannerBottomSheetSnackShowcase(),
+        const BottomSheetShowcase(),
+        const SizedBox(height: 32),
+        const MaterialBannerSnackBarShowcase(),
         const Divider(height: 32),
         const MaterialShowcase(),
         const Divider(height: 32),
@@ -87,7 +94,7 @@ class ThemeShowcase extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text('Normal TextTheme',
-                      style: Theme.of(context).textTheme.titleMedium),
+                      style: theme.textTheme.titleMedium),
                 ),
                 const TextThemeShowcase(),
               ],
@@ -96,7 +103,7 @@ class ThemeShowcase extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Card(
-          color: Theme.of(context).colorScheme.primary,
+          color: theme.colorScheme.primary,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -105,7 +112,7 @@ class ThemeShowcase extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text('Primary TextTheme',
-                      style: Theme.of(context).primaryTextTheme.titleMedium),
+                      style: theme.primaryTextTheme.titleMedium),
                 ),
                 const PrimaryTextThemeShowcase(),
               ],
@@ -375,7 +382,8 @@ class SwitchShowcase extends StatefulWidget {
 }
 
 class _SwitchShowcaseState extends State<SwitchShowcase> {
-  bool isOn = true;
+  bool isOn1 = true;
+  bool isOn2 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -385,10 +393,10 @@ class _SwitchShowcaseState extends State<SwitchShowcase> {
       runSpacing: 4,
       children: <Widget>[
         Switch(
-          value: isOn,
+          value: isOn1,
           onChanged: (bool value) {
             setState(() {
-              isOn = value;
+              isOn1 = value;
             });
           },
         ),
@@ -410,8 +418,12 @@ class _SwitchShowcaseState extends State<SwitchShowcase> {
         //   },
         // ),
         Switch(
-          value: false,
-          onChanged: (bool value) {},
+          value: isOn2,
+          onChanged: (bool value) {
+            setState(() {
+              isOn2 = value;
+            });
+          },
         ),
         const Switch(
           value: true,
@@ -426,10 +438,18 @@ class _SwitchShowcaseState extends State<SwitchShowcase> {
   }
 }
 
-class CheckboxShowcase extends StatelessWidget {
+class CheckboxShowcase extends StatefulWidget {
   const CheckboxShowcase({super.key});
 
   @override
+  State<CheckboxShowcase> createState() => _CheckboxShowcaseState();
+}
+
+class _CheckboxShowcaseState extends State<CheckboxShowcase> {
+  bool? isSelected1 = true;
+  bool? isSelected2;
+
+  @override
   Widget build(BuildContext context) {
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
@@ -437,8 +457,21 @@ class CheckboxShowcase extends StatelessWidget {
       runSpacing: 4,
       children: <Widget>[
         Checkbox(
-          value: true,
-          onChanged: (bool? value) {},
+          value: isSelected1,
+          onChanged: (bool? value) {
+            setState(() {
+              isSelected1 = value;
+            });
+          },
+        ),
+        Checkbox(
+          tristate: true,
+          value: isSelected2,
+          onChanged: (bool? value) {
+            setState(() {
+              isSelected2 = value;
+            });
+          },
         ),
         Checkbox(
           value: false,
@@ -446,6 +479,11 @@ class CheckboxShowcase extends StatelessWidget {
         ),
         const Checkbox(
           value: true,
+          onChanged: null,
+        ),
+        const Checkbox(
+          value: null,
+          tristate: true,
           onChanged: null,
         ),
         const Checkbox(
@@ -457,49 +495,15 @@ class CheckboxShowcase extends StatelessWidget {
   }
 }
 
-class RadioShowcase extends StatelessWidget {
+class RadioShowcase extends StatefulWidget {
   const RadioShowcase({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: 8,
-      runSpacing: 4,
-      children: <Widget>[
-        Radio<bool>(
-          value: true,
-          groupValue: true,
-          onChanged: (bool? value) {},
-        ),
-        Radio<bool>(
-          value: false,
-          groupValue: true,
-          onChanged: (bool? value) {},
-        ),
-        const Radio<bool>(
-          value: true,
-          groupValue: true,
-          onChanged: null,
-        ),
-        const Radio<bool>(
-          value: false,
-          groupValue: true,
-          onChanged: null,
-        ),
-      ],
-    );
-  }
+  State<RadioShowcase> createState() => _RadioShowcaseState();
 }
 
-class PopupMenuShowcase extends StatelessWidget {
-  const PopupMenuShowcase({
-    super.key,
-    this.enabled = true,
-    this.popupRadius,
-  });
-  final bool enabled;
-  final double? popupRadius;
+class _RadioShowcaseState extends State<RadioShowcase> {
+  bool? groupValue = true;
 
   @override
   Widget build(BuildContext context) {
@@ -508,19 +512,110 @@ class PopupMenuShowcase extends StatelessWidget {
       spacing: 8,
       runSpacing: 4,
       children: <Widget>[
-        _PopupMenuButton(enabled: enabled, radius: popupRadius),
+        Radio<bool>(
+          value: true,
+          groupValue: groupValue,
+          onChanged: (bool? value) {
+            setState(() {
+              groupValue = value;
+            });
+          },
+        ),
+        Radio<bool>(
+          value: false,
+          groupValue: groupValue,
+          onChanged: (bool? value) {
+            setState(() {
+              groupValue = value;
+            });
+          },
+        ),
+        Radio<bool>(
+          value: true,
+          groupValue: groupValue,
+          onChanged: null,
+        ),
+        Radio<bool>(
+          value: false,
+          groupValue: groupValue,
+          onChanged: null,
+        ),
       ],
     );
   }
 }
 
-class _PopupMenuButton extends StatelessWidget {
-  const _PopupMenuButton({
-    this.enabled = true,
-    this.radius,
-  });
-  final bool enabled;
-  final double? radius;
+class SliderShowcase extends StatefulWidget {
+  const SliderShowcase({super.key});
+
+  @override
+  State<SliderShowcase> createState() => _SliderShowcaseState();
+}
+
+class _SliderShowcaseState extends State<SliderShowcase> {
+  double value1 = 5;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ListTile(
+          dense: true,
+          title: Text('Slider stepped (${value1.toStringAsFixed(0)})'),
+          subtitle: Slider(
+            max: 30,
+            divisions: 31,
+            label: value1.toStringAsFixed(0),
+            value: value1,
+            onChanged: (double newValue) {
+              setState(() {
+                value1 = newValue.roundToDouble();
+              });
+            },
+          ),
+        ),
+        ListTile(
+          dense: true,
+          title: Text('Slider continuous (${value1.toStringAsFixed(2)})'),
+          subtitle: Slider(
+            max: 30,
+            label: value1.toStringAsFixed(2),
+            value: value1,
+            onChanged: (double newValue) {
+              setState(() {
+                value1 = newValue;
+              });
+            },
+          ),
+        ),
+        ListTile(
+          dense: true,
+          title: Text('Slider stepped disabled (${22.toStringAsFixed(0)})'),
+          subtitle: Slider(
+            max: 30,
+            divisions: 31,
+            label: 22.toStringAsFixed(0),
+            value: 22,
+            onChanged: null,
+          ),
+        ),
+        ListTile(
+          dense: true,
+          title: Text('Slider continuous disabled (${14.toStringAsFixed(2)})'),
+          subtitle: Slider(
+            max: 30,
+            label: 14.toStringAsFixed(2),
+            value: 14,
+            onChanged: null,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PopupMenuButtonShowcase extends StatelessWidget {
+  const PopupMenuButtonShowcase({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -528,8 +623,8 @@ class _PopupMenuButton extends StatelessWidget {
     final ColorScheme scheme = theme.colorScheme;
     return PopupMenuButton<int>(
       onSelected: (_) {},
-      enabled: enabled,
-      tooltip: enabled ? 'Show menu' : 'Menu disabled',
+      tooltip: 'Show menu',
+      position: PopupMenuPosition.under,
       itemBuilder: (BuildContext context) => const <PopupMenuItem<int>>[
         PopupMenuItem<int>(value: 1, child: Text('Option 1')),
         PopupMenuItem<int>(value: 2, child: Text('Option 2')),
@@ -538,19 +633,19 @@ class _PopupMenuButton extends StatelessWidget {
         PopupMenuItem<int>(value: 5, child: Text('Option 5')),
       ],
       child: AbsorbPointer(
-        child: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
+        child: TextButton.icon(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             backgroundColor: scheme.primary,
             foregroundColor: scheme.onPrimary,
             disabledForegroundColor: scheme.onSurface,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(radius ?? 8)),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
             ),
           ),
-          onPressed: enabled ? () {} : null,
+          onPressed: () {},
           icon: const Icon(Icons.expand_more_outlined),
-          label: const Text('PopupMenu'),
+          label: const Text('Show menu'),
         ),
       ),
     );
@@ -584,7 +679,10 @@ class _DropDownButtonState extends State<_DropDownButton> {
       ].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(value),
+          ),
         );
       }).toList(),
     );
@@ -626,16 +724,44 @@ class _DropDownButtonFormFieldState extends State<_DropDownButtonFormField> {
   }
 }
 
-class IconButtonCircleAvatarDropdownTooltipShowcase extends StatefulWidget {
-  const IconButtonCircleAvatarDropdownTooltipShowcase({super.key});
+class TooltipShowcase extends StatelessWidget {
+  const TooltipShowcase({super.key});
 
   @override
-  State<IconButtonCircleAvatarDropdownTooltipShowcase> createState() =>
-      _IconButtonCircleAvatarDropdownTooltipShowcaseState();
+  Widget build(BuildContext context) {
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      spacing: 16,
+      runSpacing: 4,
+      children: const <Widget>[
+        Tooltip(
+          message: 'Current tooltip theme',
+          child: Text('Text with tooltip'),
+        ),
+        Tooltip(
+          message: 'Current tooltip theme.\nThis a two row tooltip.',
+          child: Text('Text with two row tooltip'),
+        ),
+        Tooltip(
+          message: 'Current tooltip theme.\nThis tooltip is too long.\n'
+              'Try to keep them short.',
+          child: Text('Text with three row tooltip'),
+        ),
+      ],
+    );
+  }
 }
 
-class _IconButtonCircleAvatarDropdownTooltipShowcaseState
-    extends State<IconButtonCircleAvatarDropdownTooltipShowcase> {
+class IconButtonCircleAvatarDropdownShowcase extends StatefulWidget {
+  const IconButtonCircleAvatarDropdownShowcase({super.key});
+
+  @override
+  State<IconButtonCircleAvatarDropdownShowcase> createState() =>
+      _IconButtonCircleAvatarDropdownShowcaseState();
+}
+
+class _IconButtonCircleAvatarDropdownShowcaseState
+    extends State<IconButtonCircleAvatarDropdownShowcase> {
   bool isLockOpen = false;
 
   @override
@@ -674,10 +800,6 @@ class _IconButtonCircleAvatarDropdownTooltipShowcaseState
           ),
         ),
         const _DropDownButton(),
-        const Tooltip(
-          message: 'Current tooltip theme.\nThis a two row tooltip.',
-          child: Text('Text with tooltip'),
-        ),
       ],
     );
   }
@@ -706,17 +828,20 @@ class ChipShowcase extends StatelessWidget {
           avatar: const Icon(Icons.settings),
           onPressed: () {},
         ),
-        ActionChip(
-          label: const Text('ActionChip'),
-          avatar: const Icon(Icons.settings),
-          // TODO(rydmike): Uncomment in 3.1.0 to get disabled ActionChip.
-          // The onPressed is required in 3.0.5 stable, but not in 3.1.0 master.
-          onPressed: () {},
+        const ActionChip(
+          label: Text('ActionChip'),
+          avatar: Icon(Icons.settings),
+          onPressed: null,
         ),
         FilterChip(
           label: const Text('FilterChip'),
           selected: true,
           onSelected: (bool value) {},
+        ),
+        const FilterChip(
+          label: Text('FilterChip'),
+          selected: true,
+          onSelected: null,
         ),
         FilterChip(
           label: const Text('FilterChip'),
@@ -725,13 +850,17 @@ class ChipShowcase extends StatelessWidget {
         ),
         const FilterChip(
           label: Text('FilterChip'),
-          selected: true,
+          selected: false,
           onSelected: null,
         ),
         ChoiceChip(
           label: const Text('ChoiceChip'),
           selected: true,
           onSelected: (bool value) {},
+        ),
+        const ChoiceChip(
+          label: Text('ChoiceChip'),
+          selected: true,
         ),
         ChoiceChip(
           label: const Text('ChoiceChip'),
@@ -740,16 +869,23 @@ class ChipShowcase extends StatelessWidget {
         ),
         const ChoiceChip(
           label: Text('ChoiceChip'),
-          selected: true,
+          selected: false,
+          onSelected: null,
         ),
         InputChip(
+          selected: true,
           label: const Text('InputChip'),
           onSelected: (bool value) {},
           onDeleted: () {},
         ),
         InputChip(
-          showCheckmark: true,
           selected: true,
+          label: const Text('InputChip'),
+          isEnabled: false,
+          onSelected: (bool value) {},
+          onDeleted: () {},
+        ),
+        InputChip(
           label: const Text('InputChip'),
           onSelected: (bool value) {},
           onDeleted: () {},
@@ -1000,9 +1136,8 @@ class TabBarForAppBarShowcase extends StatelessWidget {
     final bool isDark = theme.brightness == Brightness.dark;
     final ColorScheme colorScheme = theme.colorScheme;
 
-    final Color effectiveTabBackground =
-        Theme.of(context).appBarTheme.backgroundColor ??
-            (isDark ? colorScheme.surface : colorScheme.primary);
+    final Color effectiveTabBackground = theme.appBarTheme.backgroundColor ??
+        (isDark ? colorScheme.surface : colorScheme.primary);
     final TextStyle denseHeader = theme.textTheme.titleMedium!.copyWith(
       fontSize: 13,
     );
@@ -1334,6 +1469,7 @@ class _NavigationRailShowcaseState extends State<NavigationRailShowcase> {
     );
     final TextStyle denseBody = theme.textTheme.bodyMedium!
         .copyWith(fontSize: 12, color: theme.textTheme.bodySmall!.color);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -1405,7 +1541,7 @@ class _NavigationRailShowcaseState extends State<NavigationRailShowcase> {
                   Expanded(
                     child: Column(
                       children: <Widget>[
-                        SwitchListTileAdaptive(
+                        SwitchListTile(
                           title: const Text('Expand and collapse'),
                           subtitle: const Text('ON to expand  OFF to collapse\n'
                               'Only used for local control of Rail '
@@ -1573,8 +1709,80 @@ class AlertDialogShowcase extends StatelessWidget {
   }
 }
 
-class BannerBottomSheetSnackShowcase extends StatelessWidget {
-  const BannerBottomSheetSnackShowcase({super.key});
+class BottomSheetShowcase extends StatelessWidget {
+  const BottomSheetShowcase({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        AbsorbPointer(
+          child: BottomSheet(
+            enableDrag: false,
+            elevation: theme.bottomSheetTheme.elevation,
+            backgroundColor: theme.bottomSheetTheme.backgroundColor,
+            onClosing: () {},
+            builder: (final BuildContext context) => SizedBox(
+              height: 150,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Material BottomSheet',
+                      style: theme.textTheme.titleMedium,
+                    ),
+                    Text(
+                      'Uses Material of type canvas as default background.\n'
+                      'ColorScheme background in M2, but surface in M3.',
+                      style: theme.textTheme.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        AbsorbPointer(
+          child: BottomSheet(
+            elevation: theme.bottomSheetTheme.modalElevation,
+            backgroundColor: theme.bottomSheetTheme.modalBackgroundColor,
+            enableDrag: false,
+            onClosing: () {},
+            builder: (final BuildContext context) => SizedBox(
+              height: 150,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Material Modal BottomSheet',
+                      style: theme.textTheme.titleMedium,
+                    ),
+                    Text(
+                      'Uses Material of type canvas as default background.\n'
+                      'ColorScheme background in M2, but surface in M3.',
+                      style: theme.textTheme.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MaterialBannerSnackBarShowcase extends StatelessWidget {
+  const MaterialBannerSnackBarShowcase({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -1598,11 +1806,11 @@ class BannerBottomSheetSnackShowcase extends StatelessWidget {
             .textTheme
             .titleMedium!
             .copyWith(color: snackForeground);
+    final double snackElevation = theme.snackBarTheme.elevation ?? 6;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const SizedBox(height: 8),
         const Divider(height: 1),
         MaterialBanner(
           padding: const EdgeInsets.all(20),
@@ -1619,46 +1827,17 @@ class BannerBottomSheetSnackShowcase extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 24),
-        AbsorbPointer(
-          child: BottomSheet(
-            enableDrag: false,
-            onClosing: () {},
-            builder: (final BuildContext context) => SizedBox(
-              height: 150,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(height: 20),
-                    Text(
-                      'A Material BottomSheet',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      'Like Drawer it uses Material of type canvas as '
-                      'background.',
-                      style: Theme.of(context).textTheme.bodySmall,
-                      textAlign: TextAlign.center,
-                    ),
-                    const Spacer(),
-                    Material(
-                      color: snackBackground,
-                      elevation: 0,
-                      surfaceTintColor: colorScheme.surfaceTint,
-                      shadowColor: colorScheme.shadow,
-                      child: SizedBox(
-                        height: 40,
-                        child: Center(
-                          child: Text(
-                              'A Material SnackBar, style simulation only',
-                              style: snackStyle),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+        const SizedBox(height: 16),
+        Material(
+          color: snackBackground,
+          elevation: snackElevation,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: colorScheme.shadow,
+          child: SizedBox(
+            height: 40,
+            child: Center(
+              child: Text('Material SnackBar (style simulation only)',
+                  style: snackStyle),
             ),
           ),
         ),
