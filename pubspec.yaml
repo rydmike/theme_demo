@@ -13,11 +13,11 @@ dependencies:
 
   # Color picker package, by Mike Rydstrom, rydmike.com (@rydmike).
   # https://pub.dev/packages/flex_color_picker
-  flex_color_picker: ^2.6.1
+  flex_color_picker: ^3.0.0
 
   # Used for surface colored branded theming. (by rydmike.com)
   # https://pub.dev/packages/flex_color_scheme
-  flex_color_scheme: ^6.1.0
+  flex_color_scheme: ^6.1.1
 
   # The Flutter framework (by Google, flutter.dev)
   # https://flutter.dev
@@ -48,7 +48,7 @@ dependencies:
 
   # Used for launching a WEB URL (by Google flutter.dev).
   # https://pub.dev/packages/url_launcher
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.7
 
 dev_dependencies:
   flutter_test:
