@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/app_const.dart';
 import '../../core/utils/app_scroll_behavior.dart';
 import '../../core/utils/drawer_width.dart';
-import '../../home/controllers/drawer_width_provider.dart';
+import '../../drawer/controllers/drawer_width_provider.dart';
 import '../../home/views/pages/home_page.dart';
 import '../../settings/controllers/settings.dart';
 import '../../splash/views/splash_page.dart';

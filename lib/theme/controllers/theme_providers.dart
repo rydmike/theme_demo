@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../home/controllers/drawer_width_provider.dart';
+import '../../drawer/controllers/drawer_width_provider.dart';
 import '../../home/controllers/platform_provider.dart';
 import '../../settings/controllers/settings.dart';
 import '../models/app_theme.dart';
