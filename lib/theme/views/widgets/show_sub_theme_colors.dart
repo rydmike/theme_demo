@@ -16,7 +16,7 @@ class ShowSubThemeColors extends StatelessWidget {
   const ShowSubThemeColors({
     super.key,
     this.onBackgroundColor,
-    this.showSubtitle = true,
+    this.showTitle = true,
   });
 
   /// The color of the background the color widget are being drawn on.
@@ -28,8 +28,8 @@ class ShowSubThemeColors extends StatelessWidget {
   /// assumed to be drawn on card color, which usually is close enough.
   final Color? onBackgroundColor;
 
-  /// Show sub-title for the sub-theme colors
-  final bool showSubtitle;
+  /// Show title for the sub-theme colors
+  final bool showTitle;
 
   // Return true if the color is light, meaning it needs dark text for contrast.
   static bool _isLight(final Color color) =>
@@ -81,7 +81,19 @@ class ShowSubThemeColors extends StatelessWidget {
     final Color elevatedButtonColor = theme
             .elevatedButtonTheme.style?.backgroundColor
             ?.resolve(<MaterialState>{}) ??
+        (useMaterial3 ? colorScheme.surface : colorScheme.primary);
+    final Color elevatedForegroundButtonColor = theme
+            .elevatedButtonTheme.style?.foregroundColor
+            ?.resolve(<MaterialState>{}) ??
+        (useMaterial3 ? colorScheme.primary : colorScheme.onPrimary);
+    final Color filledButtonColor = theme
+            .filledButtonTheme.style?.backgroundColor
+            ?.resolve(<MaterialState>{}) ??
         colorScheme.primary;
+    final Color tonalButtonColor = theme
+            .filledButtonTheme.style?.backgroundColor
+            ?.resolve(<MaterialState>{}) ??
+        colorScheme.secondaryContainer;
     final Color outlinedButtonColor = theme
             .outlinedButtonTheme.style?.foregroundColor
             ?.resolve(<MaterialState>{}) ??
@@ -96,17 +108,28 @@ class ShowSubThemeColors extends StatelessWidget {
             (theme.useMaterial3
                 ? colorScheme.primaryContainer
                 : colorScheme.secondary);
+    final Color onFloatingActionButtonColor =
+        theme.floatingActionButtonTheme.foregroundColor ??
+            (useMaterial3
+                ? theme.colorScheme.onPrimaryContainer
+                : _onColor(floatingActionButtonColor, background));
     final Color switchColor = theme.switchTheme.thumbColor
             ?.resolve(<MaterialState>{MaterialState.selected}) ??
-        theme.toggleableActiveColor;
+        (theme.useMaterial3 ? colorScheme.primary : colorScheme.secondary);
     final Color checkboxColor = theme.checkboxTheme.fillColor
             ?.resolve(<MaterialState>{MaterialState.selected}) ??
-        theme.toggleableActiveColor;
+        (theme.useMaterial3 ? colorScheme.primary : colorScheme.secondary);
     final Color radioColor = theme.radioTheme.fillColor
             ?.resolve(<MaterialState>{MaterialState.selected}) ??
-        theme.toggleableActiveColor;
-    final Color circleAvatarColor =
-        isDark ? theme.primaryColorLight : theme.primaryColorDark;
+        (theme.useMaterial3 ? colorScheme.primary : colorScheme.secondary);
+    final Color circleAvatarColor = useMaterial3
+        ? theme.colorScheme.primaryContainer
+        : isDark
+            ? theme.primaryColorLight
+            : theme.primaryColorDark;
+    final Color onCircleAvatarColor = useMaterial3
+        ? theme.colorScheme.onPrimaryContainer
+        : _onColor(circleAvatarColor, background);
     final Color chipColor =
         theme.chipTheme.backgroundColor ?? colorScheme.primary;
     final Color inputDecoratorColor =
@@ -180,7 +203,7 @@ class ShowSubThemeColors extends StatelessWidget {
     // Wrap this widget branch in a custom theme where card has a border outline
     // if it did not have one, but retains in ambient themed border radius.
     return Theme(
-      data: Theme.of(context).copyWith(
+      data: theme.copyWith(
         cardTheme: CardTheme.of(context).copyWith(
           elevation: 0,
           shape: border,
@@ -189,13 +212,14 @@ class ShowSubThemeColors extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(
-              'Component Colors',
-              style: theme.textTheme.titleMedium,
+          if (showTitle)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                'Component colors',
+                style: theme.textTheme.titleMedium,
+              ),
             ),
-          ),
           Wrap(
             alignment: WrapAlignment.start,
             crossAxisAlignment: WrapCrossAlignment.center,
@@ -205,17 +229,29 @@ class ShowSubThemeColors extends StatelessWidget {
               ColorCard(
                 label: 'Elevated\nButton',
                 color: elevatedButtonColor,
-                textColor: _onColor(elevatedButtonColor, background),
+                textColor: elevatedForegroundButtonColor,
+                elevation: useMaterial3 ? 2 : null,
+                shadowColor: Colors.transparent,
+              ),
+              ColorCard(
+                label: 'Filled\nButton',
+                color: filledButtonColor,
+                textColor: _onColor(filledButtonColor, background),
+              ),
+              ColorCard(
+                label: 'Tonal\nButton',
+                color: tonalButtonColor,
+                textColor: _onColor(tonalButtonColor, background),
               ),
               ColorCard(
                 label: 'Outlined\nButton',
-                color: outlinedButtonColor,
-                textColor: _onColor(outlinedButtonColor, background),
+                color: colorScheme.surface,
+                textColor: outlinedButtonColor,
               ),
               ColorCard(
                 label: 'Text\nButton',
-                color: textButtonColor,
-                textColor: _onColor(textButtonColor, background),
+                color: colorScheme.surface,
+                textColor: textButtonColor,
               ),
               ColorCard(
                 label: 'Toggle\nButtons',
@@ -240,12 +276,12 @@ class ShowSubThemeColors extends StatelessWidget {
               ColorCard(
                 label: 'Floating\nAction\nButton',
                 color: floatingActionButtonColor,
-                textColor: _onColor(floatingActionButtonColor, background),
+                textColor: onFloatingActionButtonColor,
               ),
               ColorCard(
                 label: 'Circle\nAvatar',
                 color: circleAvatarColor,
-                textColor: _onColor(circleAvatarColor, background),
+                textColor: onCircleAvatarColor,
               ),
               ColorCard(
                 label: 'Chips',

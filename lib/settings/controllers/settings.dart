@@ -22,7 +22,7 @@ class Settings {
   // They are collected here at the top to be easy to modify.
 
   // Defaults for: use material 3, theme mode and active color scheme.
-  static const bool _useMaterial3 = false;
+  static const bool _useMaterial3 = true;
   static const ThemeMode _themeMode = ThemeMode.system;
   static const int _schemeIndex = 0;
   // Surface mode defaults

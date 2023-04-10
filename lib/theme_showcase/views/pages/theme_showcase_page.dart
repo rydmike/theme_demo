@@ -9,7 +9,7 @@ import '../../../drawer/views/app_drawer.dart';
 import '../../../theme/views/widgets/show_color_scheme_colors.dart';
 import '../../../theme/views/widgets/show_sub_theme_colors.dart';
 import '../../../theme/views/widgets/show_theme_data_colors.dart';
-import '../../../theme/views/widgets/theme_showcase.dart';
+import '../../../theme/views/widgets/showcase_material.dart';
 
 /// This page is used show a page using the FlexColorScheme based theme's
 /// impact on commonly used Flutter Material UI Widgets.
@@ -114,7 +114,7 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppInsets.edge),
-                  child: ThemeShowcase(),
+                  child: ShowcaseMaterial(),
                 ),
               ],
             ),

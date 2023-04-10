@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/views/widgets/universal/switch_list_tile_adaptive.dart';
 import '../../controllers/settings.dart';
 
 class DarkColorsSwapSwitch extends ConsumerWidget {
@@ -9,7 +8,7 @@ class DarkColorsSwapSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SwitchListTileAdaptive(
+    return SwitchListTile(
       title: const Text('Swap colors'),
       subtitle: const Text('Swap primary and secondary dark colors'),
       value: ref.watch(Settings.darkSwapColorsProvider),

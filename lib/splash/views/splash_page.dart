@@ -48,7 +48,7 @@ class SplashPage extends StatelessWidget {
               children: <Widget>[
                 ColoredText(
                   'Splash!',
-                  style: theme.textTheme.headline2,
+                  style: theme.textTheme.displayMedium,
                 ),
                 const SizedBox(height: 20),
                 const Text('A clean splash screen'),

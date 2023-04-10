@@ -10,6 +10,11 @@ class AppTheme {
   AppTheme._();
 
   /// Returns light theme based on required parameters passed to it.
+  ///
+  /// Note:
+  /// We could do this directly in the Riverpod Provider too, this
+  /// is an extra step to wrap the FlexColorScheme usage. In case we want
+  /// to use just plain ThemeData we can replace FlexColorScheme usage here.
   static ThemeData light({
     required bool useMaterial3,
     required int usedTheme,
@@ -21,6 +26,8 @@ class AppTheme {
     required bool useSecondaryKeyColor,
     required bool useTertiaryKeyColor,
     required int usedFlexTone,
+    //
+    required double drawerWidth,
     //
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
@@ -58,7 +65,9 @@ class AppTheme {
           ? FlexSubThemesData(
               defaultRadius: defaultRadius,
               thinBorderWidth: 1,
-              thickBorderWidth: 2)
+              thickBorderWidth: 2,
+              drawerWidth: drawerWidth,
+            )
           : null,
       //
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -84,6 +93,11 @@ class AppTheme {
   }
 
   /// Returns dark theme based on required parameters passed to it.
+  ///
+  /// Note:
+  /// We could do this directly in the Riverpod Provider too, this
+  /// is an extra step to wrap the FlexColorScheme usage. In case we want
+  /// to use just plain ThemeData we can replace FlexColorScheme usage here.
   static ThemeData dark({
     required bool useMaterial3,
     required int usedTheme,
@@ -94,6 +108,9 @@ class AppTheme {
     required bool useSecondaryKeyColor,
     required bool useTertiaryKeyColor,
     required int usedFlexTone,
+    //
+    required double drawerWidth,
+    //
     required double appBarElevation,
     required FlexAppBarStyle? appBarStyle,
     required double appBarOpacity,
@@ -150,6 +167,7 @@ class AppTheme {
               defaultRadius: defaultRadius,
               thinBorderWidth: 1,
               thickBorderWidth: 2,
+              drawerWidth: drawerWidth,
             )
           : null,
       //

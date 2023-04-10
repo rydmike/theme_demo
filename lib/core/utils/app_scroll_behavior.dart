@@ -68,8 +68,8 @@ class AppleScrollBehavior extends ScrollBehavior {
 /// https://stackoverflow.com/questions/51119795/how-to-remove-scroll-glow
 class ScrollNoEdgeEffect extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
 }

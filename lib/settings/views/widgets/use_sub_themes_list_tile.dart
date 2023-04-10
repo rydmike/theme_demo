@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/views/widgets/universal/switch_list_tile_adaptive.dart';
 import '../../controllers/settings.dart';
 
 class UseSubThemesListTile extends ConsumerWidget {
@@ -12,7 +11,7 @@ class UseSubThemesListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SwitchListTileAdaptive(
+    return SwitchListTile(
       title: title,
       subtitle: subtitle,
       value: ref.watch(Settings.useSubThemesProvider),

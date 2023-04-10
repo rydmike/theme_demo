@@ -21,6 +21,7 @@ class ShowThemeDataColors extends StatelessWidget {
   const ShowThemeDataColors({
     super.key,
     this.onBackgroundColor,
+    this.showTitle = true,
   });
 
   /// The color of the background the color widget are being drawn on.
@@ -31,6 +32,11 @@ class ShowThemeDataColors extends StatelessWidget {
   /// color it is drawn on for that. If not passed in from parent, it is
   /// assumed to be drawn on card color, which usually is close enough.
   final Color? onBackgroundColor;
+
+  /// Show the title.
+  ///
+  /// Defaults to true.
+  final bool showTitle;
 
   // Return true if the color is light, meaning it needs dark text for contrast.
   static bool _isLight(final Color color) =>
@@ -113,7 +119,7 @@ class ShowThemeDataColors extends StatelessWidget {
     // Wrap this widget branch in a custom theme where card has a border outline
     // if it did not have one, but retains in ambient themed border radius.
     return Theme(
-      data: Theme.of(context).copyWith(
+      data: theme.copyWith(
         cardTheme: CardTheme.of(context).copyWith(
           elevation: 0,
           shape: border,
@@ -122,14 +128,14 @@ class ShowThemeDataColors extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              'ThemeData Colors',
-              style: theme.textTheme.titleMedium,
+          if (showTitle)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text(
+                'ThemeData Colors',
+                style: theme.textTheme.titleMedium,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
           Wrap(
             spacing: spacing,
             runSpacing: spacing,
@@ -154,21 +160,6 @@ class ShowThemeDataColors extends StatelessWidget {
                 label: 'Secondary\nHeader',
                 color: theme.secondaryHeaderColor,
                 textColor: _onColor(theme.secondaryHeaderColor, background),
-              ),
-              ColorCard(
-                label: 'Toggleable\nActive',
-                color: theme.toggleableActiveColor,
-                textColor: _onColor(theme.toggleableActiveColor, background),
-              ),
-              ColorCard(
-                label: 'Bottom\nAppBar',
-                color: theme.bottomAppBarColor,
-                textColor: _onColor(theme.bottomAppBarColor, background),
-              ),
-              ColorCard(
-                label: 'Error\nColor',
-                color: theme.errorColor,
-                textColor: colorScheme.onError,
               ),
               ColorCard(
                 label: 'Canvas$backTooHigh',
@@ -234,11 +225,6 @@ class ShowThemeDataColors extends StatelessWidget {
                 label: 'Hint\nColor',
                 color: theme.hintColor,
                 textColor: _onColor(theme.hintColor, background),
-              ),
-              ColorCard(
-                label: 'Selected\nRow',
-                color: theme.selectedRowColor,
-                textColor: _onColor(theme.selectedRowColor, background),
               ),
               ColorCard(
                 label: 'Unselected\nWidget',

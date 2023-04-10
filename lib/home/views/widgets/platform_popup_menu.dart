@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import '../../../core/constants/flex_icons.dart';
 
 // A popup menu that allows us to select the Flutter platform we want to use.
 //
@@ -36,35 +37,35 @@ class PlatformPopupMenu extends StatelessWidget {
       TargetPlatform.iOS: PopupMenuItem<TargetPlatform>(
         value: TargetPlatform.iOS,
         child: ListTile(
-          leading: Icon(MdiIcons.appleIos, color: iconColor),
+          leading: Icon(Icons.phone_iphone, color: iconColor),
           title: const Text(labelApple),
         ),
       ),
       TargetPlatform.windows: PopupMenuItem<TargetPlatform>(
         value: TargetPlatform.windows,
         child: ListTile(
-          leading: Icon(MdiIcons.microsoftWindows, color: iconColor),
+          leading: Icon(FlexIcons.windows, color: iconColor),
           title: const Text(labelWindows),
         ),
       ),
       TargetPlatform.macOS: PopupMenuItem<TargetPlatform>(
         value: TargetPlatform.macOS,
         child: ListTile(
-          leading: Icon(MdiIcons.appleFinder, color: iconColor),
+          leading: Icon(FlexIcons.apple, color: iconColor),
           title: const Text(labelMacOs),
         ),
       ),
       TargetPlatform.linux: PopupMenuItem<TargetPlatform>(
         value: TargetPlatform.linux,
         child: ListTile(
-          leading: Icon(MdiIcons.linux, color: iconColor),
+          leading: Icon(FlexIcons.linux, color: iconColor),
           title: const Text(labelLinux),
         ),
       ),
       TargetPlatform.fuchsia: PopupMenuItem<TargetPlatform>(
         value: TargetPlatform.fuchsia,
         child: ListTile(
-          leading: Icon(MdiIcons.allInclusive, color: iconColor),
+          leading: Icon(FlexIcons.infinity, color: iconColor),
           title: const Text(labelFuchsia),
         ),
       ),
@@ -82,11 +83,11 @@ class PlatformPopupMenu extends StatelessWidget {
     const Map<TargetPlatform, IconData> platformIcon =
         <TargetPlatform, IconData>{
       TargetPlatform.android: Icons.android,
-      TargetPlatform.iOS: MdiIcons.appleIos,
-      TargetPlatform.windows: MdiIcons.microsoftWindows,
-      TargetPlatform.macOS: MdiIcons.appleFinder,
-      TargetPlatform.linux: MdiIcons.linux,
-      TargetPlatform.fuchsia: MdiIcons.allInclusive,
+      TargetPlatform.iOS: Icons.phone_iphone,
+      TargetPlatform.windows: FlexIcons.windows,
+      TargetPlatform.macOS: FlexIcons.apple,
+      TargetPlatform.linux: FlexIcons.linux,
+      TargetPlatform.fuchsia: FlexIcons.infinity,
     };
 
     String subtitle = 'Now set to ${platformString[platform]}\n'

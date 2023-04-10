@@ -1,7 +1,7 @@
 import 'dart:ui' as ui show TextHeightBehavior;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 // ignore_for_file: comment_references
 
@@ -94,6 +94,7 @@ class ColoredText extends StatelessWidget {
     this.semanticsLabel,
     this.textWidthBasis,
     this.textHeightBehavior,
+    this.selectionColor,
   }) : textSpan = null;
 
   /// Creates a colored text widget with a [InlineSpan].
@@ -124,6 +125,7 @@ class ColoredText extends StatelessWidget {
     this.semanticsLabel,
     this.textWidthBasis,
     this.textHeightBehavior,
+    this.selectionColor,
   }) : data = null;
 
   /// The text to display.
@@ -262,6 +264,16 @@ class ColoredText extends StatelessWidget {
   /// {@macro flutter.dart:ui.textHeightBehavior}
   final ui.TextHeightBehavior? textHeightBehavior;
 
+  /// The color to use when painting the selection.
+  ///
+  /// This is ignored if [SelectionContainer.maybeOf] returns null
+  /// in the [BuildContext] of the [Text] widget.
+  ///
+  /// If null, the ambient [DefaultSelectionStyle] is used (if any); failing
+  /// that, the selection color defaults to [DefaultSelectionStyle.defaultColor]
+  /// (semi-transparent grey).
+  final Color? selectionColor;
+
   @override
   Widget build(BuildContext context) {
     final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
@@ -280,26 +292,39 @@ class ColoredText extends StatelessWidget {
       effectiveTextStyle = effectiveTextStyle
           .merge(const TextStyle(fontWeight: FontWeight.bold));
     }
-
+    final SelectionRegistrar? registrar = SelectionContainer.maybeOf(context);
     Widget result = RichText(
       textAlign: textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
+      // RichText uses Directionality.of to obtain a default if this is null.
       textDirection: textDirection,
+      // RichText uses Localizations.localeOf to obtain a default if this null
       locale: locale,
       softWrap: softWrap ?? defaultTextStyle.softWrap,
-      overflow: overflow ?? defaultTextStyle.overflow,
+      overflow:
+          overflow ?? effectiveTextStyle.overflow ?? defaultTextStyle.overflow,
       textScaleFactor: textScaleFactor ?? MediaQuery.textScaleFactorOf(context),
       maxLines: maxLines ?? defaultTextStyle.maxLines,
       strutStyle: strutStyle,
       textWidthBasis: textWidthBasis ?? defaultTextStyle.textWidthBasis,
       textHeightBehavior: textHeightBehavior ??
           defaultTextStyle.textHeightBehavior ??
-          DefaultTextHeightBehavior.of(context),
+          DefaultTextHeightBehavior.maybeOf(context),
+      selectionRegistrar: registrar,
+      selectionColor: selectionColor ??
+          DefaultSelectionStyle.of(context).selectionColor ??
+          DefaultSelectionStyle.defaultColor,
       text: TextSpan(
         style: effectiveTextStyle,
         text: data,
         children: textSpan != null ? <InlineSpan>[textSpan!] : null,
       ),
     );
+    if (registrar != null) {
+      result = MouseRegion(
+        cursor: SystemMouseCursors.text,
+        child: result,
+      );
+    }
     if (semanticsLabel != null) {
       result = Semantics(
         textDirection: textDirection,
@@ -320,10 +345,6 @@ class ColoredText extends StatelessWidget {
       properties.add(textSpan!.toDiagnosticsNode(
           name: 'textSpan', style: DiagnosticsTreeStyle.transition));
     }
-    properties.add(ColorProperty('color', color, defaultValue: null));
-    properties.add(DoubleProperty('fontSize', fontSize, defaultValue: null));
-    properties.add(
-        EnumProperty<FontWeight>('fontWeight', fontWeight, defaultValue: null));
     style?.debugFillProperties(properties);
     properties.add(
         EnumProperty<TextAlign>('textAlign', textAlign, defaultValue: null));
@@ -350,6 +371,5 @@ class ColoredText extends StatelessWidget {
     if (semanticsLabel != null) {
       properties.add(StringProperty('semanticsLabel', semanticsLabel));
     }
-    properties.add(DiagnosticsProperty<StrutStyle?>('strutStyle', strutStyle));
   }
 }

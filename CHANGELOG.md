@@ -2,6 +2,16 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
+## 0.9.6
+
+**April 10, 2022**
+
+* Bump Flutter version to min 3.7.0
+* Bump all dependencies, now using FlexColorScheme 7.0.1
+* Remove material_design_icons_flutter package, use a custom small icon set instead.
+* Add an example of how to make a themed media device width dependent clamped Drawer width. 
+
+
 ## 0.9.5
 
 **Nov 21, 2022**
@@ -92,8 +102,8 @@ This version bump is an internal change to using `Notifier` instead of `StateNot
 
 * Linter fixes and upgrade.
 * Refactor from Riverpod 0.14.0+3 to 1.0.0-dev.7.
-* Add Splash suitable page and a Drawer.
-* Refactor project to an example of FlexColorScheme v3.0.1 and Riverpod 1.0.0-dev.7.
+* Add a Splash page and a Drawer.
+* Refactor the project to an example of FlexColorScheme v3.0.1 and Riverpod 1.0.0-dev.7.
 
 ## 0.1.0+1 
 

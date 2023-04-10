@@ -34,11 +34,11 @@ class LightAppBarOpacitySlider extends ConsumerWidget {
           children: <Widget>[
             Text(
               '%',
-              style: textTheme.caption,
+              style: textTheme.bodySmall,
             ),
             Text(
               (opacity * 100).floor().toString(),
-              style: textTheme.caption!.copyWith(fontWeight: FontWeight.bold),
+              style: textTheme.bodySmall!.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),
