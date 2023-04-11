@@ -20,7 +20,7 @@ You can try a live WEB version of the **ThemeDemo** application here [**www.rydm
 
 ### Contents
 
-1. [FlexColorScheme 6 and Riverpod 2](#flexcolorscheme-6-and-riverpod-2)  
+1. [FlexColorScheme 7 and Riverpod 2](#flexcolorscheme-6-and-riverpod-2)  
 2. [Features](#features)  
 3. [Used `MaterialApp`](#used-materialapp)  
    3.1 [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching) 
@@ -48,9 +48,9 @@ You can try a live WEB version of the **ThemeDemo** application here [**www.rydm
 10. [More about FlexColorScheme](#more-about-flexColorScheme)
    10.1 [Questions](#questions)
 
-## FlexColorScheme 6 and Riverpod 2
+## FlexColorScheme 7 and Riverpod 2
 
-This example is designed to work with and use the stable releases of **FlexColorScheme 6** and **Riverpod 2**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v6/#/). It does, however, use more advanced state management techniques than the Themes Playground app. It has a convenient feature-first folder structure, making it easy to find related code by feature.
+This example is designed to work with and use the stable releases of **FlexColorScheme 7** and **Riverpod 2**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v7/#/). It does, however, use more advanced state management techniques than the Themes Playground app. It has a convenient feature-first folder structure, making it easy to find related code by feature.
 
 This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. It is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#themedemo-app).
 
