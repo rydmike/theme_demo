@@ -20,7 +20,7 @@ You can try a live WEB version of the **ThemeDemo** application here [**www.rydm
 
 ### Contents
 
-1. [FlexColorScheme 7 and Riverpod 2](#flexcolorscheme-6-and-riverpod-2)  
+1. [FlexColorScheme 7 and Riverpod 2](#flexcolorscheme-7-and-riverpod-2)  
 2. [Features](#features)  
 3. [Used `MaterialApp`](#used-materialapp)  
    3.1 [Dynamic Key-Value Database Switching](#dynamic-key-value-database-switching) 
