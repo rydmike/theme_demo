@@ -149,7 +149,7 @@ class Settings {
   /// The associated provider uses same name with "Provider" added to it.
   static const String _keyUseMaterial3 = 'useMaterial3';
 
-  /// Provider for swapping primary and secondary colors in light theme mode.
+  /// Provider for swapping between using Material 2 and 3 mode.
   ///
   /// Defaults to [_useMaterial3].
   static final NotifierProvider<SettingsEntry<bool>, bool>

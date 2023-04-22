@@ -2,14 +2,21 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
+## 0.9.7
+
+**April 22, 2023**
+
+* Doc comment and readme updates.
+* Chore: Package dep bumps. FlexColorScheme 7.0.1, FlexColorPicker 3.2.1
+
 ## 0.9.6
 
-**April 10, 2022**
+**April 10, 2023**
 
-* Bump Flutter version to min 3.7.0
-* Bump all dependencies, now using FlexColorScheme 7.0.1
+* Chore: Bump Flutter version to min 3.7.0
+* Chore: Bump all dependencies, now using FlexColorScheme 7.0.1
 * Remove material_design_icons_flutter package, use a custom small icon set instead.
-* Add an example of how to make a themed media device width dependent clamped Drawer width. 
+* Add an example of how to make a themed device media width dependent clamped Drawer width. 
 
 
 ## 0.9.5

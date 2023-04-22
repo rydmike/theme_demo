@@ -16,7 +16,7 @@ The source code for the **ThemeDemo** application can be found in the GitHub rep
 
 You can try a live WEB version of the **ThemeDemo** application here [**www.rydmike/themedemo**](https://rydmike.com/themedemo).
 
->This is a **0.9 version** release, but principles will remain the same in **version 1.0**. The app and this article like readme, may be tuned a bit after second review and feedback, before releasing version 1.0. 
+>This is a **0.9.x version** release, but principles will remain the same in **version 1.0**. The app and this article like readme, may be tuned a bit after reviews and feedback, before releasing version 1.0. 
 
 ### Contents
 
@@ -50,7 +50,7 @@ You can try a live WEB version of the **ThemeDemo** application here [**www.rydm
 
 ## FlexColorScheme 7 and Riverpod 2
 
-This example is designed to work with and use the stable releases of **FlexColorScheme 7** and **Riverpod 2**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v7/#/). It does, however, use more advanced state management techniques than the Themes Playground app. It has a convenient feature-first folder structure, making it easy to find related code by feature.
+This example is designed to work with and use the stable releases of **FlexColorScheme 7** and **Riverpod 2**. It uses many advanced **FlexColorScheme** theming features, but not as many as the [Themes Playground application](https://rydmike.com/flexcolorscheme/themesplayground-v7/#/). It does, however, use more advanced state management techniques than the Themes Playground app. It has a feature-first folder structure, making it easy to find related code by feature.
 
 This demo is provided as an additional example to the six examples already included with the FlexColorScheme package. It is also mentioned in the [FlexColorScheme docs](https://docs.flexcolorscheme.com/examples#themedemo-app).
 
@@ -61,9 +61,9 @@ This demo is provided as an additional example to the six examples already inclu
 
 ## Features
 
-The demo UI uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based widgets as well as [SwitchListTile.adaptive](https://api.flutter.dev/flutter/material/SwitchListTile/SwitchListTile.adaptive.html), [Slider.adaptive](https://api.flutter.dev/flutter/material/Slider/Slider.adaptive.html) and [PopupMenuButton](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html), to compose UI widgets used to toggle several input values for the used and demonstrated FlexColorScheme theming features.
+The demo UI uses several [ToggleButtons](https://api.flutter.dev/flutter/material/ToggleButtons-class.html) based widgets as well as [SwitchListTile](https://api.flutter.dev/flutter/material/SwitchListTile/SwitchListTile.html), [Slider.adaptive](https://api.flutter.dev/flutter/material/Slider/Slider.adaptive.html) and [PopupMenuButton](https://api.flutter.dev/flutter/material/PopupMenuButton-class.html), to compose UI widgets used to change several input values for the used and demonstrated FlexColorScheme theming features.
 
-The app demonstrates how the `ThemeData`, and `ThemeMode` state of the application can be easily managed using **Riverpod**, together with `Providers` and `NotifierProviders`. They are used to define the current `ThemeData` for light and dark theme, as well as theme mode states.
+The app demonstrates how the `ThemeData`, and `ThemeMode` states of the application can be easily managed using **Riverpod**, together with `Providers` and `NotifierProviders`. The providers are used to provide the current `ThemeData` for light and dark theme constructed by `FlexColorScheme`, as well as the theme mode state.
 
 It also shows how simple it is to make small UI theme control widgets that can be dropped in anywhere, were needed in an app, and then used to manipulate and modify the `ThemeData` of the application. The UI view widgets modify Riverpod `NotifierProviders`, that act as theme property controllers in `ThemeData` providers. The `MaterialApp` widget watches these providers for changes, and the application is rebuilt using new `ThemeData` whenever a single theming UI widget is changed anywhere in the application.
 
@@ -73,9 +73,13 @@ It also shows how simple it is to make small UI theme control widgets that can b
 
 ## Used `MaterialApp`
 
-The `MaterialApp` setup is simple and compact. We give the light and dark `ThemeData` objects to their respective theme properties in the `MaterialApp`. Here they are given by providers that we watch for changes. Which of the currently supplied light and dark `ThemeData` objects gets used as active application theme is controlled by the `ThemeMode` enum given to the `themeMode` property. We use and watch a third provider for this, so the theme mode can also easily be toggled via UI.
+The `MaterialApp` setup is simple and compact. We give the light and dark `ThemeData` objects to their respective theme properties in the `MaterialApp`. Here they are given by providers that we watch for changes. Which of the currently supplied light and dark `ThemeData` objects gets used as active application theme, is controlled by the `ThemeMode` enum given to the `themeMode` property. We use and watch a third provider for this, so the theme mode can also easily be toggled via UI.
 
-If you specify `ThemeMode.system` as `themeMode`, the application will follow the theme mode used by the host operating system. Many users like this option. Don't just offer light and dark settings as options, also offer the mode `system` as a user choice. A very handy widget to use to allow the user to toggle `ThemeMode` between, light, dark and system mode is `ToggleButtons`. We will look at it later.
+If you specify `ThemeMode.system` as `themeMode`, the application will follow the theme mode used by the host operating system. Many users like this option. Don't just offer light and dark settings as options, also offer the mode `system` as a user choice. A very handy widget to use to allow the user to toggle `ThemeMode` between, light, dark and system mode is `ToggleButtons`.
+
+> The newer Material 3 component `SegementedButton` can be used instead of `ToggleButtons`. However, with nice theming provided by **FlexColorScheme**, the `ToggleButtons` actually has some advantage in this use case and looks very similar to `SegementedButton`, while also matching the height and combined styles of `OutlinedButton` and `FilledButton`. `ToggleButtons` is compacter and often simpler to use than `SegementedButton`. In many other use cases `SegementedButton` is superior though, so do look into it as well. In this app we prefer the simpler and more compact `ToggleButtons` for the used UI examples.
+
+
 
 ```dart
 class ThemeDemoApp extends ConsumerWidget {
@@ -101,7 +105,7 @@ class ThemeDemoApp extends ConsumerWidget {
 }
 ```
 
-This setup works regardless of where in the widget tree the actual theme UI controlling widgets are. In this example, this is demonstrated by placing all made theme widget controls on the classical default Flutter counter page. Yes, there is still a counter on the Home page. Some theme settings widgets are also used in the application drawer, and even more can be found in a bottom sheet.
+This setup and `MaterialApp` theming works regardless of where in the widget tree the actual theme UI controlling widgets are used. This is demonstrated by placing all made theme widget controls on the classic default Flutter counter page. Yes, there is still a counter on the example **Home** page. Some theme settings widgets are also used in the application `Drawer`, and even more can be found in a `BottomSheet`.
 
 | Theme Control Widgets in App Drawer                                                                   | Theme Control Widgets in a BottomSheet                                                                |
 |-------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
@@ -120,7 +124,7 @@ This example shows how **Riverpod** can be used to change the used key-value dat
 
 Is it really necessary to switch the key-value DB persistence implementation at runtime from inside the app? Well, maybe not, but the principle might be useful as an in-app development toggle, used during development and testing for other data sources, like using remote data and mock off-line data source. It can be useful to have a setup that allows you to do this, in-app from developer options. Plus, I wanted to see if it can be done with just Riverpod. Typically, I would have done this part with [GetIt](https://pub.dev/packages/get_it), but nice to see it can be done with just Riverpod.
 
-To be able to do this with only **Riverpod**, we need to define a `ProviderContainer` in just plain Dart before we start the Flutter app. We can then access the provider that gives us the currently used key-value DB implementation. We can then perform whatever async initialization the used key-value DB needs.
+To be able to do this with only **Riverpod**, we need to define a `ProviderContainer` in just plain Dart before we start the Flutter app. We can then access the provider that gives us the currently used key-value DB implementation. We can then perform whatever async initialization the used key-value DB may need.
 
 Before we start the Flutter app, we also access a provider that sets up a listener that will run whenever the key-value DB provider is changed.
 
@@ -194,7 +198,7 @@ The act of reading the `container.read(keyValueDbListenerProvider)`, will instan
 /// A listener that listens to changes in the [keyValueDbProvider].
 ///
 /// When the [keyValueDbProvider] state changes, we initialize the
-/// new provided DB and read all its DB values and updates UI settings
+/// new provided DB and read all its DB values and update UI settings
 /// controls to the values from the new [KeyValueDb] implementation.
 class KeyValueDbListener {
   // Pass a Ref argument to the constructor
@@ -336,7 +340,7 @@ class KeyValueDbToggleButtons extends ConsumerWidget {
 }
 ```
 
-This `ToggleButtons` is small enough to even be dropped into the `trailing` property of a `ListTile` widget, so let's try that. For even more usage convenience, we make the `ListTile` tapping work as a way to cycle through the toggle buttons options. This is very handy and easier to tap the options, we can still also select the options directly by tapping them in the trailing `ToggleButtons`.
+This `ToggleButtons` is small enough to even be dropped into the `trailing` property of a `ListTile` widget. For even more usage convenience, we make `ListTile` tapping work as a way to cycle through the toggle button's options. This is very handy and easier to hit than tapping the options. We can still also select the options directly by tapping on them in the trailing `ToggleButtons`.
 
 ```dart
 /// UI used to toggle the used key-value DB implementation by just tapping
@@ -373,15 +377,15 @@ class KeyValueDbListTile extends ConsumerWidget {
 
 ```
 
-This is what it looks like in action:
+This is what it looks like in action. It behaves like a `SwitchListTile`, where you can either tap the entire tile or the switch, but in this case with three options instead of just an ON/OFF switch.
 
 <img src="https://github.com/rydmike/theme_demo/blob/master/resources/switch_key_value_db.gif?raw=true" alt="Database switch" width="650"/>
 
 *Using UI to dynamically change the used key-value DB implementation.*
 
-The themed `ToggleButtons` look different when the key-value DB implementation is switched. This is because different theme settings defined with **FlexColorScheme**, had been configured using the different key-value DB implementations. When we switch implementation, the settings persisted in each implementation is loaded and the theme changes to it.
+Above, the themed `ToggleButtons` look different when the key-value DB implementation is switched. This is because different theme settings defined with **FlexColorScheme**, had been configured using the different key-value DB implementations. When we switch implementation, the settings persisted in each implementation is loaded and the theme changes to it.
 
-That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is an easier way, but this worked well and that was the aim of this part of the demo. How useful it is, depends on what you use it for. The key-value database swapping used in this application is not really the most relevant use case.
+That's it for being able to switch in different key-value DB implementation using only **Riverpod**. Perhaps there is an easier way, but this worked well and that was the aim of this part of the demo. How useful it is depends on what you use it for. The key-value database swapping used in this example, is perhaps not the most relevant use case.
 
 > **Use Cases**
 > 
@@ -393,9 +397,9 @@ One of the goals with the design of the used key-value persistence model and Riv
 
 We could also serialize a big settings class with all the properties to a JSON and save the entire JSON with just one key. We would then be writing the entire "large" JSON file to the key-value DB, every time a single settings value is changed. This was not desired.
 
-We also did not want to use a [**Freezed**](https://pub.dev/packages/freezed) or handwritten immutable class with all the settings properties in it. Then we would have to use a `select` filter for every property in every widget using a settings entry, to ensure it is rebuilt only when its value is changed. We would also need to filter or to store only the property value that was changed into the used key-value DB. In this case, we wanted to avoid this approach. Using `select` is a bit more involved or at least verbose. In our "Settings" feature, we need and want full reactive behavior for all of its members. This is a bit different from a normal data class. In them, we typically only need it for a few of its members and for the rest, it is OK to update the entire class state "record" into the database a single JSON doc. However, that fit poorly with how we wanted the settings to behave in this application.
+We also did not want to use a [**Freezed**](https://pub.dev/packages/freezed) or handwritten immutable class with all the settings properties in it. Then we would also have to use a `select` filter for every property in every widget using a settings entry, to ensure it is rebuilt only when its value is changed. We would also need to filter to store only the property value that was changed into the used key-value DB. In this case, we wanted to avoid this approach. Using `select` is a bit more involved or at least verbose. In our "Settings" feature, we need and want full reactive behavior for all of its members. This is a bit different from a normal data class. In them, we typically only need it for a few of its members and for the rest, it is OK to update the entire class state as a "record" into the database, in a single JSON doc. However, that fit poorly with how we wanted the settings to behave in this application.
 
-> Maybe later I will add a **ThemeDemo** branch that uses **Freezed** and `myProvider.select()` approach. It could be an interesting article to compare them and discuss pros and cons with both.
+> Maybe later we will add a **ThemeDemo** branch that uses **Freezed** and `myProvider.select()` approach. It could be an interesting article to compare them and discuss pros and cons with both.
 
 For the settings entry properties, we could alternatively use just simple `StateProviders`. I have done so before, it works well. However, if we use `Notifier` and `NotifierProvider`, we have more control and can make an API for our settings entries that provides functions that reads very nicely when we use them.
 
@@ -594,7 +598,7 @@ class Settings {
 
   /// String key used for defining if we use Material 3 or Material 2.
   static const String _keyUseMaterial3 = 'useMaterial3';
-  /// Provider for swapping primary and secondary colors in light theme mode.
+  /// Provider for swapping between using Material 2 and 3 mode.
   static final NotifierProvider<SettingsEntry<bool>, bool>
       useMaterial3Provider = NotifierProvider<SettingsEntry<bool>, bool>(
     () {
@@ -893,9 +897,14 @@ The one for the dark theme is equivalent and not shown here.
 
 ### Application Theme
 
-The `AppTheme` is again a simple class, with only static functions and constants. The core functions are the `AppTheme.light` and `AppTheme.dark` ones. The rest is just constants to define some example custom theme colors, and to build a const list that contains all available color themes we can switch between.
+The `AppTheme` is a simple class, with only static functions and constants. The core functions are the `AppTheme.light` and `AppTheme.dark` ones. The rest is just constants to define some example custom theme colors, and to build a const list that contains all available color themes we can switch between.
 
-The `AppTheme.light` and `AppTheme.dark` functions are pretty equivalent, the dark theme as a few more parameters. Some used parameters share the `Settings` providers, but in cases where it makes sense, we have separate `Settings` providers for the light and dark theme, so light and dark theme parameters can be controlled and configured separately.
+The `AppTheme.light` and `AppTheme.dark` functions are pretty equivalent, the dark theme has a few more parameters. Some used parameters share the `Settings` providers, but in cases where it makes sense, we have separate `Settings` providers for the light and dark theme, so light and dark theme parameters can be controlled and configured separately.
+
+We could of course combine the above theme providers with the actual `ThemeData` factory constructors used to return the `ThemeData` object. However, for separation I prefer this approach. The theme providers only provides the `ThemeData` and listens to values that impact the theme data result. The `AppTheme` constructors actually makes the complex `ThemeData` object.
+
+In this case we are using `FlexColorScheme` to construct the fancy `ThemeData` object, but we could easily swap it out with just vanilla `ThemeData` or something else, without messing with our provider of `ThemeData`.
+
 
 ```dart
 /// The themes for this app are defined here.
