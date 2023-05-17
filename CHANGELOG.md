@@ -2,6 +2,13 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
+## 0.9.8
+
+**May 17, 2023**
+
+* Chore: Bump Flutter version to min 3.10.0, Dart 3.0.0
+* Chore: Bump all dependencies, now using FlexColorScheme 7.1.2
+
 ## 0.9.7
 
 **April 22, 2023**
