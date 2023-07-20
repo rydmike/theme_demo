@@ -74,6 +74,13 @@ class _MyHomePageState extends ConsumerState<HomePage> {
         actions: const <Widget>[AboutIconButton()],
       ),
       drawer: const AppDrawer(),
+      bottomNavigationBar: NavigationBar(
+        destinations: const <Widget>[
+          NavigationDestination(
+              icon: Icon(Icons.access_alarm_outlined), label: 'Alarm'),
+          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings')
+        ],
+      ),
       // This annotated region will change the Android system navigation bar to
       // a theme color, matching active theme mode and FlexColorScheme theme.
       body: AnnotatedRegion<SystemUiOverlayStyle>(

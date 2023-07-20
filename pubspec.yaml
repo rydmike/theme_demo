@@ -1,7 +1,7 @@
 name: theme_demo
 description: Flutter theme demo using FlexColorScheme and Riverpod.
 publish_to: 'none'
-version: 0.9.8
+version: 0.9.9
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -14,11 +14,11 @@ dependencies:
 
   # Color picker package, by Mike Rydstrom, rydmike.com (@rydmike).
   # https://pub.dev/packages/flex_color_picker
-  flex_color_picker: ^3.2.2
+  flex_color_picker: ^3.3.0
 
   # Used for surface colored branded theming. (by rydmike.com)
   # https://pub.dev/packages/flex_color_scheme
-  flex_color_scheme: ^7.1.2
+  flex_color_scheme: ^7.2.0
 
   # The Flutter framework (by Google, flutter.dev)
   # https://flutter.dev
@@ -40,11 +40,11 @@ dependencies:
 
   # Store value pair shared preference data, by Google flutter.dev.
   # https://pub.dev/packages/shared_preferences
-  shared_preferences: ^2.1.1
+  shared_preferences: ^2.2.0
 
   # Used for launching a WEB URL (by Google flutter.dev).
   # https://pub.dev/packages/url_launcher
-  url_launcher: ^6.1.11
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:

@@ -66,8 +66,8 @@ class ThemeSettings extends ConsumerWidget {
         ),
         AnimatedHide(
           hide: !useSubThemes,
-          child: Column(
-            children: const <Widget>[
+          child: const Column(
+            children: <Widget>[
               ListTile(
                 title: Text('Global border radius on components'),
                 subtitle: Text(

@@ -2,6 +2,14 @@
 
 All notable changes to the **ThemeDemo** application are documented here.
 
+## 0.9.9
+
+**July 20, 2023**
+
+* Chore: Bump all dependencies, now using FlexColorScheme 7.2.0
+* Chore: Fix deprecated Flutter SDK APIs.
+* Chore: Bump MaterialShowcase to the same version as the one used by Themes Playground in FlexColorScheme 7.2.0.
+
 ## 0.9.8
 
 **May 17, 2023**

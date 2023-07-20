@@ -62,8 +62,8 @@ class BottomSheetSettings extends ConsumerWidget {
                 // Hide the extra dark mode controls in light theme mode.
                 AnimatedHide(
                   hide: isLight,
-                  child: Column(
-                    children: const <Widget>[
+                  child: const Column(
+                    children: <Widget>[
                       DarkIsTrueBlackSwitch(),
                       DarkComputeThemeSwitch(),
                       DarkLevelSlider(),
